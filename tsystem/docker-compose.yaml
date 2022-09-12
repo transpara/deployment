@@ -1,0 +1,61 @@
+version: "3.9"
+   
+services:
+  tsystem:
+    image: "transpara/tsystem:${TSYSTEM_TAG}"
+    volumes:
+      - tsystem_data:/app/database
+    container_name: ${TSYSTEM_NAME}_api
+    hostname: ${TSYSTEM_NAME}_api
+    ports:
+      - "0.0.0.0:${TSYSTEM_PORT}:80"
+    restart: unless-stopped
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TSYSTEM_NAME}_api"
+
+  syslog:
+    image: balabit/syslog-ng:latest
+    container_name: ${TSYSTEM_NAME}_syslog
+    hostname: ${TSYSTEM_NAME}_syslog
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:514:514/udp"
+      - "0.0.0.0:601:601"
+    volumes:
+      - syslog_data:/var/log
+    command: "--no-caps"
+
+  tredis:
+    image: "redis:latest"
+    volumes:
+      - tredis_data:/data  
+    container_name: ${TSYSTEM_NAME}_redis
+    hostname: ${TSYSTEM_NAME}_redis
+    ports:
+      - "0.0.0.0:${REDIS_PORT}:6379"
+    restart: unless-stopped      
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TSYSTEM_NAME}_redis"      
+
+networks:
+   default:
+      name: transpara
+
+volumes:
+  tsystem_data:
+      name: tsystem_api_data_${TSYSTEM_ID}
+  syslog_data:
+      name: tsystem_syslog_data_${TSYSTEM_ID}
+  tredis_data:
+      name: tsystem_redis_data_${TSYSTEM_ID}
+
+
+# docker run -v $PWD/p3x-redis-ui-settings:/settings -h docker-p3x-redis-ui -p 7843:7843 -t -i patrikx3/p3x-redis-ui
