@@ -1,0 +1,33 @@
+version: "3.9"
+   
+services:
+  tcore:
+    image: "transpara/tgraph-bridge-bundle:${IMAGE_TAG}"
+    container_name: ${TCORE_NAME}_tcore
+    hostname: ${TCORE_NAME}_tcore
+    ports:
+      - "0.0.0.0:${TCORE_READ_PORT}:10002"
+      - "0.0.0.0:${TCORE_WRITE_PORT}:10003"
+      #- "${TGRAPH_BRIDGE_BOLT_PORT}:7687"
+      - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
+    restart: unless-stopped
+    environment:
+      - TCORE_NAME=${TCORE_ID}
+    volumes:
+      - tcore_data:/var/lib/memgraph
+    logging: 
+      driver: syslog
+      options:
+        #max-size: "40k"
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore"  
+   
+networks:
+   default:
+      name: transpara
+      external: true
+
+volumes:
+   tcore_data: 
+      name: tcore_${TCORE_ID}_data
