@@ -1,0 +1,112 @@
+version: "3.9"
+   
+services:
+
+  tcalc-main:
+    image: "transpara/tcalc:${TCALC_TAG}"  
+    command: /app/entry-main.sh
+    container_name: ${TCALC_NAME}_main
+    hostname: ${TCALC_NAME}_main
+    ports:
+      - "${TCALC_FLOWER_PORT}:5555"    
+      - "${TCALC_API_PORT}:10003"    
+    restart: unless-stopped     
+    environment:
+      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_PORT=${TREDIS_PORT}         version: "3.9"
+   
+services:
+  tcalc-main:
+    image: "transpara/tcalc:${TCALC_TAG}"  
+    command: /app/entry-main.sh
+    container_name: ${TCALC_NAME}_main
+    hostname: ${TCALC_NAME}_main
+    ports:
+      - "${TCALC_FLOWER_PORT}:5555"    
+      - "${TCALC_API_PORT}:10003"    
+    restart: unless-stopped     
+    environment:
+      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_PORT=${TREDIS_PORT}         
+      - REDIS_CELERY_BROKER_DB=5
+      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_SNAPSHOT_DB=7    
+      - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
+      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
+      - CACHE_CALCULATIONS_SEC=30     
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCALC_NAME}_main"      
+
+  tcalc-worker:
+    image: "transpara/tcalc:${TCALC_TAG}"  
+    command: /app/run-celeryworker.sh
+    container_name: ${TCALC_NAME}_worker
+    hostname: ${TCALC_NAME}_worker
+    restart: unless-stopped     
+    environment:
+      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_PORT=${TREDIS_PORT}          
+      - REDIS_CELERY_BROKER_DB=5
+      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_SNAPSHOT_DB=7
+      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
+      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
+      - CACHE_CALCULATIONS_SEC=30     
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCALC_NAME}_worker"     
+
+
+networks:
+   default:
+      name: transpara
+      external: true
+      - REDIS_CELERY_BROKER_DB=5
+      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_SNAPSHOT_DB=7    
+      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
+      - CACHE_CALCULATIONS_SEC=30     
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCALC_NAME}_main"      
+
+  tcalc-worker:
+    image: "transpara/tcalc:${TCALC_TAG}"  
+    command: /app/run-celeryworker.sh
+    container_name: ${TCALC_NAME}_worker
+    hostname: ${TCALC_NAME}_worker
+    restart: unless-stopped     
+    environment:
+      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_PORT=${TREDIS_PORT}          
+      - REDIS_CELERY_BROKER_DB=5
+      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_SNAPSHOT_DB=7
+      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
+      - CACHE_CALCULATIONS_SEC=30     
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCALC_NAME}_worker"     
+
+
+networks:
+   default:
+      name: transpara
+      external: true
