@@ -30,4 +30,4 @@ networks:
 
 volumes:
    tcore_data: 
-      name: tcore_${TCORE_ID}_data
+      name: tcore_data_${TCORE_ID}
