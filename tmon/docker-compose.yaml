@@ -1,1 +1,95 @@
+version: "3.9"
+   
+services:
 
+  tmon-db:
+    image: timescale/timescaledb:2.7.2-pg14
+    ports:
+      - "0.0.0.0:5432:5432"
+    container_name: tmon_db
+    volumes:
+      - tmon_data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "${TSTORE_NAME}_tmon_db"  
+
+
+  tmon-server:
+    image: "transpara/tmon-server:${TMON_SERVER_TAG}"
+    ports:
+      - "0.0.0.0:10051:10051"
+    container_name: tmon_server
+    restart: unless-stopped
+    environment:
+      - "ZBX_HOSTNAME=tmon_server"
+      - "DB_SERVER_HOST=tmon_db"
+      - "POSTGRES_DB=${TMON_DBNAME}"
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+      - "ENABLE_TIMESCALEDB=true"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "${TSTORE_NAME}_tmon_server"  
+
+  tmon-agent:
+    image: "transpara/tmon-agent:${TMON_AGENT_TAG}"
+    ports:
+      - "0.0.0.0:10050:10050"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/hostname:/etc/hostname:ro
+    user: 0:0
+    container_name: tmon_agent
+    restart: unless-stopped
+    links:
+      - 'tmon-server:zabbix-server'
+    privileged: true
+    environment:
+      - "ZBX_HOSTNAME="
+      - "ZBX_METADATA=:osname=linux:docker=yes:"
+      - "ZBX_HOSTNAMEITEM=system.run[cat /etc/hostname]"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "${TSTORE_NAME}_tmon_agent"
+
+  tmon-ui:
+    image: "transpara/tmon-ui:${TMON_UI_TAG}"
+    ports:
+      - 8080:8080
+    container_name: tmon_ui
+    restart: unless-stopped
+    environment:
+      - "DB_SERVER_HOST=tmon_db"
+      - "POSTGRES_DB=${TMON_DBNAME}"
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+      - "ZBX_SERVER_HOST=tmon_server"
+      - "PHP_TZ=America/Chicago"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "${TSTORE_NAME}_tmon_ui"
+
+networks:
+   default:
+      name: transpara
+      external: true
+
+volumes:
+   tmon_data:
+      name: tmon_db_data_${TSTORE_ID}
+      
