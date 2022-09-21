@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   tmon-db:
-    image: timescale/timescaledb:2.7.2-pg14
+    image: "transpara/tmon-database:${TMON_DATABASE_TAG}"
     ports:
       - "0.0.0.0:5432:5432"
     container_name: tmon_db
@@ -55,7 +55,7 @@ services:
     privileged: true
     environment:
       - "ZBX_HOSTNAME="
-      - "ZBX_METADATA=:osname=linux:docker=yes:"
+      - "ZBX_METADATA=${ZBX_METADATA}"
       - "ZBX_HOSTNAMEITEM=system.run[cat /etc/hostname]"
     logging:
       driver: syslog
