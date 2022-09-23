@@ -2,7 +2,7 @@ version: "3.9"
    
 services:
   tcore:
-    image: "transpara/tgraph-bridge-bundle:${IMAGE_TAG}"
+    image: "transpara/tcore-bridge:${IMAGE_TAG}"
     container_name: ${TCORE_NAME}_tcore
     hostname: ${TCORE_NAME}_tcore
     ports:
