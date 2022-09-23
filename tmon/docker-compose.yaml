@@ -33,6 +33,10 @@ services:
       - "POSTGRES_USER=${TMON_UNAME}"
       - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
       - "ENABLE_TIMESCALEDB=true"
+      - "TMONAPI_PORT=${TMONAPI_PORT}"
+      - "TMONAPI_URL=${TMONAPI_URL}"
+      - "TMONAPI_UNAME=${TMONAPI_UNAME}"
+      - "TMONAPI_PASSWORD=${TMONAPI_PASSWORD}"
     logging:
       driver: syslog
       options:
@@ -92,4 +96,3 @@ networks:
 volumes:
    tmon_data:
       name: tmon_db_data_${TMON_ID}
-      
