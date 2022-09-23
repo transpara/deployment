@@ -17,7 +17,7 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "${TSTORE_NAME}_tmon_db"  
+        tag: "${TMON_NAME}_db"  
 
 
   tmon-server:
@@ -38,7 +38,7 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "${TSTORE_NAME}_tmon_server"  
+        tag: "${TMON_NAME}_server"  
 
   tmon-agent:
     image: "transpara/tmon-agent:${TMON_AGENT_TAG}"
@@ -62,7 +62,7 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "${TSTORE_NAME}_tmon_agent"
+        tag: "${TMON_NAME}_agent"
 
   tmon-ui:
     image: "transpara/tmon-ui:${TMON_UI_TAG}"
@@ -82,7 +82,7 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "${TSTORE_NAME}_tmon_ui"
+        tag: "${TMON_NAME}_ui"
 
 networks:
    default:
@@ -91,5 +91,5 @@ networks:
 
 volumes:
    tmon_data:
-      name: tmon_db_data_${TSTORE_ID}
+      name: tmon_db_data_${TMON_ID}
       
