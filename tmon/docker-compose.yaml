@@ -54,13 +54,11 @@ services:
     user: 0:0
     container_name: tmon_agent
     restart: unless-stopped
-    links:
-      - 'tmon-server:zabbix-server'
     privileged: true
     environment:
-      - "ZBX_HOSTNAME="
       - "ZBX_METADATA=${ZBX_METADATA}"
       - "ZBX_HOSTNAMEITEM=system.run[cat /etc/hostname]"
+      - "ZBX_SERVER_HOST=${ZBX_SERVER_HOST}"
     logging:
       driver: syslog
       options:
