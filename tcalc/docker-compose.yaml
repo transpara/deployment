@@ -56,7 +56,7 @@ services:
         tag: "node-${TCALC_NAME}_worker"     
 
   code-server:
-    image: lscr.io/linuxserver/code-server:latest
+    image: "transpara/tcode:${TCALC_TAG}"
     container_name: ${TCALC_NAME}_vscode
     environment:
       - PUID=1000
