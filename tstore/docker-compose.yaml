@@ -26,7 +26,7 @@ services:
         tag: "node-${TSTORE_NAME}_db"
   
   promscale:
-    image: "transpara/tscale:${PROMSCALE_TAG}"
+    image: "transpara/tscale:${TSTORE_TAG}"
     depends_on: 
       - tstore
     ports:
