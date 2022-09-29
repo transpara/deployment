@@ -18,7 +18,7 @@ services:
         tag: "node-${TSYSTEM_NAME}_api"
 
   syslog:
-    image: balabit/syslog-ng:latest
+    image: "transpara/tlog:${TSYSTEM_TAG}"
     container_name: ${TSYSTEM_NAME}_syslog
     hostname: ${TSYSTEM_NAME}_syslog
     restart: unless-stopped
@@ -30,7 +30,7 @@ services:
     command: "--no-caps"
 
   tredis:
-    image: "redis:latest"
+    image: "transpara/tcache:${TSYSTEM_TAG}"
     volumes:
       - tredis_data:/data  
     container_name: ${TSYSTEM_NAME}_redis
