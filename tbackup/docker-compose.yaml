@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  tbackup:
+    image: "transpara/tbackup:${TBACKUP_TAG}"
+    volumes:
+      - tbackup_data:/app/data
+    environment:
+      - HOST=${TSTORE_IP}
+      - PORT=${TSTORE_PORT}
+      - USER=${TSTORE_USERNAME}
+      - PGPASSWORD=${TSTORE_PASSWORD}
+      - KEEPDAYS=${KEEPDAYS}
+    container_name: tbackup
+    hostname: tbackup
+    ports:
+      - "0.0.0.0:7000:80"
+    restart: unless-stopped
+    healthcheck:
+       test : ["CMD","psql","-h","${TSTORE_IP}","-p","${TSTORE_PORT}","-U","${TSTORE_USERNAME}","-c","select version();"]
+       interval :  10s
+       timeout : 2s
+       retries : 1
+       start_period: 1s
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "tbackup"
+
+networks:
+   default:
+      name: transpara
+
+volumes:
+   tbackup_data:
+      name: tbackup_data
