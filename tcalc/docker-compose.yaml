@@ -3,6 +3,10 @@ version: "3.9"
 services:
 
   tcalc-main:
+    labels:
+      - "Module=Main"
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
     image: "transpara/tcalc:${TCALC_TAG}"  
     command: /app/entry-main.sh
     container_name: ${TCALC_NAME}_main
@@ -31,6 +35,10 @@ services:
         tag: "node-${TCALC_NAME}_main"      
 
   tcalc-worker:
+   labels:
+      - "Module=Worker"
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
     image: "transpara/tcalc:${TCALC_TAG}"  
     command: /app/run-celeryworker.sh
     container_name: ${TCALC_NAME}_worker
@@ -56,6 +64,9 @@ services:
         tag: "node-${TCALC_NAME}_worker"     
 
   code-server:
+     labels:
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
     image: "transpara/tcode:${TCALC_TAG}"
     container_name: ${TCALC_NAME}_vscode
     environment:
