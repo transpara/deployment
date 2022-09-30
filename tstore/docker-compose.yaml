@@ -3,6 +3,9 @@ version: "3.9"
 services:
 
   tstore:
+    labels:
+      - "Version=${TSTORE_TAG}"
+      - "ID=${TSTORE_ID}"
     image: "transpara/tstore-database:${TSTORE_TAG}"
     shm_size: '2gb'
     volumes:
@@ -26,6 +29,9 @@ services:
         tag: "node-${TSTORE_NAME}_db"
   
   promscale:
+    labels:
+      - "Version=${TSTORE_TAG}"
+      - "ID=${TSTORE_ID}"
     image: "transpara/tscale:${TSTORE_TAG}"
     depends_on: 
       - tstore
@@ -47,6 +53,9 @@ services:
         tag: "node-${TSTORE_NAME}_promscale"     
 
   tstore-api:
+    labels:
+      - "Version=${TSTORE_TAG}"
+      - "ID=${TSTORE_ID}"
     image: "transpara/tstore-api:${TSTORE_API_TAG}"
     depends_on: 
       - tstore
