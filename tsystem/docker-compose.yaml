@@ -2,6 +2,9 @@ version: "3.9"
    
 services:
   tsystem:
+    labels:
+      - "Version=${TSYSTEM_TAG}"
+      - "ID=${TSYSTEM_ID}"
     image: "transpara/tsystem:${TSYSTEM_TAG}"
     volumes:
       - tsystem_data:/app/database
@@ -18,6 +21,9 @@ services:
         tag: "node-${TSYSTEM_NAME}_api"
 
   syslog:
+    labels:
+      - "Version=${TSYSTEM_TAG}"
+      - "ID=${TSYSTEM_ID}"
     image: "transpara/tlog:${TSYSTEM_TAG}"
     container_name: ${TSYSTEM_NAME}_syslog
     hostname: ${TSYSTEM_NAME}_syslog
@@ -30,6 +36,9 @@ services:
     command: "--no-caps"
 
   tredis:
+    labels:
+      - "Version=${TSYSTEM_TAG}"
+      - "ID=${TSYSTEM_ID}"
     image: "transpara/tcache:${TSYSTEM_TAG}"
     volumes:
       - tredis_data:/data  
