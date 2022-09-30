@@ -35,7 +35,7 @@ services:
         tag: "node-${TCALC_NAME}_main"      
 
   tcalc-worker:
-   labels:
+    labels:
       - "Module=Worker"
       - "Version=${TCALC_TAG}"
       - "ID=${TCALC_ID}"
@@ -64,7 +64,7 @@ services:
         tag: "node-${TCALC_NAME}_worker"     
 
   code-server:
-     labels:
+    labels:
       - "Version=${TCALC_TAG}"
       - "ID=${TCALC_ID}"
     image: "transpara/tcode:${TCALC_TAG}"
