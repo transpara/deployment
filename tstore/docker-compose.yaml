@@ -38,8 +38,8 @@ services:
     ports:
       - "${PROMSCALE_API_PORT}:9201"
       - "${MONITORING_PROMSCALE_PORT}:9202"      
-    container_name: ${TSTORE_NAME}_promscale
-    hostname: ${TSTORE_NAME}_promscale
+    container_name: ${TSTORE_NAME}_tscale
+    hostname: ${TSTORE_NAME}_tscale
     restart: unless-stopped 
     environment:
       PROMSCALE_DB_CONNECT_RETRIES: 10
