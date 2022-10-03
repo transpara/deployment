@@ -25,8 +25,8 @@ services:
       - "Version=${TSYSTEM_TAG}"
       - "ID=${TSYSTEM_ID}"
     image: "transpara/tlog:${TSYSTEM_TAG}"
-    container_name: ${TSYSTEM_NAME}_syslog
-    hostname: ${TSYSTEM_NAME}_syslog
+    container_name: ${TSYSTEM_NAME}_tlog
+    hostname: ${TSYSTEM_NAME}_tlog
     restart: unless-stopped
     ports:
       - "0.0.0.0:514:514/udp"
@@ -42,8 +42,8 @@ services:
     image: "transpara/tcache:${TSYSTEM_TAG}"
     volumes:
       - tredis_data:/data  
-    container_name: ${TSYSTEM_NAME}_redis
-    hostname: ${TSYSTEM_NAME}_redis
+    container_name: ${TSYSTEM_NAME}_tcache
+    hostname: ${TSYSTEM_NAME}_tcache
     ports:
       - "0.0.0.0:${REDIS_PORT}:6379"
     restart: unless-stopped      
