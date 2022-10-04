@@ -2,6 +2,9 @@ version: "3.9"
 
 services:
   tbackup:
+    labels:
+      - "Version=${TBACKUP_TAG}"
+      - "ID=${TBACKUP_ID}"
     image: "transpara/tbackup:${TBACKUP_TAG}"
     volumes:
       - tbackup_data:/app/data
