@@ -3,6 +3,9 @@ version: "3.9"
 services:
 
   tmon-db:
+    labels:
+      - "Version=${TMON_DATABASE_TAG}"
+      - "ID=${TMON_ID}"
     image: "transpara/tmon-database:${TMON_DATABASE_TAG}"
     ports:
       - "0.0.0.0:5432:5432"
@@ -21,6 +24,9 @@ services:
 
 
   tmon-server:
+    labels:
+      - "Version=${TMON_SERVER_TAG}"
+      - "ID=${TMON_ID}"
     image: "transpara/tmon-server:${TMON_SERVER_TAG}"
     ports:
       - "0.0.0.0:10051:10051"
@@ -45,6 +51,9 @@ services:
         tag: "${TMON_NAME}_server"  
 
   tmon-agent:
+    labels:
+      - "Version=${TMON_AGENT_TAG}"
+      - "ID=${TMON_ID}"
     image: "transpara/tmon-agent:${TMON_AGENT_TAG}"
     ports:
       - "0.0.0.0:10050:10050"
@@ -67,6 +76,9 @@ services:
         tag: "${TMON_NAME}_agent"
 
   tmon-ui:
+    labels:
+      - "Version=${TMON_UI_TAG}"
+      - "ID=${TMON_ID}"
     image: "transpara/tmon-ui:${TMON_UI_TAG}"
     ports:
       - 0.0.0.0:${TMONAPI_PORT}:8080
