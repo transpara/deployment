@@ -18,7 +18,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions  
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_HOST=${TSYSTEM_NAME}_tcache
       - REDIS_PORT=${TREDIS_PORT}         
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
@@ -47,7 +47,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions      
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_HOST=${TSYSTEM_NAME}_tcache
       - REDIS_PORT=${TREDIS_PORT}          
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
