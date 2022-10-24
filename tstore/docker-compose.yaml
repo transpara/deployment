@@ -28,7 +28,7 @@ services:
         syslog-format: "rfc3164"
         tag: "node-${TSTORE_NAME}_db"
   
-  promscale:
+  tscale:
     labels:
       - "Version=${TSTORE_TAG}"
       - "ID=${TSTORE_ID}"
@@ -50,7 +50,7 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_promscale"     
+        tag: "node-${TSTORE_NAME}_tscale"     
 
   tstore-api:
     labels:
@@ -59,7 +59,7 @@ services:
     image: "transpara/tstore-api:${TSTORE_API_TAG}"
     depends_on: 
       - tstore
-      - promscale
+      - tscale
     environment:
       - PROMSCALE_DB_URI=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - PROMSCALE_API_URI=http://${TSTORE_NAME}_tscale:9201/write
