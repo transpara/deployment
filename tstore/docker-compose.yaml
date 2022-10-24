@@ -62,7 +62,7 @@ services:
       - promscale
     environment:
       - PROMSCALE_DB_URI=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - PROMSCALE_API_URI=http://${TSTORE_NAME}_promscale:9201/write
+      - PROMSCALE_API_URI=http://${TSTORE_NAME}_tscale:9201/write
       - PROMSCALE_OTLP_URI=http://${MONITORING_PROMSCALE_HOST}:9202
       - EXPOSE_METRICS=${TSTORE_API_EXPOSE_METRICS}
       - EXPORT_TRACES=${TSTORE_API_EXPORT_TRACES}
