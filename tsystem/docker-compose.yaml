@@ -8,6 +8,10 @@ services:
     image: "transpara/tsystem:${TSYSTEM_TAG}"
     volumes:
       - tsystem_data:/app/database
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker-compose:/usr/bin/docker-compose
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/bin/git:/usr/bin/git
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
     ports:
