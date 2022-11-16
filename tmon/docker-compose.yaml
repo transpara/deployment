@@ -12,6 +12,7 @@ services:
     container_name: tmon_db
     volumes:
       - tmon_data:/var/lib/postgresql/data
+    restart: unless-stopped
     environment:
       - "POSTGRES_DB=${TMON_DBNAME}"
       - "POSTGRES_USER=${TMON_UNAME}"
@@ -44,6 +45,12 @@ services:
       - "TMONAPI_HOST=${TMONAPI_HOST}"
       - "TMONAPI_UNAME=${TMONAPI_UNAME}"
       - "TMONAPI_PASSWORD=${TMONAPI_PASSWORD}"
+      - "ZBX_METADATA=${ZBX_METADATA}"
+      - "SQLSERVER_NAME=${SQLSERVER_NAME}"
+      - "SQLSERVER_ADDRESS=${SQLSERVER_ADDRESS}"
+      - "SQLSERVER_PORT=${SQLSERVER_PORT}"
+      - "SQLSEVER_USER_NAME=${SQLSEVER_USER_NAME}"
+      - "SQLSERVER_PASSWORD=${SQLSERVER_PASSWORD}"
     depends_on: 
       - tmon-db
     logging:
@@ -67,6 +74,7 @@ services:
     container_name: tmon_agent
     restart: unless-stopped
     privileged: true
+    pid: "host"
     environment:
       - "ZBX_METADATA=${ZBX_METADATA}"
       - "ZBX_HOSTNAMEITEM=system.run[cat /etc/hostname]"
