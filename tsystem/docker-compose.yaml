@@ -11,6 +11,11 @@ services:
       - /home/transpara:/home/transpara
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
+    environment:
+      - TSYSTEM_TAG=${TSYSTEM_TAG}
+      - CONTAINER_HOST=$(CONTAINER_HOST)
+      - USERNAME=$(USERNAME)
+      - SSH_PORT=$(SSH_PORT)
     ports:
       - "0.0.0.0:${TSYSTEM_PORT}:80"
     restart: unless-stopped
