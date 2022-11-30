@@ -4,8 +4,8 @@ services:
   tbackup:
     image: "transpara/chartapi:${ECHARTS_TAG}"
     environment:
-      - username=tstoredev@transpara.com
-      - password=tStoreDev!22
+      - username=<tstore api read username>
+      - password=<tstore api read password>
       - tstore_api_url=http://tstore_api:80/api/v1
     container_name: echarts
     hostname: echarts
