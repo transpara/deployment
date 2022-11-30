@@ -1,0 +1,26 @@
+version: "3.9"
+   
+services:
+  tbackup:
+    image: "transpara/chartapi:${ECHARTS_TAG}"
+    environment:
+      - username=tstoredev@transpara.com
+      - password=tStoreDev!22
+      - tstore_api_url=http://tstore_api:80/api/v1
+    container_name: echarts
+    hostname: echarts
+    ports:
+      - "0.0.0.0:${ECHARTS_PORT}:80" 
+    restart: unless-stopped
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "echarts"
+
+networks:
+   default:
+      name: transpara
+
+
