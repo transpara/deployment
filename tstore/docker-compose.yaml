@@ -73,6 +73,7 @@ services:
       - USE_REDIS_FOR_SNAPSHOTS=${USE_REDIS_FOR_SNAPSHOTS}
       - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}  
       - VERSION=${TSTORE_API_TAG}    
+      - LOG_LEVEL=${TSTORE_API_LOG_LEVEL}
     container_name: ${TSTORE_NAME}_api
     hostname: ${TSTORE_NAME}_api
     ports:
