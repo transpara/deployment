@@ -71,7 +71,8 @@ services:
       - REDIS_PORT=${TREDIS_PORT}  
       - REDIS_DB=${TREDIS_SNAPSHOT_DB}  
       - USE_REDIS_FOR_SNAPSHOTS=${USE_REDIS_FOR_SNAPSHOTS}
-      - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}      
+      - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}  
+      - VERSION=${TSTORE_TAG}    
     container_name: ${TSTORE_NAME}_api
     hostname: ${TSTORE_NAME}_api
     ports:
