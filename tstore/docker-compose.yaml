@@ -54,7 +54,7 @@ services:
 
   tstore-api:
     labels:
-      - "Version=${TSTORE_TAG}"
+      - "Version=${TSTORE_API_TAG}"
       - "ID=${TSTORE_ID}"
     image: "transpara/tstore-api:${TSTORE_API_TAG}"
     depends_on: 
@@ -66,13 +66,13 @@ services:
       - PROMSCALE_OTLP_URI=http://${MONITORING_PROMSCALE_HOST}:9202
       - EXPOSE_METRICS=${TSTORE_API_EXPOSE_METRICS}
       - EXPORT_TRACES=${TSTORE_API_EXPORT_TRACES}
-      - TSTORE_NAME=${TSTORE_ID}
+      - TSTORE_ID=${TSTORE_ID}
       - REDIS_HOST=${TSYSTEM_NAME}_tcache
       - REDIS_PORT=${TREDIS_PORT}  
       - REDIS_DB=${TREDIS_SNAPSHOT_DB}  
       - USE_REDIS_FOR_SNAPSHOTS=${USE_REDIS_FOR_SNAPSHOTS}
       - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}  
-      - VERSION=${TSTORE_TAG}    
+      - VERSION=${TSTORE_API_TAG}    
     container_name: ${TSTORE_NAME}_api
     hostname: ${TSTORE_NAME}_api
     ports:
