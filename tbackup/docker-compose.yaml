@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  tbackup:
+    labels:
+      - "Version=${TBACKUP_TAG}"
+      - "ID=${TBACKUP_ID}"
+    image: "transpara/tbackup:${TBACKUP_TAG}"
+    volumes:
+      - tbackup_data:/app/data
+    environment:
+      - KEEPDAYS=${KEEPDAYS}
+    container_name: tbackup
+    hostname: tbackup
+    ports:
+      - "0.0.0.0:${TBACKUP_PORT}:80"
+    restart: unless-stopped
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "tbackup"
+
+networks:
+   default:
+      name: transpara
+
+volumes:
+   tbackup_data:
+      name: tbackup_data_${TBACKUP_ID}
