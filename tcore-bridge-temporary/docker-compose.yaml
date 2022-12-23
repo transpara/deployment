@@ -1,0 +1,65 @@
+version: "3.9"
+   
+services:
+  tgraph-database:
+    image: "transpara/tgraph-database:0.4.0"
+    volumes:
+      - tcore_data:/var/lib/memgraph
+    container_name: ${TCORE_NAME}_tgraph_db
+    ports:
+      - "0.0.0.0:${TGRAPH_PORT}:7687"
+      - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
+    restart: unless-stopped
+  
+  tcore-read:
+    image: "transpara/tcore-read:${IMAGE_TAG}"
+    build:
+      dockerfile: Dockerfile
+    container_name: ${TCORE_NAME}_tcore_read
+    hostname: ${TCORE_NAME}_tcore_read
+    ports:
+      - "0.0.0.0:${TCORE_READ_PORT}:80"
+    restart: unless-stopped
+    environment:
+      - TCORE_NAME=${TCORE_ID}
+      - TGRAPH_HOST=${TGRAPH_HOST}
+      - TGRAPH_PORT=${TGRAPH_PORT}
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_read"  
+
+  tcore-write:
+    image: "transpara/tcore-write:${IMAGE_TAG}"
+    build:
+      dockerfile: Dockerfile
+    container_name: ${TCORE_NAME}_tcore_write
+    hostname: ${TCORE_NAME}_tcore_write
+    ports:
+      - "0.0.0.0:${TCORE_WRITE_PORT}:80"
+    restart: unless-stopped
+    environment:
+      - TCORE_NAME=${TCORE_ID}
+      - TGRAPH_HOST=${TGRAPH_HOST}
+      - TGRAPH_PORT=${TGRAPH_PORT}
+      - MAX_WORKERS=1 #one worker eff because this container is stateful
+      - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_write"     
+
+
+volumes:
+  tcore_data: 
+      name: tcore_data_${TCORE_ID}
+
+networks:
+   default:
+      name: transpara
+      external: true
+
