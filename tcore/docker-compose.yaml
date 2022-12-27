@@ -26,6 +26,7 @@ services:
     environment:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
+      - IMAGE_TAG=${IMAGE_TAG}
     logging: 
       driver: syslog
       options:
@@ -46,6 +47,7 @@ services:
     environment:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
+      - IMAGE_TAG=${IMAGE_TAG}
       - MAX_WORKERS=1 #one worker eff because this container is stateful
       - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
     logging: 
