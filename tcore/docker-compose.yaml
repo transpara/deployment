@@ -10,7 +10,6 @@ services:
       - tcore_data:/var/lib/memgraph
     container_name: ${TCORE_NAME}_tcore_db
     ports:
-      - "0.0.0.0:${TGRAPH_PORT}:7687"
       - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
     restart: unless-stopped
   
@@ -27,7 +26,6 @@ services:
     environment:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
-      - TGRAPH_PORT=${TGRAPH_PORT}
     logging: 
       driver: syslog
       options:
@@ -48,7 +46,6 @@ services:
     environment:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
-      - TGRAPH_PORT=${TGRAPH_PORT}
       - MAX_WORKERS=1 #one worker eff because this container is stateful
       - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
     logging: 
