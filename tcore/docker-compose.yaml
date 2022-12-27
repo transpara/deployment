@@ -1,36 +1,74 @@
 version: "3.9"
    
 services:
-  tcore:
+  tgraph-database:
     labels:
       - "Version=${IMAGE_TAG}"
       - "ID=${TCORE_ID}"
-    image: "transpara/tcore-bridge:${IMAGE_TAG}"
-    container_name: ${TCORE_NAME}_tcore
-    hostname: ${TCORE_NAME}_tcore
+    image: "transpara/tgraph-database:{IMAGE_TAG}"
+    volumes:
+      - tcore_data:/var/lib/memgraph
+    container_name: ${TCORE_NAME}_tcore_db
     ports:
-      - "0.0.0.0:${TCORE_READ_PORT}:10002"
-      - "0.0.0.0:${TCORE_WRITE_PORT}:10003"
-      #- "${TGRAPH_BRIDGE_BOLT_PORT}:7687"
+      - "0.0.0.0:${TGRAPH_PORT}:7687"
       - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
+    restart: unless-stopped
+  
+  tcore-read:
+    labels:
+      - "Version=${IMAGE_TAG}"
+      - "ID=${TCORE_ID}"
+    image: "transpara/tcore-read:${IMAGE_TAG}"
+    build:
+      dockerfile: Dockerfile
+    container_name: ${TCORE_NAME}_tcore_read_api
+    hostname: ${TCORE_NAME}_tcore_read_api
+    ports:
+      - "0.0.0.0:${TCORE_READ_PORT}:80"
     restart: unless-stopped
     environment:
       - TCORE_NAME=${TCORE_ID}
-    volumes:
-      - tcore_data:/var/lib/memgraph
+      - TGRAPH_HOST=${TGRAPH_HOST}
+      - TGRAPH_PORT=${TGRAPH_PORT}
     logging: 
       driver: syslog
       options:
-        #max-size: "40k"
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore"  
-   
+        tag: "node-${TCORE_NAME}_tcore_read_api"  
+
+  tcore-write:
+    labels:
+      - "Version=${IMAGE_TAG}"
+      - "ID=${TCORE_ID}"
+    image: "transpara/tcore-write:${IMAGE_TAG}"
+    build:
+      dockerfile: Dockerfile
+    container_name: ${TCORE_NAME}_tcore_write_api
+    hostname: ${TCORE_NAME}_tcore_write_api
+    ports:
+      - "0.0.0.0:${TCORE_WRITE_PORT}:80"
+    restart: unless-stopped
+    environment:
+      - TCORE_NAME=${TCORE_ID}
+      - TGRAPH_HOST=${TGRAPH_HOST}
+      - TGRAPH_PORT=${TGRAPH_PORT}
+      - MAX_WORKERS=1 #one worker eff because this container is stateful
+      - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_write_api"     
+
+
+volumes:
+  tcore_data: 
+      name: tcore_data_${TCORE_ID}
+
 networks:
    default:
       name: transpara
       external: true
 
-volumes:
-   tcore_data: 
-      name: tcore_data_${TCORE_ID}
