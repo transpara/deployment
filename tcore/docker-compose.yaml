@@ -5,7 +5,7 @@ services:
     labels:
       - "Version=${IMAGE_TAG}"
       - "ID=${TCORE_ID}"
-    image: "transpara/tgraph-database:{IMAGE_TAG}"
+    image: "transpara/tgraph-database:${IMAGE_TAG}"
     volumes:
       - tcore_data:/var/lib/memgraph
     container_name: ${TCORE_NAME}_tcore_db
@@ -19,8 +19,6 @@ services:
       - "Version=${IMAGE_TAG}"
       - "ID=${TCORE_ID}"
     image: "transpara/tcore-read:${IMAGE_TAG}"
-    build:
-      dockerfile: Dockerfile
     container_name: ${TCORE_NAME}_tcore_read_api
     hostname: ${TCORE_NAME}_tcore_read_api
     ports:
@@ -42,8 +40,6 @@ services:
       - "Version=${IMAGE_TAG}"
       - "ID=${TCORE_ID}"
     image: "transpara/tcore-write:${IMAGE_TAG}"
-    build:
-      dockerfile: Dockerfile
     container_name: ${TCORE_NAME}_tcore_write_api
     hostname: ${TCORE_NAME}_tcore_write_api
     ports:
