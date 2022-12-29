@@ -48,6 +48,9 @@ services:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
       - IMAGE_TAG=${IMAGE_TAG}
+      - ADD_BATCH_SIZE=${ADD_BATCH_SIZE}
+      - EDIT_BATCH_SIZE=${EDIT_BATCH_SIZE}
+      - DELETE_BATCH_SIZE=${DELETE_BATCH_SIZE}
       - MAX_WORKERS=1 #one worker eff because this container is stateful
       - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
     logging: 
