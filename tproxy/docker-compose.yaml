@@ -13,6 +13,7 @@ services:
       - TSYSTEM_PORT=${TSYSTEM_PORT}
       - POLL_INTERVAL_SECONDS=${POLL_INTERVAL_SECONDS}
       - IMAGE_TAG = ${IMAGE_TAG}
+      - TEST_TIMEOUT = ${TEST_TIMEOUT}
 networks:
   default:
     name: transpara
