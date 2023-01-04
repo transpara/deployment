@@ -2,6 +2,9 @@ version: "3.9"
 
 services:
   tproxy:
+    labels:
+      - "Version=${IMAGE_TAG}"
+      - "ID=${TPROXY_ID}"
     image: "transpara/tproxy:${IMAGE_TAG}"
     container_name: tproxy
     hostname: tproxy
