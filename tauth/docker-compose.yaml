@@ -13,3 +13,7 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=BorgGoesLive!22
       - KEYCLOAK_IMPORT=/opt/keycloak/data/import/transpara-realm.json
     command: start-dev --import-realm
+
+networks:
+   default:
+      name: transpara
