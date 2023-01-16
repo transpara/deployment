@@ -1,0 +1,15 @@
+version: "3.9"
+   
+services:
+  tauth:
+    image: transpara/tauth:develop
+    container_name: tsystem_tauth
+    ports:
+      - '0.0.0.0:${TAUTH_PORT}:8080'
+    #volumes:
+      #- tauth_data:/
+    environment:
+      - KEYCLOAK_ADMIN=tauthdev
+      - KEYCLOAK_ADMIN_PASSWORD=BorgGoesLive!22
+      - KEYCLOAK_IMPORT=/opt/keycloak/data/import/transpara-realm.json
+    command: start-dev --import-realm
