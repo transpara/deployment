@@ -110,6 +110,7 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://${TCORE_HOST}:${TCORE_PORT}/api/v1
       - NEXT_PUBLIC_SOCKET_URL=http://${TCORE_HOST}:${TCORE_PORT}
+      - NEXT_PUBLIC_BASEPATH=/VisualKPI
 
 networks:
    default:
