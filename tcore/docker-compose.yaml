@@ -11,6 +11,7 @@ services:
     container_name: ${TCORE_NAME}_tcore_db
     ports:
       - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
+      - "0.0.0.0:${TCORE_BOLT_PORT}:7687"
     restart: unless-stopped
   
   tcore-read:
