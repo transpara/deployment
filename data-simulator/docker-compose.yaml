@@ -2,7 +2,7 @@ version: '3.9'
 services:
   tstore-simulator:
     image: transpara/tstore-simulator:develop
-    build: ./tstore_simulator
+    build: ./tstore-simulator
     container_name: tstore_simulator
     environment:
       - TSTORE_HOST=tstore_api
