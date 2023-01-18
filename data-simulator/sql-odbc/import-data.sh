@@ -1,4 +1,5 @@
-sleep 90s
+#!/bin/bash
+sleep 120s
 #run the setup script to create the DB and the schema in the DB
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Convoy#8" -i /scripts/common/01.Database.sql
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Convoy#8" -i /scripts/common/02.Data.sql
