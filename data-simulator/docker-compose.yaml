@@ -4,10 +4,10 @@ services:
     image: transpara/tstore-simulator:develop
     build: ./tstore_simulator
     container_name: tstore_simulator
-  environment:
-    -TSTORE_HOST=tstore_api
-    -TSTORE_PORT=80
-  restart: unless-stopped
+    environment:
+      - TSTORE_HOST=tstore_api
+      - TSTORE_PORT=80
+    restart: unless-stopped
 
   sql-simulator: 
     image: "transpara/sql-simulator:develop"
