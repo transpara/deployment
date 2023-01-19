@@ -1,3 +1,7 @@
+version: "3.9"
+   
+services:
+
   tgraph-database:
     labels:
       - "Version=${IMAGE_TAG}"
@@ -10,11 +14,10 @@
       - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
     restart: unless-stopped
 
-
-
   tcore-api:
     image: "transpara/tcore-api:develop"
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687
       - REDIS_HOST=${TCACHE_HOST}
@@ -41,6 +44,7 @@
     container_name: ${TCORE_NAME}_tcore_beat
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687    
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
@@ -64,6 +68,7 @@
     hostname: ${TCORE_NAME}_tcore_worker
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687    
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
@@ -89,6 +94,7 @@
       - "${FLOWER_PORT}:5555"    
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
       - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1
     logging: 
