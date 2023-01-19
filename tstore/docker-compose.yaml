@@ -30,9 +30,9 @@ services:
   
   tscale:
     labels:
-      - "Version=${TSTORE_TAG}"
+      - "Version=${TSCALE_TAG}"
       - "ID=${TSTORE_ID}"
-    image: "transpara/tscale:${TSTORE_TAG}"
+    image: "transpara/tscale:${TSCALE_TAG}"
     depends_on: 
       - tstore
     ports:
