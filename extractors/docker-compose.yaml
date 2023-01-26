@@ -1,0 +1,26 @@
+version: "3.9"
+   
+services:
+  todbc:
+    image: "transpara/todbc:${TODBC_TAG}"
+    volumes:
+      - ${PWD}/data:/app/data
+    environment:
+      - tstore_api_url=${TSTORE_API_URL}
+      - todbc_api_port=${TODBC_API_PORT}
+    container_name: ${NAME}
+    ports:
+      - "0.0.0.0:${TODBC_API_PORT}:${TODBC_API_PORT}" 
+    hostname: ${NAME}
+    restart: unless-stopped
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: ODBC_${NAME}
+
+networks:
+   default:
+      name: transpara
+
