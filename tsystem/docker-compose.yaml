@@ -28,9 +28,9 @@ services:
 
   syslog:
     labels:
-      - "Version=${TSYSTEM_TAG}"
+      - "Version=${TLOG_TAG}"
       - "ID=${TSYSTEM_ID}"
-    image: "transpara/tlog:${TSYSTEM_TAG}"
+    image: "transpara/tlog:${TLOG_TAG}"
     container_name: ${TSYSTEM_NAME}_tlog
     hostname: ${TSYSTEM_NAME}_tlog
     restart: unless-stopped
@@ -43,9 +43,9 @@ services:
 
   tredis:
     labels:
-      - "Version=${TSYSTEM_TAG}"
+      - "Version=${TCACHE_TAG}"
       - "ID=${TSYSTEM_ID}"
-    image: "transpara/tcache:${TSYSTEM_TAG}"
+    image: "transpara/tcache:${TCACHE_TAG}"
     volumes:
       - tredis_data:/data  
     container_name: ${TSYSTEM_NAME}_tcache
