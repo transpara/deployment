@@ -17,6 +17,7 @@ services:
   tcore-api:
     image: "transpara/tcore-api:develop"
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687
       - REDIS_HOST=${TCACHE_HOST}
@@ -26,8 +27,7 @@ services:
       - TAUTH_HOST=${TAUTH_HOST}
       - TAUTH_PORT=8080
       - TCORE_ID=${TCORE_ID}
-    container_name: ${TCORE_NAME}_tcore-api
-    hostname: ${TCORE_NAME}_tcore-api
+    container_name: ${TCORE_NAME}_tcore_api
     ports:
       - "0.0.0.0:${TCORE_PORT}:80"
     restart: unless-stopped
@@ -41,10 +41,10 @@ services:
   tcore-beat:
     image: "transpara/tcore-api:develop"  
     command: /app/run-celerybeat.sh
-    container_name: ${TCORE_NAME}_tcore-beat
-    hostname: ${TCORE_NAME}_tcore-beat
+    container_name: ${TCORE_NAME}_tcore_beat
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687    
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
@@ -59,15 +59,16 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore-beat"      
+        tag: "node-${TCORE_NAME}_tcore_beat"      
 
   tcore-worker:
     image: "transpara/tcore-api:develop"  
     command: /app/run-celeryworker.sh
-    container_name: ${TCORE_NAME}_tcore-worker
-    hostname: ${TCORE_NAME}_tcore-worker
+    container_name: ${TCORE_NAME}_tcore_worker
+    hostname: ${TCORE_NAME}_tcore_worker
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - TGRAPH_HOST=${TCORE_NAME}_tcore_db
       - TGRAPH_PORT=7687    
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
@@ -82,17 +83,18 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore-worker"     
+        tag: "node-${TCORE_NAME}_tcore_worker"     
 
   tcore-flower:
     image: "transpara/tcore-api:develop"  
     command: /app/run-flower.sh
-    container_name: ${TCORE_NAME}_tcore-flower
-    hostname: ${TCORE_NAME}_tcore-flower
+    container_name: ${TCORE_NAME}_tcore_flower
+    hostname: ${TCORE_NAME}_tcore_flower
     ports:
       - "${FLOWER_PORT}:5555"    
     restart: unless-stopped     
     environment:
+      - TCORE_NAME=${TCORE_NAME}
       - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
       - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1
     logging: 
@@ -100,11 +102,11 @@ services:
       options:
         syslog-address: "udp://${SYSLOG_HOST}:514"
         syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore-flower"    
+        tag: "node-${TCORE_NAME}_tcore_flower"    
 
   tcore-ui:
     image: transpara/tcore-ui:develop
-    container_name: ${TCORE_NAME}_tcore-ui
+    container_name: ${TCORE_NAME}_tcore_ui
     ports:
       - '10101:3000'
     environment:
@@ -119,5 +121,3 @@ networks:
 volumes:
   tcore_data: 
       name: tcore_data_${TCORE_ID}
-  tauth_data: 
-      name: tauth_data
