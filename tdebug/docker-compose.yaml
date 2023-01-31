@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
     ports:
       - '0.0.0.0:${REDIS_UI_PORT}:7843'
+    volumes:
+      - redis_ui_settings:/settings
 
   grafana:
     image: grafana/grafana-oss
@@ -38,3 +40,7 @@ services:
 networks:
    default:
       name: transpara
+
+volumes:
+   redis_ui_settings:
+      name: tdebug_redis_ui_settings
