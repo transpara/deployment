@@ -107,6 +107,7 @@ services:
   tcore-ui:
     image: transpara/tcore-ui:develop
     container_name: ${TCORE_NAME}_tcore_ui
+    restart: unless-stopped
     ports:
       - '10101:3000'
     environment:
