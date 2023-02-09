@@ -12,7 +12,8 @@ services:
     ports:
       - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
     restart: unless-stopped
-  
+    command: "/usr/bin/supervisord"
+
   tcore-read:
     labels:
       - "Version=${IMAGE_TAG}"
