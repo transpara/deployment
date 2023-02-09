@@ -5,7 +5,7 @@ services:
     labels:
       - "Version=${IMAGE_TAG}"
       - "ID=${TCORE_ID}"
-    image: "transpara/tgraph-database:${IMAGE_TAG}"
+    image: "memgraph/memgraph-platform:2.3.1"
     volumes:
       - tcore_data:/var/lib/memgraph
     container_name: ${TCORE_NAME}_tcore_db
