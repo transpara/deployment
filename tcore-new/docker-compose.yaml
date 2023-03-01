@@ -29,6 +29,8 @@ services:
       - TAUTH_PORT=8080
       - TCORE_ID=${TCORE_ID}
       - OTEL_EXPORTER_HOST=tstore_tscale
+      - TIMEOUT=600 #worker timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
+
     container_name: ${TCORE_NAME}_tcore_api
     ports:
       - "0.0.0.0:${TCORE_PORT}:80"
