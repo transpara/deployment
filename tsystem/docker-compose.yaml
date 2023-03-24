@@ -59,6 +59,25 @@ services:
         syslog-address: "udp://localhost:514"
         syslog-format: "rfc3164"
         tag: "node-${TSYSTEM_NAME}_redis"      
+  
+  tsystem_ui:
+    labels:
+      - "Version=${TSYSTEM_UI_TAG}"
+      - "ID=${TSYSTEM_ID}"
+    image: "transpara/tsystem-ui:${TSYSTEM_UI_TAG}"
+    container_name: ${TSYSTEM_NAME}_ui
+    hostname: ${TSYSTEM_NAME}_ui
+    environment:
+      - TSYSTEM_HOST=${CONTAINER_HOST}
+    ports:
+      - "0.0.0.0:${TSYSTEM_UI_PORT}:80"
+    restart: unless-stopped
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TSYSTEM_NAME}_api"
 
 networks:
    default:
