@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  tstore-simulator:
+    image: transpara/tstore-simulator:develop
+    build: ./tstore-simulator
+    container_name: tstore_simulator
+    environment:
+      - TSTORE_HOST=tstore_api
+      - TSTORE_PORT=80
+    restart: unless-stopped
+
+  sql-simulator: 
+    image: "transpara/sql-simulator:develop"
+    container_name: sql_simulator
+    build: ./sql-odbc
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Convoy#8
+      - MSSQL_PID=Express
+
+
+networks:
+   default:
+      name: transpara
+
