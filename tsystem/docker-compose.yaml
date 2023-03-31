@@ -68,7 +68,7 @@ services:
     container_name: ${TSYSTEM_NAME}_ui
     hostname: ${TSYSTEM_NAME}_ui
     environment:
-      - TSYSTEM_HOST=${CONTAINER_HOST}
+      - REACT_APP_TSYSTEM_HOST=${CONTAINER_HOST}
     ports:
       - "0.0.0.0:${TSYSTEM_UI_PORT}:80"
     restart: unless-stopped
