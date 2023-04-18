@@ -3,8 +3,6 @@ version: "3.9"
 services:
   pjm:
     image: "transpara/pjm:${PJM_TAG}"
-    volumes:
-      - ${PWD}/data:/app/data
     environment:
       - tstore_api_url=${TSTORE_API_URL}
       - pjm_api_port=${PJM_API_PORT}
