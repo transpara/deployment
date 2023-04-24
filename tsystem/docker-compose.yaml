@@ -69,6 +69,7 @@ services:
     hostname: ${TSYSTEM_NAME}_ui
     environment:
       - NEXT_PUBLIC_TSYSTEM_API_URL=http://${CONTAINER_HOST}:${TSYSTEM_PORT}${TSYSTEM_API_ENDPOINT}
+      - NEXT_PUBLIC_CONTAINER_HOST=${CONTAINER_HOST}
     ports:
       - "0.0.0.0:${TSYSTEM_UI_PORT}:3000"
     restart: unless-stopped
