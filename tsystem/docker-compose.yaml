@@ -8,7 +8,6 @@ services:
     image: "transpara/tsystem:${TSYSTEM_TAG}"
     volumes:
       - tsystem_data:/app/database
-      - /home/transpara:/home/transpara
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
     environment:
