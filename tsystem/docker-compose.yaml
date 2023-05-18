@@ -20,12 +20,6 @@ services:
     ports:
       - "0.0.0.0:${TSYSTEM_PORT}:80"
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://localhost:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSYSTEM_NAME}_api"
 
   tredis:
     labels:
@@ -39,12 +33,6 @@ services:
     ports:
       - "0.0.0.0:${REDIS_PORT}:6379"
     restart: unless-stopped      
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://localhost:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSYSTEM_NAME}_redis"      
   
   tsystem_ui:
     labels:
@@ -59,12 +47,6 @@ services:
     ports:
       - "0.0.0.0:${TSYSTEM_UI_PORT}:3000"
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://localhost:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSYSTEM_NAME}_api"
 
 networks:
    default:
@@ -73,8 +55,6 @@ networks:
 volumes:
   tsystem_data:
       name: tsystem_api_data_${TSYSTEM_ID}
-  syslog_data:
-      name: tsystem_syslog_data_${TSYSTEM_ID}
   tredis_data:
       name: tsystem_redis_data_${TSYSTEM_ID}
 
