@@ -27,21 +27,6 @@ services:
         syslog-format: "rfc3164"
         tag: "node-${TSYSTEM_NAME}_api"
 
-  syslog:
-    labels:
-      - "Version=${TLOG_TAG}"
-      - "ID=${TSYSTEM_ID}"
-    image: "transpara/tlog:${TLOG_TAG}"
-    container_name: ${TSYSTEM_NAME}_tlog
-    hostname: ${TSYSTEM_NAME}_tlog
-    restart: unless-stopped
-    ports:
-      - "0.0.0.0:514:514/udp"
-      - "0.0.0.0:601:601"
-    volumes:
-      - syslog_data:/var/log
-    command: "--no-caps"
-
   tredis:
     labels:
       - "Version=${TCACHE_TAG}"
