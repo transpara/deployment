@@ -13,6 +13,7 @@ services:
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
     environment:
+      - EXTERNAL_PORT=${TSYSTEM_PORT}
       - TSYSTEM_TAG=${TSYSTEM_TAG}
       - CONTAINER_HOST=${CONTAINER_HOST}
       - USERNAME=${USERNAME}
