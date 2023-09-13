@@ -7,10 +7,12 @@ services:
       - "ID=${TSYSTEM_ID}"
     image: "transpara/tsystem:${TSYSTEM_TAG}"
     volumes:
-      - tsystem_api_data:/app/database
+      - tsystem_data:/app/database
+      - /home/transpara:/home/transpara
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
     environment:
+      - EXTERNAL_PORT=${TSYSTEM_PORT}
       - TSYSTEM_TAG=${TSYSTEM_TAG}
       - CONTAINER_HOST=${CONTAINER_HOST}
       - USERNAME=${USERNAME}
@@ -21,9 +23,9 @@ services:
 
   tcache:
     labels:
-      - "Version=${TSYSTEM_TAG}"
+      - "Version=${TCACHE_TAG}"
       - "ID=${TSYSTEM_ID}"
-    image: "transpara/tcache:${TSYSTEM_TAG}"
+    image: "transpara/tcache:${TCACHE_TAG}"
     volumes:
       - tsystem_cache_data:/data  
     container_name: ${TSYSTEM_NAME}_cache
@@ -31,6 +33,20 @@ services:
     ports:
       - "0.0.0.0:${REDIS_PORT}:6379"
     restart: unless-stopped      
+  
+  tsystem_ui:
+    labels:
+      - "Version=${TSYSTEM_UI_TAG}"
+      - "ID=${TSYSTEM_ID}"
+    image: "transpara/tsystem-ui:${TSYSTEM_UI_TAG}"
+    container_name: ${TSYSTEM_NAME}_ui
+    hostname: ${TSYSTEM_NAME}_ui
+    environment:
+      - NEXT_PUBLIC_TSYSTEM_API_URL=http://${CONTAINER_HOST}:${TSYSTEM_PORT}${TSYSTEM_API_ENDPOINT}
+      - NEXT_PUBLIC_CONTAINER_HOST=${CONTAINER_HOST}
+    ports:
+      - "0.0.0.0:${TSYSTEM_UI_PORT}:3000"
+    restart: unless-stopped
 
 networks:
    default:

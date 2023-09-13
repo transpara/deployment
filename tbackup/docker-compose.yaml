@@ -12,7 +12,7 @@ services:
       - tbackup_config:/config
     environment:
       - SQLALCHEMY_JOB_STORE_URL=sqlite:////config/pgbr_job_store.db
-      - DATABASE_IP=tstore_db
+      - DATABASE_IP=${DATABASE_IP}
       - REPO_PATH=/backup
       - CONFIG_PATH=/config
       - TBACKUP_TAG=${TBACKUP_TAG}

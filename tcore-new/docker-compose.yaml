@@ -1,0 +1,129 @@
+version: "3.9"
+   
+services:
+
+  tgraph-database:
+    labels:
+      - "Version=${IMAGE_TAG}"
+      - "ID=${TCORE_ID}"
+    image: "memgraph/memgraph-platform:2.3.1"
+    volumes:
+      - tcore_data:/var/lib/memgraph
+    container_name: ${TCORE_NAME}_tcore_db
+    ports:
+      - "0.0.0.0:${TCORE_GRAPH_UI_PORT}:3000"
+    restart: unless-stopped
+    command: "/usr/bin/supervisord"
+
+  tcore-api:
+    image: "transpara/tcore-api:develop"
+    environment:
+      - TCORE_NAME=${TCORE_NAME}
+      - TGRAPH_HOST=${TCORE_NAME}_tcore_db
+      - TGRAPH_PORT=7687
+      - REDIS_HOST=${TCACHE_HOST}
+      - REDIS_PORT=6379  
+      - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1 
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=8080
+      - TCORE_ID=${TCORE_ID}
+      - OTEL_EXPORTER_HOST=tstore_tscale
+      - TIMEOUT=600 #worker timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
+
+    container_name: ${TCORE_NAME}_tcore_api
+    ports:
+      - "0.0.0.0:${TCORE_PORT}:80"
+    restart: unless-stopped
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore-api"
+
+  tcore-beat:
+    image: "transpara/tcore-api:develop"  
+    command: /app/run-celerybeat.sh
+    container_name: ${TCORE_NAME}_tcore_beat
+    restart: unless-stopped     
+    environment:
+      - TCORE_NAME=${TCORE_NAME}
+      - TGRAPH_HOST=${TCORE_NAME}_tcore_db
+      - TGRAPH_PORT=7687    
+      - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1          
+      - REDIS_HOST=${TCACHE_HOST}
+      - REDIS_PORT=6379   
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=8080     
+      - TCORE_ID=${TCORE_ID}
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_beat"      
+
+  tcore-worker:
+    image: "transpara/tcore-api:develop"  
+    command: /app/run-celeryworker.sh
+    container_name: ${TCORE_NAME}_tcore_worker
+    hostname: ${TCORE_NAME}_tcore_worker
+    restart: unless-stopped     
+    environment:
+      - TCORE_NAME=${TCORE_NAME}
+      - TGRAPH_HOST=${TCORE_NAME}_tcore_db
+      - TGRAPH_PORT=7687    
+      - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1      
+      - REDIS_HOST=${TCACHE_HOST}
+      - REDIS_PORT=6379              
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=8080
+      - TCORE_ID=${TCORE_ID}
+      - OTEL_EXPORTER_HOST=tstore_tscale
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_worker"     
+
+  tcore-flower:
+    image: "transpara/tcore-api:develop"  
+    command: /app/run-flower.sh
+    container_name: ${TCORE_NAME}_tcore_flower
+    hostname: ${TCORE_NAME}_tcore_flower
+    ports:
+      - "${FLOWER_PORT}:5555"    
+    restart: unless-stopped     
+    environment:
+      - TCORE_NAME=${TCORE_NAME}
+      - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1
+    logging: 
+      driver: syslog
+      options:
+        syslog-address: "udp://${SYSLOG_HOST}:514"
+        syslog-format: "rfc3164"
+        tag: "node-${TCORE_NAME}_tcore_flower"    
+
+  tcore-ui:
+    image: transpara/tcore-ui:develop
+    container_name: ${TCORE_NAME}_tcore_ui
+    restart: unless-stopped
+    ports:
+      - '${TCORE_UI_PORT}:3000'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://${TCORE_HOST}:${TCORE_PORT}/api/v1
+      - NEXT_PUBLIC_SOCKET_URL=http://${TCORE_HOST}:${TCORE_PORT}
+      - NEXT_PUBLIC_BASEPATH=/${TCORE_UI_PATH}
+
+networks:
+   default:
+      name: transpara
+
+volumes:
+  tcore_data: 
+      name: tcore_data_${TCORE_ID}
