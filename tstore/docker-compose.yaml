@@ -2,7 +2,7 @@ version: "3.9"
    
 services:
 
-  tstore:
+  tstore-database:
     labels:
       - "Version=${TSTORE_TAG}"
       - "ID=${TSTORE_ID}"
@@ -21,70 +21,6 @@ services:
     ports:
       - "${TSTORE_PORT}:5432"
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_db"
-  
-  tscale:
-    labels:
-      - "Version=${TSCALE_TAG}"
-      - "ID=${TSTORE_ID}"
-    image: "transpara/tscale:${TSCALE_TAG}"
-    depends_on: 
-      - tstore
-    ports:
-      - "${PROMSCALE_API_PORT}:9201"
-      - "${MONITORING_PROMSCALE_PORT}:9202"      
-    container_name: ${TSTORE_NAME}_tscale
-    hostname: ${TSTORE_NAME}_tscale
-    restart: unless-stopped 
-    environment:
-      PROMSCALE_DB_CONNECT_RETRIES: 10
-      PROMSCALE_WEB_TELEMETRY_PATH: /metrics
-      PROMSCALE_DB_URI: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${TSTORE_NAME}_db:5432/${POSTGRES_DB}?sslmode=allow 
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_tscale"     
-
-  tstore-api:
-    labels:
-      - "Version=${TSTORE_API_TAG}"
-      - "ID=${TSTORE_ID}"
-    image: "transpara/tstore-api:${TSTORE_API_TAG}"
-    depends_on: 
-      - tstore
-      - tscale
-    environment:
-      - PROMSCALE_DB_URI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${TSTORE_NAME}_db:5432/${POSTGRES_DB}
-      - PROMSCALE_API_URI=http://${TSTORE_NAME}_tscale:9201/write
-      - PROMSCALE_OTLP_URI=http://${MONITORING_PROMSCALE_HOST}:9202
-      - EXPOSE_METRICS=${TSTORE_API_EXPOSE_METRICS}
-      - EXPORT_TRACES=${TSTORE_API_EXPORT_TRACES}
-      - TSTORE_ID=${TSTORE_ID}
-      - REDIS_HOST=${TSYSTEM_NAME}_tcache
-      - REDIS_PORT=${TREDIS_PORT}  
-      - REDIS_DB=${TREDIS_SNAPSHOT_DB}  
-      - USE_REDIS_FOR_SNAPSHOTS=${USE_REDIS_FOR_SNAPSHOTS}
-      - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}  
-      - VERSION=${TSTORE_API_TAG}    
-      - LOG_LEVEL=${TSTORE_API_LOG_LEVEL}
-    container_name: ${TSTORE_NAME}_api
-    hostname: ${TSTORE_NAME}_api
-    ports:
-      - "${TSTORE_API_PORT}:80"
-    restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_api"
 
 networks:
    default:

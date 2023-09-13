@@ -18,7 +18,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions  
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_tcache
+      - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TREDIS_PORT}         
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
@@ -28,12 +28,7 @@ services:
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=30 
       - VERSION=${TCALC_TAG}      
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_main"      
+   
 
   tcalc-worker:
     labels:
@@ -48,7 +43,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions      
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_tcache
+      - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TREDIS_PORT}          
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
@@ -57,12 +52,6 @@ services:
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=30     
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_worker"     
 
   code-server:
     labels:
@@ -80,12 +69,7 @@ services:
     ports:
       - ${VSCODE_PORT}:8443
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_vscode"     
+
 
 
 networks:

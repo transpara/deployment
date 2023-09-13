@@ -28,12 +28,6 @@ services:
       - TCORE_NAME=${TCORE_ID}
       - TGRAPH_HOST=${TGRAPH_HOST}
       - IMAGE_TAG=${IMAGE_TAG}
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore_read_api"  
 
   tcore-write:
     labels:
@@ -54,12 +48,6 @@ services:
       - DELETE_BATCH_SIZE=${DELETE_BATCH_SIZE}
       - MAX_WORKERS=1 #one worker eff because this container is stateful
       - TIMEOUT=600 #cache timeout, fail safe | gunicorn boots the process after the worker is unresponsive for 600s
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCORE_NAME}_tcore_write_api"     
 
 
 volumes:

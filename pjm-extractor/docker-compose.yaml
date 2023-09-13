@@ -13,12 +13,6 @@ services:
       - "0.0.0.0:${PJM_API_PORT}:${PJM_API_PORT}" 
     hostname: ${NAME}
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://localhost:514"
-        syslog-format: "rfc3164"
-        tag: PJM_${NAME}
 
 networks:
    default:
