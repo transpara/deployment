@@ -23,9 +23,9 @@ services:
 
   tcache:
     labels:
-      - "Version=${TCACHE_TAG}"
+      - "Version=${TSYSTEM_TAG}"
       - "ID=${TSYSTEM_ID}"
-    image: "transpara/tcache:${TCACHE_TAG}"
+    image: "transpara/tcache:${TSYSTEM_TAG}"
     volumes:
       - tsystem_cache_data:/data  
     container_name: ${TSYSTEM_NAME}_cache
@@ -36,9 +36,9 @@ services:
   
   tsystem_ui:
     labels:
-      - "Version=${TSYSTEM_UI_TAG}"
+      - "Version=${TSYSTEM_TAG}"
       - "ID=${TSYSTEM_ID}"
-    image: "transpara/tsystem-ui:${TSYSTEM_UI_TAG}"
+    image: "transpara/tsystem-ui:${TSYSTEM_TAG}"
     container_name: ${TSYSTEM_NAME}_ui
     hostname: ${TSYSTEM_NAME}_ui
     environment:
