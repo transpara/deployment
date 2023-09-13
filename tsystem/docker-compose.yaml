@@ -19,7 +19,7 @@ services:
       - "0.0.0.0:${TSYSTEM_PORT}:80"
     restart: unless-stopped
 
-  tredis:
+  tcache:
     labels:
       - "Version=${TSYSTEM_TAG}"
       - "ID=${TSYSTEM_ID}"
