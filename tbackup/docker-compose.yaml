@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     healthcheck:
       test: python3 /app/health.py > /proc/1/fd/1
-      interval: 120s
+      interval: 10s
       
 networks:
    default:
