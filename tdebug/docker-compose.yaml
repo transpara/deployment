@@ -40,6 +40,7 @@ services:
 networks:
    default:
       name: transpara
+      external: true
 
 volumes:
    redis_ui_settings:
