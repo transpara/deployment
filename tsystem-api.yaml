@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsystem-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tsystem-api
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: tsystem-api
+    spec:
+      containers:
+      - name: tsystem-api
+        image: transpara/tsystem:0.143.0
+        imagePullPolicy: Always
+        env:
+        - name: EXTERNAL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: TSYSTEM_PORT
+        - name: TSYSTEM_TAG
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: TSYSTEM_TAG
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: REDIS_PORT
+        - name: CONTAINER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: CONTAINER_HOST
+        - name: USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: USERNAME
+        - name: SSH_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: SSH_PORT
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: transpara-docker-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tsystem-api
+spec:
+  selector:
+    app: tsystem-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+  type: NodePort
+

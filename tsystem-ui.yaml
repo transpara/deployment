@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsystem-ui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tsystem-ui
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: tsystem-ui
+    spec:
+      containers:
+      - name: tsystem-ui
+        image: transpara/tsystem-ui:0.143.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_TSYSTEM_API_URL
+          value: http://172.26.95.72:30080/api/v1/
+        - name: NEXT_PUBLIC_CONTAINER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: CONTAINER_HOST
+      imagePullSecrets:
+        - name: transpara-docker-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tsystem-ui
+spec:
+  selector:
+    app: tsystem-ui
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30081
+  type: NodePort
+

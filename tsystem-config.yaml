@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tsystem-config
+data:
+  TSYSTEM_ID: "049f6ed7-e015-47cd-961c-8ae249cd412d"
+  TSYSTEM_NAME: "tsystem"
+  REDIS_PORT: "6379"
+  REDIS_HOST: "tsystem-cache"
+  TSYSTEM_PORT: "8000"
+  CONTAINER_HOST: "172.26.95.72"
+  USERNAME: "transpara"
+  SSH_PORT: "22"
+  TSYSTEM_UI_PORT: "3010"
+  TSYSTEM_TAG: "0.143.0"
+  TSYSTEM_API_ENDPOINT: "/api/v1/"
