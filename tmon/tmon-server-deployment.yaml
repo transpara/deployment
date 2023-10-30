@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tmon-server
+  name: tmon-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tmon-server
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tmon-server
+    spec:
+      containers:
+        - env:
+            - name: DB_SERVER_HOST
+              value: tmon_db
+            - name: ENABLE_TIMESCALEDB
+              value: "true"
+            - name: POSTGRES_DB
+            - name: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+            - name: SQLSERVER_ADDRESS
+            - name: SQLSERVER_NAME
+            - name: SQLSERVER_PASSWORD
+            - name: SQLSERVER_PORT
+            - name: SQLSEVER_USER_NAME
+            - name: TMONAPI_HOST
+            - name: TMONAPI_PASSWORD
+            - name: TMONAPI_PORT
+            - name: TMONAPI_UNAME
+            - name: ZBX_HOSTNAME
+              value: tmon_server
+            - name: ZBX_METADATA
+          image: 'transpara/tmon-server:'
+          name: tmon-server
+          ports:
+            - containerPort: 10051
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

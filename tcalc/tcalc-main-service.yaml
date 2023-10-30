@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    ID: ""
+    Module: Main
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tcalc-main
+  name: tcalc-main
+spec:
+  ports:
+    - name: "5555"
+      port: 5555
+      targetPort: 5555
+    - name: "10003"
+      port: 10003
+      targetPort: 10003
+  selector:
+    io.kompose.service: tcalc-main
+status:
+  loadBalancer: {}

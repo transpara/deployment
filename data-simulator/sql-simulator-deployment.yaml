@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sql-simulator
+  name: sql-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sql-simulator
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: sql-simulator
+    spec:
+      containers:
+        - env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_PID
+              value: Express
+            - name: SA_PASSWORD
+              value: Convoy#8
+          image: transpara/sql-simulator:develop
+          name: sql-simulator
+          ports:
+            - containerPort: 1433
+              hostPort: 1433
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

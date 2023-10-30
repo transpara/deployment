@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tmon-agent
+  name: tmon-agent
+spec:
+  ports:
+    - name: "10050"
+      port: 10050
+      targetPort: 10050
+  selector:
+    io.kompose.service: tmon-agent
+status:
+  loadBalancer: {}

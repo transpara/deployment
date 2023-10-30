@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Module: Worker
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tcalc-worker
+  name: tcalc-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tcalc-worker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Module: Worker
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tcalc-worker
+    spec:
+      containers:
+        - args:
+            - /app/run-celeryworker.sh
+          env:
+            - name: CACHE_CALCULATIONS_SEC
+              value: "30"
+            - name: CONFIG_DB_URL
+              value: postgresql://:@_db:5432/
+            - name: REDIS_CELERY_BROKER_DB
+              value: "5"
+            - name: REDIS_CELERY_RESULT_DB
+              value: "6"
+            - name: REDIS_HOST
+              value: _cache
+            - name: REDIS_PORT
+            - name: REDIS_SNAPSHOT_DB
+              value: "7"
+            - name: TSTORE_API_URL
+              value: http://_api:80/api/v1
+            - name: TSYSTEM_API_URL
+              value: http://_api:80/api/v1
+          image: 'transpara/tcalc:'
+          name: -worker
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/app/extensions
+              name: tcalc-modules
+      hostname: _worker
+      restartPolicy: Always
+      volumes:
+        - name: tcalc-modules
+          persistentVolumeClaim:
+            claimName: tcalc-modules
+status: {}

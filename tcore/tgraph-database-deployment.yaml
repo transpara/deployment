@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tgraph-database
+  name: tgraph-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tgraph-database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tgraph-database
+    spec:
+      containers:
+        - args:
+            - /usr/bin/supervisord
+          image: memgraph/memgraph-platform:2.3.1
+          name: -tcore-db
+          ports:
+            - containerPort: 3000
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/memgraph
+              name: tcore-data
+      restartPolicy: Always
+      volumes:
+        - name: tcore-data
+          persistentVolumeClaim:
+            claimName: tcore-data
+status: {}

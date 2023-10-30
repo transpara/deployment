@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tstore-simulator
+  name: tstore-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tstore-simulator
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tstore-simulator
+    spec:
+      containers:
+        - env:
+            - name: TSTORE_HOST
+              value: tstore_api
+            - name: TSTORE_PORT
+              value: "80"
+          image: transpara/tstore-simulator:develop
+          name: tstore-simulator
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tmon-agent
+  name: tmon-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tmon-agent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tmon-agent
+    spec:
+      containers:
+        - env:
+            - name: ZBX_HOSTNAMEITEM
+              value: system.run[cat /etc/hostname]
+            - name: ZBX_METADATA
+            - name: ZBX_SERVER_HOST
+          image: 'transpara/tmon-agent:'
+          name: tmon-agent
+          ports:
+            - containerPort: 10050
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: tmon-agent-claim0
+              readOnly: true
+            - mountPath: /etc/hostname
+              name: tmon-agent-claim1
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: tmon-agent-claim0
+          persistentVolumeClaim:
+            claimName: tmon-agent-claim0
+            readOnly: true
+        - name: tmon-agent-claim1
+          persistentVolumeClaim:
+            claimName: tmon-agent-claim1
+            readOnly: true
+status: {}

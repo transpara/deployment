@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tcache
+  name: tcache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tcache
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tcache
+    spec:
+      containers:
+        - image: 'transpara/tcache:'
+          name: -cache
+          ports:
+            - containerPort: 6379
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: tsystem-cache-data
+      hostname: _cache
+      restartPolicy: Always
+      volumes:
+        - name: tsystem-cache-data
+          persistentVolumeClaim:
+            claimName: tsystem-cache-data
+status: {}

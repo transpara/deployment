@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis-ui
+  name: redis-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis-ui
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: redis-ui
+    spec:
+      containers:
+        - image: patrikx3/p3x-redis-ui
+          name: tdebug-redis-ui
+          ports:
+            - containerPort: 7843
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /settings
+              name: redis-ui-settings
+      restartPolicy: Always
+      volumes:
+        - name: redis-ui-settings
+          persistentVolumeClaim:
+            claimName: redis-ui-settings
+status: {}

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tauth
+  name: tauth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tauth
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tauth
+    spec:
+      containers:
+        - args:
+            - start-dev
+            - --import-realm
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: tauthdev
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: BorgGoesLive!22
+            - name: KEYCLOAK_IMPORT
+              value: /opt/keycloak/data/import/transpara-realm.json
+          image: transpara/tauth:develop
+          name: tsystem-tauth
+          ports:
+            - containerPort: 8080
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

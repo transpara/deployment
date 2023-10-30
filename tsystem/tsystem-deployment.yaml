@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tsystem
+  name: tsystem
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tsystem
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tsystem
+    spec:
+      containers:
+        - env:
+            - name: CONTAINER_HOST
+            - name: EXTERNAL_PORT
+            - name: REDIS_HOST
+            - name: REDIS_PORT
+            - name: SSH_PORT
+            - name: TSYSTEM_TAG
+            - name: USERNAME
+          image: 'transpara/tsystem:'
+          name: -api
+          ports:
+            - containerPort: 80
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: tsystem-claim0
+            - mountPath: /app/database
+              name: tsystem-api-data
+            - mountPath: /home/transpara
+              name: tsystem-claim2
+      hostname: _api
+      restartPolicy: Always
+      volumes:
+        - name: tsystem-claim0
+          persistentVolumeClaim:
+            claimName: tsystem-claim0
+        - name: tsystem-api-data
+          persistentVolumeClaim:
+            claimName: tsystem-api-data
+        - name: tsystem-claim2
+          persistentVolumeClaim:
+            claimName: tsystem-claim2
+status: {}

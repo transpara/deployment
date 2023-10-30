@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tstore-interface
+  name: tstore-interface
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tstore-interface
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tstore-interface
+    spec:
+      containers:
+        - env:
+            - name: EXPOSE_METRICS
+            - name: LOG_LEVEL
+            - name: TCACHE_CONSIDER_STALE_SEC
+            - name: TCACHE_DB
+            - name: TCACHE_HOST
+            - name: TCACHE_PORT
+            - name: TSTORE_DB_URL
+            - name: TSTORE_ID
+            - name: TSYSTEM_URL
+            - name: VERSION
+          image: 'transpara/tstore-interface:'
+          name: tstore-interface
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

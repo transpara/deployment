@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tcore-flower
+  name: tcore-flower
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tcore-flower
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tcore-flower
+    spec:
+      containers:
+        - args:
+            - /app/run-flower.sh
+          env:
+            - name: CELERY_BROKER_URL
+              value: redis://:6379/0
+            - name: CELERY_RESULT_BACKEND
+              value: redis://:6379/1
+            - name: TCORE_NAME
+          image: transpara/tcore-api:develop
+          name: -tcore-flower
+          ports:
+            - containerPort: 5555
+              protocol: TCP
+          resources: {}
+      hostname: _tcore_flower
+      restartPolicy: Always
+status: {}

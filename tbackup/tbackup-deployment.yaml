@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    ID: ""
+    Version: ""
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tbackup
+  name: tbackup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tbackup
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        ID: ""
+        Version: ""
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/transpara: "true"
+        io.kompose.service: tbackup
+    spec:
+      containers:
+        - env:
+            - name: CONFIG_PATH
+              value: /config
+            - name: DATABASE_IP
+            - name: REPO_PATH
+              value: /backup
+            - name: SQLALCHEMY_JOB_STORE_URL
+              value: sqlite:////config/pgbr_job_store.db
+            - name: TBACKUP_MIN_FREE
+            - name: TBACKUP_TAG
+          image: 'transpara/tbackup:'
+          livenessProbe:
+            exec:
+              command:
+                - python3 /app/health.py > /proc/1/fd/1
+            periodSeconds: 10
+          name: tbackup
+          ports:
+            - containerPort: 80
+              hostIP: 0.0.0.0
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /backup
+              name: tbackup-data
+            - mountPath: /config
+              name: tbackup-config
+      restartPolicy: Always
+      volumes:
+        - name: tbackup-data
+          persistentVolumeClaim:
+            claimName: tbackup-data
+        - name: tbackup-config
+          persistentVolumeClaim:
+            claimName: tbackup-config
+status: {}
