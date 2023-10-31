@@ -60,10 +60,10 @@ spec:
           mountPath: /app/database
       imagePullSecrets:
         - name: transpara-docker-secret
-  volumes:
-  - name: tsystem-api-data
-    persistentVolumeClaim:
-      claimName: tsystem-api-data-claim
+      volumes:
+      - name: tsystem-api-data
+        persistentVolumeClaim:
+          claimName: tsystem-api-data-claim
 ---
 
 apiVersion: v1
