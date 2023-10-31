@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: tsystem-api-deployment
+  name: tsystem-api
 spec:
+  serviceName: tsystem-api
   selector:
     matchLabels:
       app: tsystem-api
@@ -54,8 +55,20 @@ spec:
               key: SSH_PORT
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: tsystem-api-data
+          mountPath: /app/database
       imagePullSecrets:
         - name: transpara-docker-secret
+  volumeClaimTemplates:
+  - metadata:
+      name: tsystem-api-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
