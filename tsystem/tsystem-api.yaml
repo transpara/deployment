@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: tsystem-api
-        image: transpara/tsystem:0.143.0
+        image: transpara/tsystem:0.144.0
         imagePullPolicy: Always
         env:
         - name: EXTERNAL_PORT
@@ -60,16 +60,12 @@ spec:
           mountPath: /app/database
       imagePullSecrets:
         - name: transpara-docker-secret
-  volumeClaimTemplates:
-  - metadata:
-      name: tsystem-api-data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "local-path"
-      resources:
-        requests:
-          storage: 1Gi
+  volumes:
+  - name: tsystem-api-data
+    persistentVolumeClaim:
+      claimName: tsystem-api-data-claim
 ---
+
 apiVersion: v1
 kind: Service
 metadata:

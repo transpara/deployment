@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tstore-interface-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tstore-interface
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: tstore-interface
+    spec:
+      containers:
+      - name: tstore-interface
+        image: transpara/tstore-interface:develop_nopromscale
+        imagePullPolicy: Always
+        env:
+        - name: TSYSTEM_URL
+          value: http://tsystem-api:80/api/v1
+        - name: TSTORE_DB_URL
+          # value: postgresql://postgres:<password>@<host-ip>:5432/postgres
+        - name: EXPOSE_METRICS
+          value: "true"
+        - name: TSTORE_ID
+          value: 16561dd1-1247-409b-be2d-50cd8f9bb20d
+        - name: TCACHE_HOST
+          value: tsystem-cache
+        - name: TCACHE_PORT
+          value: "6379"
+        - name: TCACHE_DB
+          value: "7"
+        - name: TCACHE_CONSIDER_STALE_SEC
+          value: "300"
+        - name: VERSION
+          value: "0.142.0"
+        - name: LOG_LEVEL
+          value: INFO
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: transpara-docker-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tstore-interface
+spec:
+  selector:
+    app: tstore-interface
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30083
+  type: NodePort
