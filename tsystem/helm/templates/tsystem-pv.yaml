@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tsystem-api-data
+  labels:
+    type: local
+spec:
+  storageClassName: {{ .Values.tSystemPv.storageClassName }}
+  capacity:
+    storage: {{ .Values.tSystemPv.capacity }}
+  accessModes: {{ .Values.tSystemPv.accessModes }}
+  hostPath:
+    path: {{ .Values.tSystemPv.hostPath }}

@@ -1,0 +1,31 @@
+# tsystem-ui-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tSystemUi.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.tSystemUi.name }}
+  replicas: {{ .Values.tSystemUi.replicas | default 2 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tSystemUi.name }}
+    spec:
+      containers:
+        - name: {{ .Values.tSystemApi.name | default "tsystem-ui" }}
+          image: "{{ .Values.tSystemUi.image.repository }}:{{ .Values.tSystemUi.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
+          env:
+            - name: NEXT_PUBLIC_TSYSTEM_API_URL
+              value: "http://{{ .Values.global.CONTAINER_HOST }}:{{ .Values.tSystemApi.ports.nodePort | default 30080 }}/api/v1/"
+            - name: NEXT_PUBLIC_CONTAINER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: tsystem-config
+                  key: CONTAINER_HOST
+      imagePullSecrets: 
+        - name: {{ .Values.global.imagePullSecret }}
