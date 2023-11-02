@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Values.tSystemCache.name }}
 spec:
+  serviceName: {{ .Values.tSystemCache.name }}
   replicas: {{ .Values.tSystemCache.replicas }}
   selector:
     matchLabels:
@@ -18,5 +19,12 @@ spec:
         imagePullPolicy: {{ .Values.tSystemCache.imagePullPolicy }}
         ports:
         - containerPort: {{ .Values.tSystemCache.ports.containerPort }}
+        volumeMounts: 
+        - name: {{ .Values.tSystemCache.volumeMount.name }}
+          mountPath: {{ .Values.tSystemCache.volumeMount.mountPath }}
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}
+      volumes:
+        - name: {{ .Values.tSystemCache.volumeMount.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.tSystemCachePvc.name }}

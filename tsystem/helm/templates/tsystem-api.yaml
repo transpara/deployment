@@ -63,4 +63,4 @@ spec:
       volumes:
         - name: {{ .Values.tSystemApi.volumeMount.name }}
           persistentVolumeClaim:
-            claimName: tsystem-api-data-claim
+            claimName: {{ .Values.tSystemApiPvc.name }}

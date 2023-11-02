@@ -2,18 +2,38 @@ global:
   imagePullSecret: transpara-docker-secret
   CONTAINER_HOST: "192.168.83.33"
 
-tSystemPv:
+# tsystem-api volume
+tSystemApiPv:
+  name: tsystem-api-data
   storageClassName: local-path
   capacity: 1Gi
   accessModes:
     - ReadWriteOnce
-  hostPath: "/transpara/data"
+  hostPath: "/transpara/data/volumes/tsystem-api-data"
 
-tSystemPvc:
+tSystemApiPvc:
+  name: tsystem-api-data-claim
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path
   storage: 1Gi
+
+# tsystem-cache volume
+tSystemCachePv:
+  name: tsystem-cache-data
+  storageClassName: local-path
+  capacity: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: "/transpara/data/volumes/tsystem-cache-data"
+
+tSystemCachePvc:
+  name: tsystem-cache-data-claim
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  storage: 1Gi
+
 
 tSystemApi:
   name: tsystem-api
@@ -51,6 +71,9 @@ tSystemCache:
     containerPort: 6379
     servicePort: 6379
     nodePort: 30082
+  volumeMount:
+    name: tsystem-cache-data
+    mountPath: /data
 
 tSystemUi:
   name: tsystem-ui
