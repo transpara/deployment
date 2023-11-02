@@ -19,7 +19,7 @@ spec:
         - containerPort: 3000
         env:
         - name: NEXT_PUBLIC_TSYSTEM_API_URL
-          value: http://172.26.95.72:30080/api/v1/
+          value: http://172.31.8.155:30080/api/v1/
         - name: NEXT_PUBLIC_CONTAINER_HOST
           valueFrom:
             configMapKeyRef:

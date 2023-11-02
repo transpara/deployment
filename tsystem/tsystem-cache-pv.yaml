@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tsystem-api-data
+  name: tsystem-cache-data
   labels:
     type: local
 spec:
@@ -13,4 +13,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/transpara/data/volumes/tsystem-api-data"
+    path: "/transpara/data/volumes/tsystem-cache-data"

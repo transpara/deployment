@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: tsystem-cache-deployment
+  name: tsystem-cache
 spec:
+  serviceName: tsystem-cache
   selector:
     matchLabels:
       app: tsystem-cache
@@ -17,8 +18,15 @@ spec:
         image: transpara/tcache:0.143.0
         ports:
         - containerPort: 6379
+        volumeMounts:
+        - name: tsystem-cache-data
+          mountPath: /data
       imagePullSecrets:
         - name: transpara-docker-secret
+      volumes:
+      - name: tsystem-cache-data
+        persistentVolumeClaim:
+          claimName: tsystem-cache-data
 ---
 apiVersion: v1
 kind: Service
