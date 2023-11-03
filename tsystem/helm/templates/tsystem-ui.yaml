@@ -17,6 +17,7 @@ spec:
       containers:
         - name: {{ .Values.tSystemApi.name | default "tsystem-ui" }}
           image: "{{ .Values.tSystemUi.image.repository }}:{{ .Values.tSystemUi.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
           env:

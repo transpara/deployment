@@ -9,3 +9,8 @@ This branch is in active development and should be used with caution. It may con
 The instructions for deployment can be found in the `/transpara/docs` repository. Please follow the guidelines provided there to understand the current deployment process and to contribute to the ongoing development.
 
 We appreciate your interest and contributions towards improving the deployment process of BORG components on Kubernetes. Your feedback and insights are invaluable in driving the success of this initiative.
+
+By using helm chart:
+```
+helm install tsystem . --kubeconfig=/etc/rancher/k3s/k3s.yaml --set global.CONTAINER_HOST=<host_ip_address>
+```

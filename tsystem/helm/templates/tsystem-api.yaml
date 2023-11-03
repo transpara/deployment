@@ -16,7 +16,7 @@ spec:
       containers:
       - name: {{ .Values.tSystemApi.name }}
         image: "{{ .Values.tSystemApi.image.repository }}:{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
-        imagePullPolicy: {{ .Values.tSystemApi.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         ports:
         - containerPort: {{ .Values.tSystemApi.ports.containerPort }}
         volumeMounts:

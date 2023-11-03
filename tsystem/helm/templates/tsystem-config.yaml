@@ -4,13 +4,13 @@ metadata:
   name: tsystem-config
 data:
   TSYSTEM_ID: "{{ .Values.tSystemApi.config.TSYSTEM_ID }}"
-  TSYSTEM_NAME: "{{ .Values.tSystemApi.config.TSYSTEM_NAME }}"
-  REDIS_PORT: "{{ .Values.tSystemApi.config.REDIS_PORT }}"
-  REDIS_HOST: "{{ .Values.tSystemApi.config.REDIS_HOST }}"
-  TSYSTEM_PORT: "{{ .Values.tSystemApi.config.TSYSTEM_PORT }}"
+  #TSYSTEM_NAME: "{{ .Values.tSystemApi.name }}"
+  REDIS_PORT: "{{ .Values.tSystemCache.ports.servicePort}}"
+  REDIS_HOST: "{{ .Values.tSystemCache.name }}"
+  TSYSTEM_PORT: "{{ .Values.tSystemApi.ports.servicePort }}"
   CONTAINER_HOST: "{{ .Values.global.CONTAINER_HOST }}"
   USERNAME: "{{ .Values.tSystemApi.config.USERNAME }}"
   SSH_PORT: "{{ .Values.tSystemApi.config.SSH_PORT }}"
-  TSYSTEM_UI_PORT: "{{ .Values.tSystemApi.config.TSYSTEM_UI_PORT }}"
+  #TSYSTEM_UI_PORT: "{{ .Values.tSystemApi.config.TSYSTEM_UI_PORT }}"
   TSYSTEM_TAG: "{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
   TSYSTEM_API_ENDPOINT: "{{ .Values.tSystemApi.config.TSYSTEM_API_ENDPOINT }}"
