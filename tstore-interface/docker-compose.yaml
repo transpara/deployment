@@ -24,6 +24,20 @@ services:
       - "${TSTORE_INTERFACE_PORT}:80"
     restart: unless-stopped
 
+  tstore_ui:
+    labels:
+      - "Version=${TSTORE_UI_TAG}"
+      - "ID=${TSTORE_ID}"
+    image: "transpara/tstore-ui:${TSTORE_UI_TAG}"
+    environment:
+      - TSTORE_INTERFACE_URL=http://${TSTORE_INTERFACE_NAME}:80/api/v1
+      - VERSION=${TSTORE_UI_TAG}    
+      - LOG_LEVEL=${LOG_LEVEL}
+    container_name: ${TSTORE_UI_NAME}
+    hostname: ${TSTORE_UI_NAME}
+    ports:
+      - "${TSTORE_UI_PORT}:8080"
+    restart: unless-stopped
 
 networks:
    default:
