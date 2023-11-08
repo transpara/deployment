@@ -7,7 +7,7 @@ services:
       - "Version=${TSTORE_TAG}"
       - "ID=${TSTORE_ID}"
     image: "transpara/tstore-database:${TSTORE_TAG}"
-    shm_size: '2gb'
+#    shm_size: '2gb'
     volumes:
       - tstore_data:/var/lib/postgresql/data
     environment:
@@ -16,6 +16,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/var/lib/postgresql/data
       - PGPORT=5432
+      - TSTUNE_PROFILE="promscale" # this is the profile for timescaledb-tune to optimize postgres for promscale-like loads (wal size, buffers, etc)
     container_name: ${TSTORE_NAME}_db
     hostname: ${TSTORE_NAME}_db
     ports:
