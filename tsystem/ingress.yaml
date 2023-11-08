@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tsystem-api
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/docs`)
+      kind: Rule
+      services:
+        - name: tsystem-api-service
+          port: 80
+      middlewares:
+        - name: strip-prefix
+    - match: PathPrefix(`/tsystem-ui`)
+      kind: Rule
+      services:
+        - name: tsystem-ui-service
+          port: 3000
+    
+

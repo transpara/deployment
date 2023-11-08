@@ -58,6 +58,11 @@ spec:
             configMapKeyRef:
               name: tsystem-config
               key: SSH_PORT
+        - name: BASE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: BASE_PATH
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}
       volumes:
