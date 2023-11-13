@@ -29,7 +29,7 @@ spec:
                 configMapKeyRef:
                   name: tsystem-config
                   key: CONTAINER_HOST
-            - name: BASE_PATH
+            - name: NEXT_PUBLIC_BASE_PATH
               value: "{{ .Values.tSystemUi.config.BASE_PATH }}"
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}
