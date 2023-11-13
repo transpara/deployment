@@ -16,7 +16,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/var/lib/postgresql/data
       - PGPORT=5432
-      - TSTUNE_PROFILE="promscale" # this is the profile for timescaledb-tune to optimize postgres for promscale-like loads (wal size, buffers, etc)
+      - TSTUNE_PROFILE=promscale # this is the profile for timescaledb-tune to optimize postgres for promscale-like loads (wal size, buffers, etc)
     container_name: ${TSTORE_NAME}_db
     hostname: ${TSTORE_NAME}_db
     ports:
