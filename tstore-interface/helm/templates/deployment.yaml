@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tstoreInterface.name }}-deployment
+spec:
+  replicas: {{ .Values.tstoreInterface.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tstoreInterface.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tstoreInterface.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tstoreInterface.name }}
+        image: "{{ .Values.tstoreInterface.image.repository }}:{{ .Values.tstoreInterface.image.tag }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        env:
+{{ toYaml .Values.tstoreInterface.env | indent 10 }}
+        ports:
+{{ toYaml .Values.tstoreInterface.ports | indent 10 }}
+      imagePullSecrets:
+      - name: {{ .Values.global.imagePullSecret }}

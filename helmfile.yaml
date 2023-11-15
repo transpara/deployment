@@ -1,0 +1,55 @@
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: stackgres-charts
+    url: https://stackgres.io/downloads/stackgres-k8s/stackgres/helm/
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: openebs
+    url: https://openebs.github.io/charts
+
+releases:
+  - name: prometheus-operator
+    namespace: monitoring
+    chart: prometheus-community/kube-prometheus-stack
+    version: 52.1.0
+    values:
+      - grafana:
+          enabled: true
+          image:
+            tag: 10.2.0
+          persistence:
+            enabled: true
+            size: 10Gi
+
+  - name: stackgres-operator
+    namespace: stackgres
+    chart: stackgres-charts/stackgres-operator
+    version: 1.5.0
+    values:
+      - grafana:
+          autoEmbed: true
+          webHost: prometheus-operator-grafana.monitoring
+          secretNamespace: monitoring
+          secretName: prometheus-operator-grafana
+          secretUserKey: admin-user
+          secretPasswordKey: admin-password
+        adminui:
+          service:
+            type: ClusterIP
+
+  - name: minio
+    chart: bitnami/minio
+    version: 12.8.7
+    values:
+      - resources:
+          requests:
+            memory: 128Mi
+        persistence:
+          enabled: true
+          size: 10Gi
+
+  - name: openebs
+    namespace: openebs
+    chart: openebs/openebs
+    createNamespace: true

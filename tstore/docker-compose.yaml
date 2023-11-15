@@ -1,7 +1,6 @@
 version: "3.9"
    
 services:
-
   tstore-database:
     labels:
       - "Version=${TSTORE_TAG}"
