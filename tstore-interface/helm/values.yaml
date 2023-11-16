@@ -1,8 +1,7 @@
 global:
   imagePullSecret: transpara-docker-secret
   imagePullPolicy: Always
-  CONTAINER_HOST: localhost
-
+  
 tstoreInterface:
   name: tstore-interface
   replicas: 2
