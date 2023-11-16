@@ -8,27 +8,17 @@ tstoreInterface:
   image:
     repository: transpara/tstore-interface
     tag: develop_nopromscale
-  env:
-    - name: TSYSTEM_URL
-      value: http://tsystem-api:80/api/v1
-    - name: TSTORE_DB_URL
-      # value: postgresql://postgres:<password>@<host-ip>:5432/postgres
-    - name: EXPOSE_METRICS
-      value: "true"
-    - name: TSTORE_ID
-      value: 16561dd1-1247-409b-be2d-50cd8f9bb20d
-    - name: TCACHE_HOST
-      value: tsystem-cache
-    - name: TCACHE_PORT
-      value: "6379"
-    - name: TCACHE_DB
-      value: "7"
-    - name: TCACHE_CONSIDER_STALE_SEC
-      value: "300"
-    - name: VERSION
-      value: "0.142.0"
-    - name: LOG_LEVEL
-      value: INFO
+  config:
+    TSYSTEM_URL: http://tsystem-api:80/api/v1
+    TSTORE_DB_URL: # postgresql://postgres:<password>@<host-ip>:5432/postgres
+    EXPOSE_METRICS: "true"
+    TSTORE_ID: 16561dd1-1247-409b-be2d-50cd8f9bb20d
+    TCACHE_HOST: tsystem-cache
+    TCACHE_PORT: "6379"
+    TCACHE_DB: "7"
+    TCACHE_CONSIDER_STALE_SEC: "300"
+    VERSION: "0.142.0"
+    LOG_LEVEL: INFO
   ports:
     - containerPort: 80
   service:
