@@ -23,6 +23,20 @@ services:
       - "${TSTORE_PORT}:5432"
     restart: unless-stopped
 
+
+  tstore-pool:
+    image: "bitnami/pgbouncer:latest"
+    environment:
+      - POSTGRESQL_USERNAME=${POSTGRES_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}  
+      - POSTGRESQL_HOST=${TSTORE_NAME}_db
+      - POSTGRESQL_DATABASE=postgres
+      - PGBOUNCER_PORT=6432
+      - PGBOUNCER_QUERY_WAIT_TIMEOUT=500
+    container_name: ${TSTORE_NAME}_pool
+    hostname: ${TSTORE_NAME}_pool          
+
+
 networks:
    default:
       name: transpara
