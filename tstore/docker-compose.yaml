@@ -36,7 +36,7 @@ services:
       # max_connections in postgress = 500
       # 8 workers for tstore_interface
       # db writes bypass pgbouncer, so we leave 6*8=48 connections for the writes
-      - PGBOUNCER_POOL_MODE=transaction #it allows reusing connections between transactiosn
+      - PGBOUNCER_POOL_MODE=session #transaction pool mode does not work well with prepared statements which SQLAlchemy uses
       - PGBOUNCER_MAX_CLIENT_CONN=800 #100 connections per client process as a buffer
       - PGBOUNCER_DEFAULT_POOL_SIZE=30 #Assuming each client process won't need more than a few connections to the database at a time
       - PGBOUNCER_RESERVE_POOL_SIZE=70 #we assume max 100 connections per each worker, so 30 default + 70 in reserve.
