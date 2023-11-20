@@ -9,7 +9,8 @@ services:
     image: "transpara/tstore-interface:${TSTORE_INTERFACE_TAG}"
     environment:
       - TSYSTEM_URL=${TSYSTEM_URL}    
-      - TSTORE_DB_URL=${TSTORE_DB_URL}
+      - TSTORE_DB_READ_URL=${TSTORE_DB_READ_URL}
+      - TSTORE_DB_WRITE_URL=${TSTORE_DB_READ_URL}
       - EXPOSE_METRICS=${EXPOSE_METRICS}
       - TSTORE_ID=${TSTORE_ID}
       - TCACHE_HOST=${TCACHE_HOST}

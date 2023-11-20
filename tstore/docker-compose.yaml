@@ -32,7 +32,8 @@ services:
       - POSTGRESQL_HOST=${TSTORE_NAME}_db
       - POSTGRESQL_DATABASE=postgres
       - PGBOUNCER_PORT=6432
-      - PGBOUNCER_QUERY_WAIT_TIMEOUT=500
+      - PGBOUNCER_QUERY_WAIT_TIMEOUT=300
+      - PGBOUNCER_MAX_DB_CONNECTIONS=100
     container_name: ${TSTORE_NAME}_pool
     hostname: ${TSTORE_NAME}_pool          
 
