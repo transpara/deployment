@@ -35,13 +35,13 @@ services:
       # we will assume the following configuration here:
       # max_connections in postgress = 500
       # 8 workers for tstore_interface
-      # db writes bypass pgbouncer, so we leave 6*8=48 connections for the writes
+      # db writes bypass pgbouncer, so we leave 6*8=48 connections for the writes, and we leave 20 connections to administrative tasks
       - PGBOUNCER_POOL_MODE=session #transaction pool mode does not work well with prepared statements which SQLAlchemy uses
       - PGBOUNCER_MAX_CLIENT_CONN=800 #100 connections per client process as a buffer
       - PGBOUNCER_DEFAULT_POOL_SIZE=30 #Assuming each client process won't need more than a few connections to the database at a time
       - PGBOUNCER_RESERVE_POOL_SIZE=70 #we assume max 100 connections per each worker, so 30 default + 70 in reserve.
       - PGBOUNCER_QUERY_WAIT_TIMEOUT=300
-      - PGBOUNCER_MAX_DB_CONNECTIONS=450
+      - PGBOUNCER_MAX_DB_CONNECTIONS=430
     container_name: ${TSTORE_NAME}_pool
     hostname: ${TSTORE_NAME}_pool          
 
