@@ -42,7 +42,7 @@ tSystemApi:
   replicas: 2
   image:
     repository: transpara/tsystem
-    tag: "0.144.1"
+    tag: "0.144.0-kube"
   ports:
     containerPort: 80
     servicePort: 80

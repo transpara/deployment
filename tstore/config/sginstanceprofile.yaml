@@ -1,0 +1,15 @@
+apiVersion: stackgres.io/v1
+kind: SGInstanceProfile
+metadata:
+  name: size-s
+spec:
+  cpu: "300m"
+  memory: "256Mi"
+---
+apiVersion: stackgres.io/v1
+kind: SGInstanceProfile
+metadata:
+  name: distributedlogs-profile
+spec:
+  cpu: "300m"
+  memory: "256Mi"

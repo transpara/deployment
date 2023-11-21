@@ -1,0 +1,12 @@
+apiVersion: stackgres.io/v1
+kind: SGPostgresConfig
+metadata:
+  name: pgconfig
+spec:
+  postgresVersion: "15"
+  postgresql.conf:
+    shared_buffers: '128MB'
+    random_page_cost: '1.1'
+    checkpoint_timeout: '15min'
+    max_connections: '100'
+    shared_preload_libraries: timescaledb
