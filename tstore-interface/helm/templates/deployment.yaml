@@ -17,7 +17,26 @@ spec:
         image: "{{ .Values.tstoreInterface.image.repository }}:{{ .Values.tstoreInterface.image.tag }}"
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         env:
-{{ toYaml .Values.tstoreInterface.env | indent 10 }}
+        - name: TSYSTEM_URL
+          value: {{ .Values.tstoreInterface.config.TSYSTEM_URL }}
+        - name: TSTORE_DB_URL
+          value: {{ .Values.tstoreInterface.config.TSTORE_DB_URL }}
+        - name: EXPOSE_METRICS
+          value: "{{ .Values.tstoreInterface.config.EXPOSE_METRICS }}"
+        - name: TSTORE_ID
+          value: {{ .Values.tstoreInterface.config.TSTORE_ID }}
+        - name: TCACHE_HOST
+          value: {{ .Values.tstoreInterface.config.TCACHE_HOST }}
+        - name: TCACHE_PORT
+          value: "{{ .Values.tstoreInterface.config.TCACHE_PORT }}"
+        - name: TCACHE_DB
+          value: "{{ .Values.tstoreInterface.config.TCACHE_DB }}"
+        - name: TCACHE_CONSIDER_STALE_SEC
+          value: "{{ .Values.tstoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
+        - name: VERSION
+          value: {{ .Values.tstoreInterface.config.VERSION }}
+        - name: LOG_LEVEL
+          value: {{ .Values.tstoreInterface.config.LOG_LEVEL }}
         ports:
 {{ toYaml .Values.tstoreInterface.ports | indent 10 }}
       imagePullSecrets:
