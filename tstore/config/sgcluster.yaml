@@ -17,15 +17,15 @@ spec:
   configurations:
     sgPostgresConfig: 'pgconfig'
     sgPoolingConfig: 'poolconfig'
-    credentials:
-      users:
-        superuser:
-          password:
-            name: my-db-secret
-            key: password 
-          username:
-            name: my-db-secret
-            key: username 
+    # credentials:
+    #   users:
+    #     superuser:
+    #       password:
+    #         name: my-db-secret
+    #         key: password 
+    #       username:
+    #         name: my-db-secret
+    #         key: username 
     backups:
     - sgObjectStorage: backup-stackgres
       retention: 2
