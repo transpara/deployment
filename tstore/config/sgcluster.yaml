@@ -20,9 +20,8 @@ spec:
     credentials:
       users:
         superuser:
-          secretKeyRef:
-            name: my-db-secret
-            key: password
+          name: my-db-secret
+          key: password
     backups:
     - sgObjectStorage: backup-stackgres
       retention: 2
