@@ -17,6 +17,11 @@ spec:
   configurations:
     sgPostgresConfig: 'pgconfig'
     sgPoolingConfig: 'poolconfig'
+    binding:
+      password:
+        secretKeyRef:
+          name: my-db-secret
+          key: password
     backups:
     - sgObjectStorage: backup-stackgres
       retention: 2
