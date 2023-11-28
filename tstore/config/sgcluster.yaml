@@ -7,7 +7,9 @@ spec:
     version: '15.3'
     extensions:
     - name: timescaledb
-      version: '2.11.2'
+      version: 2.11.2
+    - name: timescaledb_toolkit
+      version: 1.17.0
   instances: 1
   sgInstanceProfile: 'size-s'
   pods:
@@ -17,15 +19,6 @@ spec:
   configurations:
     sgPostgresConfig: 'pgconfig'
     sgPoolingConfig: 'poolconfig'
-    # credentials:
-    #   users:
-    #     superuser:
-    #       password:
-    #         name: my-db-secret
-    #         key: password 
-    #       username:
-    #         name: my-db-secret
-    #         key: username 
     backups:
     - sgObjectStorage: backup-stackgres
       retention: 2
