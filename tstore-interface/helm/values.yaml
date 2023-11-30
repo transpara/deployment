@@ -2,7 +2,7 @@ global:
   imagePullSecret: transpara-docker-secret
   imagePullPolicy: Always
   
-tstoreInterface:
+tStoreInterface:
   name: tstore-interface
   replicas: 2
   image:
