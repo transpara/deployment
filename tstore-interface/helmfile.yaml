@@ -1,0 +1,7 @@
+releases:
+  - name: tstore-interface
+    namespace: default
+    chart: ./helm
+    values:
+      - ./helm/values.yaml
+      - TSTORE_DB_URL: {{ .Values.TSTORE_DB_URL }}
