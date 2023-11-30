@@ -10,7 +10,7 @@ tstoreInterface:
     tag: "0.148.0"
   config:
     TSYSTEM_URL: http://tsystem-api-service:80/api/v1
-    TSTORE_DB_URL: postgresql://postgres:ee9b-279b-416b-a82@my-db-primary:5432/postgres
+    TSTORE_DB_URL: postgresql://postgres:56f0-0b8e-4172-985@my-db-primary:5432/postgres
     EXPOSE_METRICS: "true"
     TSTORE_ID: 16561dd1-1247-409b-be2d-50cd8f9bb20d
     TCACHE_HOST: tsystem-cache
