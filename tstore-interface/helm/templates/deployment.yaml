@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.tstoreInterface.name }}-deployment
+  name: {{ .Values.tStoreInterface.name }}-deployment
 spec:
-  replicas: {{ .Values.tstoreInterface.replicas }}
+  replicas: {{ .Values.tStoreInterface.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.tstoreInterface.name }}
+      app: {{ .Values.tStoreInterface.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.tstoreInterface.name }}
+        app: {{ .Values.tStoreInterface.name }}
     spec:
       containers:
-      - name: {{ .Values.tstoreInterface.name }}
-        image: "{{ .Values.tstoreInterface.image.repository }}:{{ .Values.tstoreInterface.image.tag }}"
+      - name: {{ .Values.tStoreInterface.name }}
+        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag }}"
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         env:
         - name: TSYSTEM_URL
-          value: "{{ .Values.tstoreInterface.config.TSYSTEM_URL }}"
+          value: "{{ .Values.tStoreInterface.config.TSYSTEM_URL }}"
         - name: TSTORE_DB_URL
-          value: "{{ .Values.tstoreInterface.config.TSTORE_DB_URL }}"
+          value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
         - name: EXPOSE_METRICS
-          value: "{{ .Values.tstoreInterface.config.EXPOSE_METRICS }}"
+          value: "{{ .Values.tStoreInterface.config.EXPOSE_METRICS }}"
         - name: TSTORE_ID
-          value: "{{ .Values.tstoreInterface.config.TSTORE_ID }}"
+          value: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"
         - name: TCACHE_HOST
-          value: "{{ .Values.tstoreInterface.config.TCACHE_HOST }}"
+          value: "{{ .Values.tStoreInterface.config.TCACHE_HOST }}"
         - name: TCACHE_PORT
-          value: "{{ .Values.tstoreInterface.config.TCACHE_PORT }}"
+          value: "{{ .Values.tStoreInterface.config.TCACHE_PORT }}"
         - name: TCACHE_DB
-          value: "{{ .Values.tstoreInterface.config.TCACHE_DB }}"
+          value: "{{ .Values.tStoreInterface.config.TCACHE_DB }}"
         - name: TCACHE_CONSIDER_STALE_SEC
-          value: "{{ .Values.tstoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
+          value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
         - name: LOG_LEVEL
-          value: "{{ .Values.tstoreInterface.config.LOG_LEVEL }}"
+          value: "{{ .Values.tStoreInterface.config.LOG_LEVEL }}"
         ports:
-{{ toYaml .Values.tstoreInterface.ports | indent 10 }}
+{{ toYaml .Values.tStoreInterface.ports | indent 10 }}
       imagePullSecrets:
       - name: {{ .Values.global.imagePullSecret }}
