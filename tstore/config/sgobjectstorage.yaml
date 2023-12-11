@@ -7,7 +7,7 @@ spec:
   s3Compatible:
     bucket: test
     enablePathStyleAddressing: true
-    endpoint: http://minio.minio:9000
+    endpoint: http://minio:9000
     awsCredentials:
       secretKeySelectors:
         accessKeyId:
