@@ -6,10 +6,10 @@ spec:
   postgres:
     version: '15.3'
     extensions:
-    - name: timescaledb
-      version: '2.11.2'
+    - name: timescaledb_tsl
+      version: '2.13.0'
     - name: timescaledb_toolkit
-      version: '1.17.0'
+      version: '1.18.0'
   instances: 1
   sgInstanceProfile: 'size-s'
   pods:
@@ -20,7 +20,7 @@ spec:
     sgPostgresConfig: 'pgconfig'
     sgPoolingConfig: 'poolconfig'
     backups:
-    - sgObjectStorage: backup-stackgres
+      - sgObjectStorage: backup-stackgres
       retention: 2
       cronSchedule: 30 01 * * 6
       compression: lz4
