@@ -2,7 +2,7 @@
 
 # Install K3s
 echo "Installing K3s Kubernetes..."
-curl -sfL https://get.k3s.io | sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.27 sh -
 
 # Check for successful installation
 if [ $? -ne 0 ]; then
