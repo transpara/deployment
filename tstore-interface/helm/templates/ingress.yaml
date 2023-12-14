@@ -6,7 +6,6 @@ spec:
   entryPoints:
     - web
   routes:
-    # - match: PathPrefix(`{{ .Values.tSystemApi.config.BASE_PATH }}`)
     - match: PathPrefix(`/tstore-interface`)
       kind: Rule
       services:
