@@ -19,7 +19,9 @@ spec:
         env:
         - name: TSYSTEM_URL
           value: "{{ .Values.tStoreInterface.config.TSYSTEM_URL }}"
-        - name: TSTORE_DB_URL
+        - name: TSTORE_DB_READ_URL
+          value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
+        - name: TSTORE_DB_WRITE_URL
           value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
         - name: EXPOSE_METRICS
           value: "{{ .Values.tStoreInterface.config.EXPOSE_METRICS }}"
