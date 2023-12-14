@@ -35,6 +35,8 @@ spec:
           value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
         - name: LOG_LEVEL
           value: "{{ .Values.tStoreInterface.config.LOG_LEVEL }}"
+        - name: BASE_PATH
+          value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
         ports:
 {{ toYaml .Values.tStoreInterface.ports | indent 10 }}
       imagePullSecrets:
