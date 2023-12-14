@@ -20,7 +20,7 @@ spec:
     sgPostgresConfig: 'pgconfig'
     sgPoolingConfig: 'poolconfig'
     backups:
-      - sgObjectStorage: backup-stackgres
+    - sgObjectStorage: backup-stackgres
       retention: 2
       cronSchedule: 30 01 * * 6
       compression: lz4
