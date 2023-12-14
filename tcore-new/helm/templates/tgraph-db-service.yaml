@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.memgraphDb.service.name }}
+  labels:
+    app: {{ .Values.memgraphDb.name }}
+spec:
+  type: {{ .Values.memgraphDb.service.type }}
+  ports:
+    - port: {{ .Values.memgraphDb.service.port }}
+      targetPort: {{ .Values.memgraphDb.ports.containerPort }}
+      nodePort: {{ .Values.memgraphDb.service.nodePort | default nil }}
+      protocol: TCP
+  selector:
+    app: {{ .Values.memgraphDb.name }}

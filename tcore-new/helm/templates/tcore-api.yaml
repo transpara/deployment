@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tcoreApi.deployment.name }}
+spec:
+  replicas: {{ .Values.tcoreApi.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tcoreApi.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tcoreApi.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tcoreApi.deployment.name }}
+        image: "{{ .Values.tcoreApi.image.repository }}:{{ .Values.tcoreApi.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.tcoreApi.containerPort }}
+        env:
+        - name: TCORE_NAME
+          value: {{ .Values.tcoreApi.config.TCORE_NAME }}
+        - name: TGRAPH_HOST
+          value: {{ .Values.tcoreApi.config.TGRAPH_HOST }}
+        - name: TGRAPH_PORT
+          value: "7687"
+        - name: REDIS_HOST
+          value: {{ .Values.tcoreApi.config.REDIS_HOST }}
+        - name: REDIS_PORT
+          value: "6379"
+        - name: CELERY_BROKER_URL
+          value: "redis://{{ .Values.tcoreApi.config.REDIS_HOST }}:6379/0"
+        - name: CELERY_RESULT_BACKEND
+          value: "redis://{{ .Values.tcoreApi.config.REDIS_HOST }}:6379/1"
+        - name: TAUTH_HOST
+          value: {{ .Values.tcoreApi.config.TAUTH_HOST }}
+        - name: TAUTH_PORT
+          value: "8080"
+        - name: TCORE_ID
+          value: {{ .Values.tcoreApi.config.TCORE_ID }}
+        - name: OTEL_EXPORTER_HOST
+          value: {{ .Values.tcoreApi.config.OTEL_EXPORTER_HOST }}
+        - name: TIMEOUT
+          value: "600" #worker timeout, fail safe
+        imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

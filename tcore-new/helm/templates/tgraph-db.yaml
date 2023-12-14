@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.memgraphDb.name }}
+spec:
+  serviceName: {{ .Values.memgraphDb.name }}
+  replicas: {{ .Values.memgraphDb.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.memgraphDb.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.memgraphDb.name }}
+    spec:
+      containers:
+      - name: {{ .Values.memgraphDb.name }}
+        image: "{{ .Values.memgraphDb.image.repository }}:{{ .Values.memgraphDb.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.memgraphDb.ports.containerPort }}
+        volumeMounts:
+        - name: {{ .Values.memgraphDb.volumeMount.name }}
+          mountPath: {{ .Values.memgraphDb.volumeMount.mountPath }}
+        env:
+        # Add any specific environment variables needed for Memgraph here
+      imagePullSecrets: 
+        - name: {{ .Values.global.imagePullSecret }}
+      volumes:
+        - name: {{ .Values.memgraphDb.volumeMount.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.memgraphDbPvc.name }}

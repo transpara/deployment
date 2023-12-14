@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.tcoreUi.service.name }}
+spec:
+  type: {{ .Values.tcoreUi.service.type }}
+  ports:
+  - port: {{ .Values.tcoreUi.service.port }}
+    targetPort: {{ .Values.tcoreUi.containerPort }}
+  selector:
+    app: {{ .Values.tcoreUi.deployment.name }}
