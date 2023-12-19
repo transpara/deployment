@@ -4,7 +4,7 @@ global:
   
 tStoreInterface:
   name: tstore-interface
-  replicas: 2
+  replicas: 1
   image:
     repository: transpara/tstore-interface
     tag: "kube-test"
