@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tauth.name }}
+  labels:
+    app: {{ .Values.tauth.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.tauth.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tauth.name }}
+    spec:
+      containers:
+        - name: tauth
+          image: "{{ .Values.tauth.image.repository }}:{{ .Values.tauth.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "{{ .Values.tauth.environment.KEYCLOAK_ADMIN }}"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "{{ .Values.tauth.environment.KEYCLOAK_ADMIN_PASSWORD }}"
+            - name: KEYCLOAK_IMPORT
+              value: "{{ .Values.tauth.environment.KEYCLOAK_IMPORT }}"
+          command: ["start-dev", "--import-realm"]
