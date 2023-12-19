@@ -39,4 +39,5 @@ spec:
           value: {{ .Values.tcoreWorker.config.TCORE_ID }}
         - name: OTEL_EXPORTER_HOST
           value: {{ .Values.tcoreWorker.config.OTEL_EXPORTER_HOST }}
-        # Additional environment variables can be added as needed
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

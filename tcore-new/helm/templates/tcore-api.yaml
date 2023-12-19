@@ -41,6 +41,6 @@ spec:
         - name: OTEL_EXPORTER_HOST
           value: {{ .Values.tcoreApi.config.OTEL_EXPORTER_HOST }}
         - name: TIMEOUT
-          value: "600" #worker timeout, fail safe
-        imagePullSecrets:
-        - name: {{ .Values.global.imagePullSecret }}
+          value: "600" 
+      imagePullSecrets:
+      - name: {{ .Values.global.imagePullSecret }}

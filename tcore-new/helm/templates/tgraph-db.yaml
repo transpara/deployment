@@ -30,3 +30,5 @@ spec:
         - name: {{ .Values.memgraphDb.volumeMount.name }}
           persistentVolumeClaim:
             claimName: {{ .Values.memgraphDbPvc.name }}
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

@@ -1,57 +1,89 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml
-    kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: tcore-api
   name: tcore-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: tcore-api
+      app: tcore-api
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml
-        kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
       labels:
-        io.kompose.network/transpara: "true"
-        io.kompose.service: tcore-api
+        app: tcore-api
     spec:
       containers:
-        - env:
-            - name: CELERY_BROKER_URL
-              value: redis://:6379/0
-            - name: CELERY_RESULT_BACKEND
-              value: redis://:6379/1
-            - name: OTEL_EXPORTER_HOST
-              value: tstore_tscale
-            - name: REDIS_HOST
-            - name: REDIS_PORT
-              value: "6379"
-            - name: TAUTH_HOST
-            - name: TAUTH_PORT
-              value: "8080"
-            - name: TCORE_ID
-            - name: TCORE_NAME
-            - name: TGRAPH_HOST
-              value: _tcore_db
-            - name: TGRAPH_PORT
-              value: "7687"
-            - name: TIMEOUT
-              value: "600"
-          image: transpara/tcore-api:develop
-          name: -tcore-api
-          ports:
-            - containerPort: 80
-              hostIP: 0.0.0.0
-              protocol: TCP
-          resources: {}
+      - name: tcore-api
+        image: transpara/tcore-api:develop
+        env:
+          - name: CELERY_BROKER_URL
+            value: redis://:6379/0
+          - name: CELERY_RESULT_BACKEND
+            value: redis://:6379/1
+          - name: OTEL_EXPORTER_HOST
+            value: tstore_tscale
+          - name: REDIS_HOST
+          - name: REDIS_PORT
+            value: "6379"
+          - name: TAUTH_HOST
+          - name: TAUTH_PORT
+            value: "8080"
+          - name: TCORE_ID
+          - name: TCORE_NAME
+          - name: TGRAPH_HOST
+            value: _tcore_db
+          - name: TGRAPH_PORT
+            value: "7687"
+          - name: TIMEOUT
+            value: "600"
+        ports:
+          - containerPort: 80
+            hostIP: 0.0.0.0
+            protocol: TCP
+        resources: {}
       restartPolicy: Always
 status: {}
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tStoreInterface.name }}-deployment
+spec:
+  replicas: {{ .Values.tStoreInterface.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tStoreInterface.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tStoreInterface.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tStoreInterface.name }}
+        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        env:
+        - name: TSYSTEM_URL
+          value: "{{ .Values.tStoreInterface.config.TSYSTEM_URL }}"
+        - name: TSTORE_DB_URL
+          value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
+        - name: EXPOSE_METRICS
+          value: "{{ .Values.tStoreInterface.config.EXPOSE_METRICS }}"
+        - name: TSTORE_ID
+          value: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"
+        - name: TCACHE_HOST
+          value: "{{ .Values.tStoreInterface.config.TCACHE_HOST }}"
+        - name: TCACHE_PORT
+          value: "{{ .Values.tStoreInterface.config.TCACHE_PORT }}"
+        - name: TCACHE_DB
+          value: "{{ .Values.tStoreInterface.config.TCACHE_DB }}"
+        - name: TCACHE_CONSIDER_STALE_SEC
+          value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
+        - name: LOG_LEVEL
+          value: "{{ .Values.tStoreInterface.config.LOG_LEVEL }}"
+        ports:
+{{ toYaml .Values.tStoreInterface.ports | indent 10 }}
+      imagePullSecrets:
+      - name: {{ .Values.global.imagePullSecret }}

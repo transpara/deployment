@@ -25,4 +25,5 @@ spec:
           value: "redis://{{ .Values.tcoreFlower.config.REDIS_HOST }}:{{ .Values.tcoreFlower.config.REDIS_PORT }}/0"
         - name: CELERY_RESULT_BACKEND
           value: "redis://{{ .Values.tcoreFlower.config.REDIS_HOST }}:{{ .Values.tcoreFlower.config.REDIS_PORT }}/1"
-        # Additional environment variables can be added as needed
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

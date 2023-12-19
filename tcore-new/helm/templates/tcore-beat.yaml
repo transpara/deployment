@@ -37,4 +37,5 @@ spec:
           value: "{{ .Values.tcoreBeat.config.TAUTH_PORT }}"
         - name: TCORE_ID
           value: {{ .Values.tcoreBeat.config.TCORE_ID }}
-        # Add additional environment variables as needed
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

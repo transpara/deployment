@@ -24,3 +24,5 @@ spec:
           value: "http://{{ .Values.tcoreUi.config.TCORE_HOST }}:{{ .Values.tcoreUi.config.TCORE_PORT }}"
         - name: NEXT_PUBLIC_BASEPATH
           value: "/{{ .Values.tcoreUi.config.TCORE_UI_PATH }}"
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}
