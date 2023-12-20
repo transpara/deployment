@@ -1,0 +1,15 @@
+apiVersion: stackgres.io/v1
+kind: SGInstanceProfile
+metadata:
+  name: distributedlogs-profile
+  namespace: my-db
+spec:
+  cpu: "1000m"
+  memory: "1Gi"
+  requests:
+    containers:
+      fluentd:
+        cpu: 250m
+        memory: 512Mi
+    cpu: 600m
+    memory: 1Gi

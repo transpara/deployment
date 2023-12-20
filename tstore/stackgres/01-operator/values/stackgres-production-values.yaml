@@ -1,0 +1,10 @@
+grafana:
+  autoEmbed: true
+  webHost: prometheus-operator-grafana.monitoring.svc
+  secretNamespace: monitoring
+  secretUserKey: admin-user
+  secretPasswordKey: admin-password
+
+adminui:
+  service:
+    type: ClusterIP

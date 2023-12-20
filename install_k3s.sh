@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install K3s
+# 1. Install K3s
 echo "Installing K3s Kubernetes..."
 curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.27 sh -
 

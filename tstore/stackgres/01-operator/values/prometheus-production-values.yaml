@@ -1,0 +1,17 @@
+grafana:
+  enabled: true
+  image:
+    tag: 10.2.1
+  service:
+    type: ClusterIP
+  grafana.ini:
+    auth.anonymous:
+      enabled: false
+    analytics:
+      reporting_enabled: false
+      check_for_updates: false
+      check_for_plugin_updates: false
+      enable_feedback_links: false
+  persistence:
+    enabled: true
+    size: 10Gi

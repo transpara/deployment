@@ -1,0 +1,37 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  name: my-db
+spec:
+  postgres:
+    version: '15.3'
+    extensions:
+    - name: timescaledb_tsl
+      version: '2.13.0'
+    - name: timescaledb_toolkit
+      version: '1.18.0'
+  instances: 1
+  sgInstanceProfile: 'size-s'
+  pods:
+    persistentVolume:
+      size: '40Gi'
+      storageClass: openebs-device
+  configurations:
+    sgPostgresConfig: 'pgconfig'
+    sgPoolingConfig: 'poolconfig'
+    backups:
+    - sgObjectStorage: backup-stackgres
+      retention: 2
+      cronSchedule: 30 01 * * 6
+      compression: lz4
+  distributedLogs:
+    sgDistributedLogs: 'distributedlogs'
+    retention: "15 days"
+  postgresServices:
+    primary:
+      type: ClusterIP
+    replicas:
+      type: ClusterIP
+  prometheusAutobind: true
+  nonProductionOptions:
+    disableClusterPodAntiAffinity: true

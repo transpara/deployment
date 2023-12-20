@@ -1,0 +1,15 @@
+resources:
+  requests:
+    memory: 128Mi
+persistence:
+  enabled: true
+  size: 10Gi
+  existingClaim: ""
+provisioning:
+  enabled: true
+  buckets:
+  - name: test
+    policy: none
+    purge: true
+readinessProbe:
+  initialDelaySeconds: 5
