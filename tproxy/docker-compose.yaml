@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  tproxy:
+    labels:
+      - "Version=${IMAGE_TAG}"
+      - "ID=${TPROXY_ID}"
+    image: "transpara/tproxy:${IMAGE_TAG}"
+    container_name: tproxy
+    hostname: tproxy
+    ports:
+      - "0.0.0.0:${TPROXY_PORT}:80"
+    restart: unless-stopped
+    environment:
+      - TSYSTEM_HOST=${TSYSTEM_HOST}
+      - TSYSTEM_PORT=${TSYSTEM_PORT}
+      - POLL_INTERVAL_SECONDS=${POLL_INTERVAL_SECONDS}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - TEST_TIMEOUT=${TEST_TIMEOUT}
+networks:
+  default:
+    name: transpara
+    external: true

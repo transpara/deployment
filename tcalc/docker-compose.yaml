@@ -3,6 +3,10 @@ version: "3.9"
 services:
 
   tcalc-main:
+    labels:
+      - "Module=Main"
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
     image: "transpara/tcalc:${TCALC_TAG}"  
     command: /app/entry-main.sh
     container_name: ${TCALC_NAME}_main
@@ -14,7 +18,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions  
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TREDIS_PORT}         
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
@@ -22,15 +26,15 @@ services:
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - CACHE_CALCULATIONS_SEC=30     
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_main"      
+      - CACHE_CALCULATIONS_SEC=30 
+      - VERSION=${TCALC_TAG}      
+   
 
   tcalc-worker:
+    labels:
+      - "Module=Worker"
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
     image: "transpara/tcalc:${TCALC_TAG}"  
     command: /app/run-celeryworker.sh
     container_name: ${TCALC_NAME}_worker
@@ -39,7 +43,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions      
     environment:
-      - REDIS_HOST=${TSYSTEM_NAME}_redis
+      - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TREDIS_PORT}          
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
@@ -48,15 +52,12 @@ services:
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=30     
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_worker"     
 
   code-server:
-    image: lscr.io/linuxserver/code-server:latest
+    labels:
+      - "Version=${TCALC_TAG}"
+      - "ID=${TCALC_ID}"
+    image: "transpara/tcode:${TCALC_TAG}"
     container_name: ${TCALC_NAME}_vscode
     environment:
       - PUID=1000
@@ -68,12 +69,7 @@ services:
     ports:
       - ${VSCODE_PORT}:8443
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TCALC_NAME}_vscode"     
+
 
 
 networks:

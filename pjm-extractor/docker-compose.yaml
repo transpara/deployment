@@ -1,0 +1,19 @@
+version: "3.9"
+   
+services:
+  pjm:
+    image: "transpara/pjm:${PJM_TAG}"
+    environment:
+      - tstore_api_url=${TSTORE_API_URL}
+      - pjm_api_port=${PJM_API_PORT}
+      - pjm_base_url=${PJM_BASE_URL}
+      - pjm_api_key=${PJM_API_KEY}
+    container_name: ${NAME}
+    ports:
+      - "0.0.0.0:${PJM_API_PORT}:${PJM_API_PORT}" 
+    hostname: ${NAME}
+    restart: unless-stopped
+
+networks:
+   default:
+      name: transpara

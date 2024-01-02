@@ -2,9 +2,12 @@ version: "3.9"
    
 services:
 
-  tstore:
+  tstore-database:
+    labels:
+      - "Version=${TSTORE_TAG}"
+      - "ID=${TSTORE_ID}"
     image: "transpara/tstore-database:${TSTORE_TAG}"
-    shm_size: '2gb'
+#    shm_size: '2gb'
     volumes:
       - tstore_data:/var/lib/postgresql/data
     environment:
@@ -13,67 +16,36 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/var/lib/postgresql/data
       - PGPORT=5432
+      - TSTUNE_PROFILE=promscale # this is the profile for timescaledb-tune to optimize postgres for promscale-like loads (wal size, buffers, etc)
     container_name: ${TSTORE_NAME}_db
     hostname: ${TSTORE_NAME}_db
     ports:
       - "${TSTORE_PORT}:5432"
     restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_db"
-  
-  promscale:
-    image: timescale/promscale:${PROMSCALE_TAG}
-    depends_on: 
-      - tstore
-    ports:
-      - "${PROMSCALE_API_PORT}:9201"
-      - "${MONITORING_PROMSCALE_PORT}:9202"      
-    container_name: ${TSTORE_NAME}_promscale
-    hostname: ${TSTORE_NAME}_promscale
-    restart: unless-stopped 
-    environment:
-      PROMSCALE_DB_CONNECT_RETRIES: 10
-      PROMSCALE_WEB_TELEMETRY_PATH: /metrics
-      PROMSCALE_DB_URI: postgres://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}?sslmode=allow 
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_promscale"     
 
-  tstore-api:
-    image: "transpara/tstore-api:${TSTORE_API_TAG}"
-    depends_on: 
-      - tstore
-      - promscale
+
+  tstore-pool:
+    image: "bitnami/pgbouncer:latest"
     environment:
-      - PROMSCALE_DB_URI=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - PROMSCALE_API_URI=http://${TSTORE_NAME}_promscale:9201/write
-      - PROMSCALE_OTLP_URI=http://${MONITORING_PROMSCALE_HOST}:9202
-      - EXPOSE_METRICS=${TSTORE_API_EXPOSE_METRICS}
-      - EXPORT_TRACES=${TSTORE_API_EXPORT_TRACES}
-      - TSTORE_NAME=${TSTORE_ID}
-      - REDIS_HOST=${TSYSTEM_NAME}_redis
-      - REDIS_PORT=${TREDIS_PORT}  
-      - REDIS_DB=${TREDIS_SNAPSHOT_DB}  
-      - USE_REDIS_FOR_SNAPSHOTS=${USE_REDIS_FOR_SNAPSHOTS}
-      - REDIS_CONSIDER_STALE_SEC=${REDIS_CONSIDER_STALE_SEC}      
-    container_name: ${TSTORE_NAME}_api
-    hostname: ${TSTORE_NAME}_api
-    ports:
-      - "${TSTORE_API_PORT}:80"
-    restart: unless-stopped
-    logging: 
-      driver: syslog
-      options:
-        syslog-address: "udp://${SYSLOG_HOST}:514"
-        syslog-format: "rfc3164"
-        tag: "node-${TSTORE_NAME}_api"
+      - POSTGRESQL_USERNAME=${POSTGRES_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}  
+      - POSTGRESQL_HOST=${TSTORE_NAME}_db
+      - POSTGRESQL_DATABASE=postgres
+      - PGBOUNCER_PORT=6432
+      # we will assume the following configuration here:
+      # max_connections in postgress = 500
+      # 8 workers for tstore_interface
+      # db writes bypass pgbouncer, so we leave 6*8=48 connections for the writes, and we leave 20 connections to administrative tasks
+      - PGBOUNCER_POOL_MODE=session #transaction pool mode does not work well with prepared statements which SQLAlchemy uses
+      - PGBOUNCER_MAX_CLIENT_CONN=430 #global limit per user/database, in our case it should match the max_connections on DB side as we only use single user/db
+      - PGBOUNCER_DEFAULT_POOL_SIZE=96 #assuming normal working 12 connections per each worker, 96 connections in total
+      - PGBOUNCER_MIN_POOL_SIZE=16 # Assuming minimum 2 open connections per worker.
+      - PGBOUNCER_RESERVE_POOL_SIZE=334 #Remaining between default and max.
+      - PGBOUNCER_QUERY_WAIT_TIMEOUT=300
+      - PGBOUNCER_MAX_DB_CONNECTIONS=430
+    container_name: ${TSTORE_NAME}_pool
+    hostname: ${TSTORE_NAME}_pool          
+
 
 networks:
    default:

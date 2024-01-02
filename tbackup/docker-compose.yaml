@@ -1,0 +1,38 @@
+version: '3'
+services:
+  tbackup:
+    labels:
+      - "Version=${TBACKUP_TAG}"
+      - "ID=${TBACKUP_ID}"
+    image: transpara/tbackup:${TBACKUP_TAG}
+    container_name: ${TBACKUP_NAME}
+    hostname: ${TBACKUP_NAME}
+    volumes:
+      - ${TBACKUP_LOCATION:-tbackup_data}:/backup
+      - tbackup_config:/config
+    environment:
+      - SQLALCHEMY_JOB_STORE_URL=sqlite:////config/pgbr_job_store.db
+      - DATABASE_IP=${DATABASE_IP}
+      - REPO_PATH=/backup
+      - CONFIG_PATH=/config
+      - TBACKUP_TAG=${TBACKUP_TAG}
+      - TBACKUP_MIN_FREE=${TBACKUP_MIN_FREE}
+    ports:
+      - "0.0.0.0:${TBACKUP_PORT}:80"
+    restart: unless-stopped
+    healthcheck:
+      test: python3 /app/health.py > /proc/1/fd/1
+      interval: 10s
+      
+networks:
+   default:
+      name: transpara
+
+volumes:
+  tbackup_config:
+     name: tbackup_config_${TBACKUP_ID}
+  tbackup_data:
+     name: tbackup_data_${TBACKUP_ID}
+
+
+

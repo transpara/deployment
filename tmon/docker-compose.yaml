@@ -1,1 +1,98 @@
+version: "3.9"
+   
+services:
 
+  tmon-db:
+    labels:
+      - "Version=${TMON_DATABASE_TAG}"
+      - "ID=${TMON_ID}"
+    image: "transpara/tmon-database:${TMON_DATABASE_TAG}"
+    ports:
+      - "0.0.0.0:${TMON_DB_PORT}:5432"
+    container_name: tmon_db
+    volumes:
+      - tmon_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_DB=${TMON_DBNAME}"
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+
+
+  tmon-server:
+    labels:
+      - "Version=${TMON_SERVER_TAG}"
+      - "ID=${TMON_ID}"
+    image: "transpara/tmon-server:${TMON_SERVER_TAG}"
+    ports:
+      - "0.0.0.0:${TMON_SERVER_PORT}:10051"
+    container_name: tmon_server
+    restart: unless-stopped
+    environment:
+      - "ZBX_HOSTNAME=tmon_server"
+      - "DB_SERVER_HOST=tmon_db"
+      - "POSTGRES_DB=${TMON_DBNAME}"
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+      - "ENABLE_TIMESCALEDB=true"
+      - "TMONAPI_PORT=${TMONAPI_PORT}"
+      - "TMONAPI_HOST=${TMONAPI_HOST}"
+      - "TMONAPI_UNAME=${TMONAPI_UNAME}"
+      - "TMONAPI_PASSWORD=${TMONAPI_PASSWORD}"
+      - "ZBX_METADATA=${ZBX_METADATA}"
+      - "SQLSERVER_NAME=${SQLSERVER_NAME}"
+      - "SQLSERVER_ADDRESS=${SQLSERVER_ADDRESS}"
+      - "SQLSERVER_PORT=${SQLSERVER_PORT}"
+      - "SQLSEVER_USER_NAME=${SQLSEVER_USER_NAME}"
+      - "SQLSERVER_PASSWORD=${SQLSERVER_PASSWORD}"
+    depends_on: 
+      - tmon-db
+
+  tmon-agent:
+    labels:
+      - "Version=${TMON_AGENT_TAG}"
+      - "ID=${TMON_ID}"
+    image: "transpara/tmon-agent:${TMON_AGENT_TAG}"
+    ports:
+      - "0.0.0.0:${TMON_AGENT_PORT}:10050"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/hostname:/etc/hostname:ro
+    user: 0:0
+    container_name: tmon_agent
+    restart: unless-stopped
+    privileged: true
+    pid: "host"
+    environment:
+      - "ZBX_METADATA=${ZBX_METADATA}"
+      - "ZBX_HOSTNAMEITEM=system.run[cat /etc/hostname]"
+      - "ZBX_SERVER_HOST=${ZBX_SERVER_HOST}"
+
+  tmon-ui:
+    labels:
+      - "Version=${TMON_UI_TAG}"
+      - "ID=${TMON_ID}"
+    image: "transpara/tmon-ui:${TMON_UI_TAG}"
+    ports:
+      - 0.0.0.0:${TMONAPI_PORT}:8080
+    container_name: tmon_ui
+    restart: unless-stopped
+    environment:
+      - "DB_SERVER_HOST=tmon_db"
+      - "POSTGRES_DB=${TMON_DBNAME}"
+      - "POSTGRES_USER=${TMON_UNAME}"
+      - "POSTGRES_PASSWORD=${TMON_PASSWORD}"
+      - "ZBX_SERVER_HOST=tmon_server"
+      - "PHP_TZ=America/Chicago"
+    depends_on:
+      - tmon-db
+      - tmon-server
+
+networks:
+   default:
+      name: transpara
+      external: true
+
+volumes:
+   tmon_data:
+      name: tmon_db_data_${TMON_ID}

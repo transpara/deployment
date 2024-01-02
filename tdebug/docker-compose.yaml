@@ -1,0 +1,47 @@
+version: "3.9"
+   
+services:
+  jaeger:
+    image: jaegertracing/jaeger-query:1.30
+    container_name: tdebug_jaeger
+    restart: unless-stopped
+    ports:
+      - '0.0.0.0:${JAEGER_PORT}:16686'
+    environment:
+      - SPAN_STORAGE_TYPE=grpc-plugin
+      - GRPC_STORAGE_SERVER=${TRACES_HOST}:${TRACES_PORT}
+
+  redis-ui:
+    image: patrikx3/p3x-redis-ui
+    container_name: tdebug_redis_ui
+    restart: unless-stopped
+    ports:
+      - '0.0.0.0:${REDIS_UI_PORT}:7843'
+    volumes:
+      - redis_ui_settings:/settings
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: tdebug_grafana
+    restart: unless-stopped
+    ports:
+      - '0.0.0.0:${GRAFANA_PORT}:3000'
+
+  pg-admin:
+    image: dpage/pgadmin4
+    container_name: tdebug_pgadmin
+    restart: unless-stopped
+    ports:
+      - '0.0.0.0:${PG_ADMIN_PORT}:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG_ADMIN_EMAIL} 
+      - PGADMIN_DEFAULT_PASSWORD=${PG_ADMIN_PW} 
+
+networks:
+   default:
+      name: transpara
+      external: true
+
+volumes:
+   redis_ui_settings:
+      name: tdebug_redis_ui_settings
