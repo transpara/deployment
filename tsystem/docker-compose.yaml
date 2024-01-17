@@ -9,7 +9,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - tsystem_api_data:/app/database
-      - /home/transpara:/home/transpara
     container_name: ${TSYSTEM_NAME}_api
     hostname: ${TSYSTEM_NAME}_api
     environment:
