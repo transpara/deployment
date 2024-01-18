@@ -45,7 +45,7 @@ services:
       - PGBOUNCER_MAX_DB_CONNECTIONS=430
     container_name: ${TSTORE_NAME}_pool
     hostname: ${TSTORE_NAME}_pool          
-
+    restart: unless-stopped
 
 networks:
    default:
