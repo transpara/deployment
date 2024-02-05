@@ -42,7 +42,7 @@ tSystemApi:
   replicas: 2
   image:
     repository: transpara/tsystem
-    tag: "0.144.0-kube"
+    tag: "kube-develop"
   ports:
     containerPort: 80
     servicePort: 80
@@ -61,6 +61,8 @@ tSystemApi:
     SSH_PORT: "22"
     #TSYSTEM_UI_PORT: "3010"
     TSYSTEM_API_ENDPOINT: "/api/v1/"
+    DOCKER_FILE_BASE_PATH: "/transpara/deployment"
+    DOCKER_FILE_TEMPLATE_PATH: "/transpara/deployment/template"
 
 tSystemCache:
   name: tsystem-cache
