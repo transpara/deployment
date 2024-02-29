@@ -1,0 +1,47 @@
+---
+# Source: tstore-interface/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tstore-interface-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tstore-interface
+  template:
+    metadata:
+      labels:
+        app: tstore-interface
+    spec:
+      containers:
+      - name: tstore-interface
+        image: "transpara/tstore-interface:kube-test"
+        imagePullPolicy: Always
+        env:
+        - name: TSYSTEM_URL
+          value: "<<TSYSTEM_URL>>"
+        - name: TSTORE_DB_READ_URL
+          value: "<<TSTORE_CONNECTION_STRING>>"
+        - name: TSTORE_DB_WRITE_URL
+          value: "<<TSTORE_CONNECTION_STRING>>"
+        - name: EXPOSE_METRICS
+          value: "true"
+        - name: TSTORE_ID
+          value: "<<TSTORE_ID>>"
+        - name: TCACHE_HOST
+          value: "tsystem-cache"
+        - name: TCACHE_PORT
+          value: "6379"
+        - name: TCACHE_DB
+          value: "7"
+        - name: TCACHE_CONSIDER_STALE_SEC
+          value: "300"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: BASE_PATH
+          value: "/tstore-interface"
+        ports:
+          - containerPort: 80
+      imagePullSecrets:
+      - name: transpara-docker-secret

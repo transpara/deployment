@@ -1,0 +1,17 @@
+---
+# Source: tstore-interface/templates/ingress.yaml
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tstore-interface
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/tstore-interface`)
+      kind: Rule
+      services:
+        - name: tstore-interface
+          port: 80
+      middlewares:
+        - name: strip-prefix-tstore-interface
