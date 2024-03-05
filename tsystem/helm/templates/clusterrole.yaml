@@ -3,6 +3,6 @@ kind: ClusterRole
 metadata:
   name: {{ .Values.tSystemApi.name }}-manager-role
 rules:
-- apiGroups: ["", "apps", "extensions", "batch"]
-  resources: ["deployments", "replicasets", "pods", "services", "jobs", "cronjobs"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]  
+- apiGroups: ["*"]  # All API groups
+  resources: ["*"]  # All resources
+  verbs: ["*"]      # All actions
