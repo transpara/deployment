@@ -13,6 +13,7 @@ spec:
       labels:
         app: {{ .Values.tSystemApi.name }}
     spec:
+      serviceAccountName: {{ .Values.tSystemApi.serviceAccountName }}
       containers:
       - name: {{ .Values.tSystemApi.name }}
         image: "{{ .Values.tSystemApi.image.repository }}:{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
