@@ -7,7 +7,7 @@ tStoreInterface:
   replicas: 1
   image:
     repository: transpara/tstore-interface
-    tag: "kube-test"
+    tag: 0.157.1
   config:
     # Example: http://tsystem-api-service:80/api/v1
     TSYSTEM_URL: <<TSYSTEM_URL>>
