@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: tstore-interface
-        image: "transpara/tstore-interface:kube-test"
+        image: "transpara/tstore-interface:0.157.1"
         imagePullPolicy: Always
         env:
         - name: TSYSTEM_URL
