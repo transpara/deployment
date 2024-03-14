@@ -39,7 +39,7 @@ tSystemCachePvc:
 tSystemApi:
   name: tsystem-api
   serviceName: tsystem-api-service
-  replicas: 2
+  replicas: 1
   image:
     repository: transpara/tsystem
     tag: "kube-test"
@@ -67,7 +67,7 @@ tSystemApi:
 tSystemCache:
   name: tsystem-cache
   serviceName: tsystem-cache-service
-  replicas: 2
+  replicas: 1
   image: 
     repository: transpara/tcache
   ports:
