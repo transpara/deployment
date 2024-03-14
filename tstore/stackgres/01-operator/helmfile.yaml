@@ -31,7 +31,7 @@ releases:
 
 - name: stackgres-operator
   namespace: stackgres
-  version: 1.6.0
+  version: 1.8.0
   chart: stackgres-charts/stackgres-operator
   values:
     - values/stackgres-{{ .Environment.Name }}-values.yaml

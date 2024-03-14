@@ -9,4 +9,4 @@ spec:
     random_page_cost: '1.1'
     checkpoint_timeout: '15min'
     max_connections: '100'
-    shared_preload_libraries: timescaledb
+    shared_preload_libraries: pg_stat_statements,timescaledb
