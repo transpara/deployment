@@ -20,6 +20,10 @@ services:
       - TREND_RESOLUTION_FACTOR=${TREND_RESOLUTION_FACTOR}  
       - VERSION=${TSTORE_INTERFACE_TAG}    
       - LOG_LEVEL=${LOG_LEVEL}
+      # this is the tiers to retry historical value call to speed up the response time
+      # most of the time we look for the data close to recent and unlimited search through the old chunks
+      # makes the SQL planner work too hard for no reason
+      - HISTORICAL_RETRY_DAYS_TIERS=${HISTORICAL_RETRY_DAYS_TIERS} 
     container_name: ${TSTORE_INTERFACE_NAME}
     hostname: ${TSTORE_INTERFACE_NAME}
     ports:
