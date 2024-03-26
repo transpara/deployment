@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.tSystemCachePv.name }}
+  labels:
+    type: local
+spec:
+  storageClassName: {{ .Values.tSystemCachePv.storageClassName }}
+  capacity:
+    storage: {{ .Values.tSystemCachePv.capacity }}
+  accessModes: {{ .Values.tSystemCachePv.accessModes }}
+  hostPath:
+    path: {{ .Values.tSystemCachePv.hostPath }}

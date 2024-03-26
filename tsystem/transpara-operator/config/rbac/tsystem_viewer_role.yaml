@@ -1,0 +1,27 @@
+# permissions for end users to view tsystems.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: tsystem-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: transpara-operator
+    app.kubernetes.io/part-of: transpara-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: tsystem-viewer-role
+rules:
+- apiGroups:
+  - charts.transpara.com
+  resources:
+  - tsystems
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - charts.transpara.com
+  resources:
+  - tsystems/status
+  verbs:
+  - get

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.tSystemApi.name }}
+spec:
+  serviceName: {{ .Values.tSystemApi.name }}
+  replicas: {{ .Values.tSystemApi.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tSystemApi.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tSystemApi.name }}
+    spec:
+      serviceAccountName: {{ .Values.tSystemApi.name }}
+      containers:
+      - name: {{ .Values.tSystemApi.name }}
+        image: "{{ .Values.tSystemApi.image.repository }}:{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.tSystemApi.ports.containerPort }}
+        volumeMounts:
+        - name: {{ .Values.tSystemApi.volumeMount.name }}
+          mountPath: {{ .Values.tSystemApi.volumeMount.mountPath }}
+        env:
+        - name: EXTERNAL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: TSYSTEM_PORT
+        - name: TSYSTEM_TAG
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: TSYSTEM_TAG
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: REDIS_PORT
+        - name: CONTAINER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: CONTAINER_HOST
+        - name: USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: USERNAME
+        - name: SSH_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: SSH_PORT
+        - name: BASE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: BASE_PATH
+        - name: DOCKER_FILE_BASE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: DOCKER_FILE_BASE_PATH
+        - name: DOCKER_FILE_TEMPLATE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: DOCKER_FILE_TEMPLATE_PATH
+      imagePullSecrets: 
+        - name: {{ .Values.global.imagePullSecret }}
+      volumes:
+        - name: {{ .Values.tSystemApi.volumeMount.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.tSystemApiPvc.name }}

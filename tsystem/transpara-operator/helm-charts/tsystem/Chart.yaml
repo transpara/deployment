@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 0.153.0
+description: Platform for managing Transpara Infrastructure
+name: tsystem
+type: application
+version: 0.1.0
