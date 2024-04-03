@@ -24,7 +24,7 @@ services:
       - REDIS_CELERY_RESULT_DB=6
       - REDIS_SNAPSHOT_DB=7    
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
-      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=30 
       - VERSION=${TCALC_TAG}      
@@ -48,27 +48,27 @@ services:
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
       - REDIS_SNAPSHOT_DB=7
-      - TSTORE_API_URL=http://${TSTORE_NAME}_api:80/api/v1
+      - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=30     
 
-  code-server:
-    labels:
-      - "Version=${TCALC_TAG}"
-      - "ID=${TCALC_ID}"
-    image: "transpara/tcode:${TCALC_TAG}"
-    container_name: ${TCALC_NAME}_vscode
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - DEFAULT_WORKSPACE=/extensions
-    volumes:
-      - tcalc_modules:/extensions
-    ports:
-      - ${VSCODE_PORT}:8443
-    restart: unless-stopped
+  # code-server:
+  #   labels:
+  #     - "Version=${TCALC_TAG}"
+  #     - "ID=${TCALC_ID}"
+  #   image: "transpara/tcode:${TCALC_TAG}"
+  #   container_name: ${TCALC_NAME}_vscode
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #     - DEFAULT_WORKSPACE=/extensions
+  #   volumes:
+  #     - tcalc_modules:/extensions
+  #   ports:
+  #     - ${VSCODE_PORT}:8443
+  #   restart: unless-stopped
 
 
 
