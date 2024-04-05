@@ -1,0 +1,45 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+    createdAt: "2024-04-05T15:02:33Z"
+    operators.operatorframework.io/builder: operator-sdk-v1.34.1
+    operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+  name: transpara-operator.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: Engine used for sending and reading data to/from tStore
+  displayName: TStoreInterface
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: []
+    strategy: deployment
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - interface
+  - tstore
+  links:
+  - name: Transpara Operator
+    url: https://transpara-operator.domain
+  maintainers:
+  - email: diego.castro@transpara.com
+    name: Diego
+  maturity: alpha
+  provider:
+    name: transpara
+  version: 0.0.1

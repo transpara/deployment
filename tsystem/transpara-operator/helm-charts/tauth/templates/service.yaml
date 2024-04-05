@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.tauth.name }}
+  labels:
+    app: {{ .Values.tauth.name }}
+spec:
+  type: {{ .Values.tauth.service.type }}
+  ports:
+    - port: {{ .Values.tauth.service.port }}
+      targetPort: 8080
+  selector:
+    app: {{ .Values.tauth.name }}

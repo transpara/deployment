@@ -1,7 +1,7 @@
 apiVersion: charts.transpara.com/v1
 kind: TSystem
 metadata:
-  name: tsystem-sample
+  name: tsystem
 spec:
   # Default values copied from <project_dir>/helm-charts/tsystem/values.yaml
   global:

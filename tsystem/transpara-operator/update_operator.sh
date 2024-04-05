@@ -1,0 +1,1 @@
+sudo make docker-build docker-push bundle-build bundle-push catalog-build catalog-push

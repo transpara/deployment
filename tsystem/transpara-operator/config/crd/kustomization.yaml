@@ -3,4 +3,6 @@
 # It should be run by config/default
 resources:
 - bases/charts.transpara.com_tsystems.yaml
+- bases/charts.transpara.com_tstoreinterfaces.yaml
+- bases/charts.transpara.com_tauths.yaml
 #+kubebuilder:scaffold:crdkustomizeresource

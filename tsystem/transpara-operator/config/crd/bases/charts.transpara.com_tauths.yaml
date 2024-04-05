@@ -1,20 +1,20 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: tsystems.charts.transpara.com
+  name: tauths.charts.transpara.com
 spec:
   group: charts.transpara.com
   names:
-    kind: TSystem
-    listKind: TSystemList
-    plural: tsystems
-    singular: tsystem
+    kind: TAuth
+    listKind: TAuthList
+    plural: tauths
+    singular: tauth
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: TSystem is the Schema for the tsystems API
+        description: TAuth is the Schema for the tauths API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -29,11 +29,11 @@ spec:
           metadata:
             type: object
           spec:
-            description: Spec defines the desired state of TSystem
+            description: Spec defines the desired state of TAuth
             type: object
             x-kubernetes-preserve-unknown-fields: true
           status:
-            description: Status defines the observed state of TSystem
+            description: Status defines the observed state of TAuth
             type: object
             x-kubernetes-preserve-unknown-fields: true
         type: object
