@@ -4,10 +4,9 @@ metadata:
   name: tauth
 spec:
   tauth:
-    name: tsystem_tauth
+    name: tsystem-tauth
     image:
       repository: transpara/tauth
-      tag: develop
     service:
       type: ClusterIP
       port: 8080
