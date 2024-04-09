@@ -2,15 +2,14 @@ version: "3.9"
    
 services:
   jaeger:
-    image: jaegertracing/jaeger-query:1.30
-    container_name: tdebug_jaeger
-    restart: unless-stopped
+    image: jaegertracing/all-in-one:1.35
     ports:
-      - '0.0.0.0:${JAEGER_PORT}:16686'
+        - "4317:4317" 
+        - "16686:16686"
     environment:
-      - SPAN_STORAGE_TYPE=grpc-plugin
-      - GRPC_STORAGE_SERVER=${TRACES_HOST}:${TRACES_PORT}
-
+        - LOG_LEVEL=debug
+        - COLLECTOR_OTLP_ENABLED=true
+        
   redis-ui:
     image: patrikx3/p3x-redis-ui
     container_name: tdebug_redis_ui
