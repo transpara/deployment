@@ -64,6 +64,16 @@ spec:
             configMapKeyRef:
               name: tstore-interface-config
               key: TCACHE_CONSIDER_STALE_SEC
+        - name: TREND_RESOLUTION_FACTOR
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TREND_RESOLUTION_FACTOR
+        - name: VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TSTORE_INTERFACE_TAG
         - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
@@ -74,7 +84,20 @@ spec:
             configMapKeyRef:
               name: tstore-interface-config
               key: BASE_PATH
+        - name: HISTORICAL_RETRY_DAYS_TIERS
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: HISTORICAL_RETRY_DAYS_TIERS
         ports:
           - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "250m"
+            memory: "512Mi"
       imagePullSecrets:
       - name: transpara-docker-secret
+      

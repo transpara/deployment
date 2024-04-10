@@ -15,3 +15,10 @@ spec:
           port: 80
       middlewares:
         - name: strip-prefix-tstore-interface
+    - match: PathPrefix(`/tstore-ui`)
+      kind: Rule
+      services:
+        - name: tstore-ui
+          port: 8080
+      middlewares:
+        - name: strip-prefix-tstore-interface

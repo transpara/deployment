@@ -1,0 +1,15 @@
+---
+# Source: tstore-interface/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tstore-ui
+spec:
+  selector:
+    app: tstore-ui
+  type: NodePort
+  ports:
+    - nodePort: 30083
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
