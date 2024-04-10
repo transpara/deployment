@@ -9,21 +9,41 @@ services:
     image: "transpara/tstore-interface:${TSTORE_INTERFACE_TAG}"
     environment:
       - TSYSTEM_URL=${TSYSTEM_URL}    
-      - TSTORE_DB_URL=${TSTORE_DB_URL}
+      - TSTORE_DB_READ_URL=${TSTORE_DB_READ_URL}
+      - TSTORE_DB_WRITE_URL=${TSTORE_DB_WRITE_URL}
       - EXPOSE_METRICS=${EXPOSE_METRICS}
       - TSTORE_ID=${TSTORE_ID}
       - TCACHE_HOST=${TCACHE_HOST}
       - TCACHE_PORT=${TCACHE_PORT}  
       - TCACHE_DB=${TCACHE_DB}  
       - TCACHE_CONSIDER_STALE_SEC=${TCACHE_CONSIDER_STALE_SEC}  
+      - TREND_RESOLUTION_FACTOR=${TREND_RESOLUTION_FACTOR}  
       - VERSION=${TSTORE_INTERFACE_TAG}    
       - LOG_LEVEL=${LOG_LEVEL}
+      # this is the tiers to retry historical value call to speed up the response time
+      # most of the time we look for the data close to recent and unlimited search through the old chunks
+      # makes the SQL planner work too hard for no reason
+      - HISTORICAL_RETRY_DAYS_TIERS=${HISTORICAL_RETRY_DAYS_TIERS} 
     container_name: ${TSTORE_INTERFACE_NAME}
     hostname: ${TSTORE_INTERFACE_NAME}
     ports:
       - "${TSTORE_INTERFACE_PORT}:80"
     restart: unless-stopped
 
+  tstore_ui:
+    labels:
+      - "Version=${TSTORE_UI_TAG}"
+      - "ID=${TSTORE_ID}"
+    image: "transpara/tstore-ui:${TSTORE_UI_TAG}"
+    environment:
+      - TSTORE_INTERFACE_URL=http://${TSTORE_INTERFACE_NAME}:80/api/v1
+      - VERSION=${TSTORE_UI_TAG}    
+      - LOG_LEVEL=${LOG_LEVEL}
+    container_name: ${TSTORE_UI_NAME}
+    hostname: ${TSTORE_UI_NAME}
+    ports:
+      - "${TSTORE_UI_PORT}:8080"
+    restart: unless-stopped
 
 networks:
    default:

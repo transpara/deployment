@@ -30,3 +30,20 @@ tStoreInterface:
         port: 80
         targetPort: 80
         nodePort: 30083
+
+tStoreUi:
+  name: tstore-ui
+  replicas: 2 
+  image:
+    repository: transpara/tstore-ui
+  config:
+    LOG_LEVEL: INFO 
+  ports:
+    - containerPort: 8080
+  service:
+    type: NodePort
+    ports:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080
+        nodePort: 30084 
