@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tstore-interface-config
+data:
+  TSYSTEM_URL: "<<TSYSTEM_URL>>"
+  TSTORE_DB_READ_URL: "<<TSTORE_CONNECTION_STRING>>"
+  TSTORE_DB_WRITE_URL: "<<TSTORE_CONNECTION_STRING>>"
+  EXPOSE_METRICS: "true"
+  TSTORE_ID: "<<TSTORE_ID>>"
+  TCACHE_HOST: "tsystem-cache"
+  TCACHE_PORT: "6379"
+  TCACHE_DB: "7"
+  TCACHE_CONSIDER_STALE_SEC: "300"
+  LOG_LEVEL: "INFO"
+  BASE_PATH: "/tstore-interface"

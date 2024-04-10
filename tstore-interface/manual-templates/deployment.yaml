@@ -20,27 +20,60 @@ spec:
         imagePullPolicy: Always
         env:
         - name: TSYSTEM_URL
-          value: "<<TSYSTEM_URL>>"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TSYSTEM_URL
         - name: TSTORE_DB_READ_URL
-          value: "<<TSTORE_CONNECTION_STRING>>"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TSTORE_DB_READ_URL
         - name: TSTORE_DB_WRITE_URL
-          value: "<<TSTORE_CONNECTION_STRING>>"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TSTORE_DB_WRITE_URL
         - name: EXPOSE_METRICS
-          value: "true"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: EXPOSE_METRICS
         - name: TSTORE_ID
-          value: "<<TSTORE_ID>>"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TSTORE_ID
         - name: TCACHE_HOST
-          value: "tsystem-cache"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TCACHE_HOST
         - name: TCACHE_PORT
-          value: "6379"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TCACHE_PORT
         - name: TCACHE_DB
-          value: "7"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TCACHE_DB
         - name: TCACHE_CONSIDER_STALE_SEC
-          value: "300"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: TCACHE_CONSIDER_STALE_SEC
         - name: LOG_LEVEL
-          value: "INFO"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: LOG_LEVEL
         - name: BASE_PATH
-          value: "/tstore-interface"
+          valueFrom:
+            configMapKeyRef:
+              name: tstore-interface-config
+              key: BASE_PATH
         ports:
           - containerPort: 80
       imagePullSecrets:
