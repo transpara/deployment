@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: tstore-ui
-        image: "transpara/tstore-ui:<TSTORE_UI_TAG>"
+        image: "transpara/tstore-ui:<<TSTORE_UI_TAG>>"
         env: 
         - name: TSTORE_INTERFACE_URL
           valueFrom:
