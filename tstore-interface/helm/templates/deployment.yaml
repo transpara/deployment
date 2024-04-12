@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.tStoreInterface.name }}
-        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tSystemUi.image.tag | default .Chart.AppVersion }}"
+        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         env:
         - name: TSYSTEM_URL
@@ -36,7 +36,7 @@ spec:
         - name: TCACHE_CONSIDER_STALE_SEC
           value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
         - name: LOG_LEVEL
-          value: "{{ .Values.tSystemUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
+          value: "{{ .Values.tStoreUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
         - name: BASE_PATH
           value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
         # this is the tiers to retry historical value call to speed up the response time

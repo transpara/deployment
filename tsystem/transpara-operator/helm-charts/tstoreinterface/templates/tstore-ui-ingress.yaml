@@ -11,5 +11,3 @@ spec:
       services:
         - name: tstore-ui
           port: 8080
-      middlewares:
-        - name: tstore-ui-strip-prefix
