@@ -1,5 +1,9 @@
+global:
+  imagePullSecret: transpara-docker-secret
+  imagePullPolicy: Always
+
 tauth:
-  name: tsystem_tauth
+  name: tsystem-tauth
   image:
     repository: transpara/tauth
     tag: develop
