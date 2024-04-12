@@ -26,9 +26,9 @@ services:
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - CACHE_CALCULATIONS_SEC=30 
+      - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC} 
       - VERSION=${TCALC_TAG}      
-   
+      - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
   tcalc-worker:
     labels:
@@ -51,7 +51,8 @@ services:
       - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - CACHE_CALCULATIONS_SEC=30     
+      - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
+      - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
   # code-server:
   #   labels:
