@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.tStoreInterface.name }}
-        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag }}"
+        image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         env:
         - name: TSYSTEM_URL
@@ -36,9 +36,14 @@ spec:
         - name: TCACHE_CONSIDER_STALE_SEC
           value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
         - name: LOG_LEVEL
-          value: "{{ .Values.tStoreInterface.config.LOG_LEVEL }}"
+          value: "{{ .Values.tStoreUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
         - name: BASE_PATH
           value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
+        # this is the tiers to retry historical value call to speed up the response time
+        # most of the time we look for the data close to recent and unlimited search through the old chunks
+        # makes the SQL planner work too hard for no reason
+        - name: HISTORICAL_RETRY_DAYS_TIERS
+          value: "{{.Values.tStoreInterface.config.HISTORICAL_RETRY_DAYS_TIERS}}" 
         ports:
 {{ toYaml .Values.tStoreInterface.ports | indent 10 }}
       imagePullSecrets:
