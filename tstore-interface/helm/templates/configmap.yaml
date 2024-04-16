@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.tStoreInterface.name }}-config
+data:
+  TSTORE_ID: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"
+  TSTORE_DB_READ_URL: "{{ .Values.tStoreInterface.config.TSTORE_DB_READ_URL }}"
+  TSTORE_DB_WRITE_URL: "{{ .Values.tStoreInterface.config.TSTORE_DB_WRITE_URL }}"
+  TSYSTEM_URL: "{{ .Values.tStoreInterface.config.TSYSTEM_URL }}"
+  TSTORE_INTERFACE_URL: "http://{{ .Values.tStoreInterface.name }}:80/api/v1"
+  TCACHE_HOST: "{{ .Values.tStoreInterface.config.TCACHE_HOST }}"
+  TCACHE_PORT: "{{ .Values.tStoreInterface.config.TCACHE_PORT }}"
+  TCACHE_DB: "{{ .Values.tStoreInterface.config.TCACHE_DB }}"
+  TCACHE_CONSIDER_STALE_SEC: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
+  TREND_RESOLUTION_FACTOR: "{{ .Values.tStoreInterface.config.TREND_RESOLUTION_FACTOR | default '1' }}"
+  EXPOSE_METRICS: "{{ .Values.tStoreInterface.config.EXPOSE_METRICS }}"
+  LOG_LEVEL: "{{ .Values.tStoreInterface.config.LOG_LEVEL | default .Values.global.logLevel }}"
+  BASE_PATH: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
+  HISTORICAL_RETRY_DAYS_TIERS: "{{ .Values.tStoreInterface.config.HISTORICAL_RETRY_DAYS_TIERS }}"

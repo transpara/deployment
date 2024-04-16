@@ -18,32 +18,75 @@ spec:
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         env:
         - name: TSYSTEM_URL
-          value: "{{ .Values.tStoreInterface.config.TSYSTEM_URL }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TSYSTEM_URL
         - name: TSTORE_DB_READ_URL
-          value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TSTORE_DB_READ_URL
         - name: TSTORE_DB_WRITE_URL
-          value: "{{ .Values.tStoreInterface.config.TSTORE_DB_URL }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TSTORE_DB_WRITE_URL
         - name: EXPOSE_METRICS
-          value: "{{ .Values.tStoreInterface.config.EXPOSE_METRICS }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: EXPOSE_METRICS
         - name: TSTORE_ID
-          value: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TSTORE_ID
         - name: TCACHE_HOST
-          value: "{{ .Values.tStoreInterface.config.TCACHE_HOST }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TCACHE_HOST
         - name: TCACHE_PORT
-          value: "{{ .Values.tStoreInterface.config.TCACHE_PORT }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TCACHE_PORT
         - name: TCACHE_DB
-          value: "{{ .Values.tStoreInterface.config.TCACHE_DB }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TCACHE_DB
         - name: TCACHE_CONSIDER_STALE_SEC
-          value: "{{ .Values.tStoreInterface.config.TCACHE_CONSIDER_STALE_SEC }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TCACHE_CONSIDER_STALE_SEC
+        - name: TREND_RESOLUTION_FACTOR
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TREND_RESOLUTION_FACTOR
+        - name: VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: TSTORE_INTERFACE_TAG
         - name: LOG_LEVEL
-          value: "{{ .Values.tStoreUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: LOG_LEVEL
         - name: BASE_PATH
-          value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
-        # this is the tiers to retry historical value call to speed up the response time
-        # most of the time we look for the data close to recent and unlimited search through the old chunks
-        # makes the SQL planner work too hard for no reason
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: BASE_PATH
         - name: HISTORICAL_RETRY_DAYS_TIERS
-          value: "{{.Values.tStoreInterface.config.HISTORICAL_RETRY_DAYS_TIERS}}" 
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.tStoreInterface.name }}-config
+              key: HISTORICAL_RETRY_DAYS_TIERS 
         ports:
 {{ toYaml .Values.tStoreInterface.ports | indent 10 }}
       imagePullSecrets:
