@@ -3,4 +3,4 @@ name: tstore-interface
 description: Transpara's component to connect with a tStore database
 type: application
 version: 0.1.0
-appVersion: "0.157.0"
+appVersion: "0.162.0"

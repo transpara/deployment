@@ -26,6 +26,7 @@ spec:
               value: "{{ .Values.tauth.environment.KEYCLOAK_ADMIN_PASSWORD }}"
             - name: KEYCLOAK_IMPORT
               value: "{{ .Values.tauth.environment.KEYCLOAK_IMPORT }}"
-          command: ["start-dev", "--import-realm"]
+          command: ["start-dev"]
+          args: ["--import-realm"]
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}
