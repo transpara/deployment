@@ -38,7 +38,7 @@ releases:
   disableValidation: true
 
 - name: minio
-  namespace: my-db
+  namespace: tstore
   chart: bitnami/minio
   version: 12.8.7
   disableValidation: true
