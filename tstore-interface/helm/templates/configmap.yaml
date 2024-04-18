@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.tStoreInterface.name }}-config
 data:
+  TSTORE_INTERFACE_TAG: "{{ .Values.tStoreInterface.image.tag | default .Chart.AppVersion }}"
   TSTORE_ID: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"
   TSTORE_DB_READ_URL: "{{ .Values.tStoreInterface.config.TSTORE_DB_READ_URL }}"
   TSTORE_DB_WRITE_URL: "{{ .Values.tStoreInterface.config.TSTORE_DB_WRITE_URL }}"

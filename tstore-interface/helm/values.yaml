@@ -21,7 +21,7 @@ tStoreInterface:
     TCACHE_DB: "7"
     TCACHE_CONSIDER_STALE_SEC: "300"
     LOG_LEVEL: INFO
-    BASE_PATH: "/tstore-interface"
+    BASE_PATH: "/tstore/api/v1"
     HISTORICAL_RETRY_DAYS_TIERS: "[1,7,30]"
   ports:
     - containerPort: 80
@@ -39,6 +39,7 @@ tStoreUi:
   image:
     repository: transpara/tstore-ui
   config:
+    BASE_PATH: "/tstore/ui"
     LOG_LEVEL: INFO 
   ports:
     - containerPort: 8080
