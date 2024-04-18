@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.tStoreInterface.name }}-config
+  name: {{ .Values.tStoreInterface.name }}
 data:
   TSTORE_INTERFACE_TAG: "{{ .Values.tStoreInterface.image.tag | default .Chart.AppVersion }}"
   TSTORE_ID: "{{ .Values.tStoreInterface.config.TSTORE_ID }}"

@@ -24,5 +24,7 @@ spec:
           value: "{{ .Values.tStoreUi.image.tag }}"
         - name: LOG_LEVEL
           value: "{{ .Values.tStoreUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
+        - name: BASE_PATH
+          value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
       imagePullSecrets:
       - name: {{ .Values.global.imagePullSecret }}

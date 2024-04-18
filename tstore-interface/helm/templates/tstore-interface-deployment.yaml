@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.tStoreInterface.name }}-deployment
+  name: {{ .Values.tStoreInterface.name }}
 spec:
   replicas: {{ .Values.tStoreInterface.replicas }}
   selector:
@@ -20,72 +20,72 @@ spec:
         - name: TSYSTEM_URL
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TSYSTEM_URL
         - name: TSTORE_DB_READ_URL
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TSTORE_DB_READ_URL
         - name: TSTORE_DB_WRITE_URL
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TSTORE_DB_WRITE_URL
         - name: EXPOSE_METRICS
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: EXPOSE_METRICS
         - name: TSTORE_ID
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TSTORE_ID
         - name: TCACHE_HOST
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TCACHE_HOST
         - name: TCACHE_PORT
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TCACHE_PORT
         - name: TCACHE_DB
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TCACHE_DB
         - name: TCACHE_CONSIDER_STALE_SEC
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TCACHE_CONSIDER_STALE_SEC
         - name: TREND_RESOLUTION_FACTOR
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TREND_RESOLUTION_FACTOR
         - name: VERSION
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: TSTORE_INTERFACE_TAG
         - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: LOG_LEVEL
         - name: BASE_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: BASE_PATH
         - name: HISTORICAL_RETRY_DAYS_TIERS
           valueFrom:
             configMapKeyRef:
-              name: {{ .Values.tStoreInterface.name }}-config
+              name: {{ .Values.tStoreInterface.name }}
               key: HISTORICAL_RETRY_DAYS_TIERS 
         ports:
 {{ toYaml .Values.tStoreInterface.ports | indent 10 }}

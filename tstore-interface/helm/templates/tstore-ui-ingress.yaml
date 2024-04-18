@@ -1,15 +1,15 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: tstore-ui
+  name: {{ .Values.tStoreUi.name }}
 spec:
   entryPoints:
     - web
   routes:
-    - match: PathPrefix(`/tstore`)
+    - match: PathPrefix(`{{ .Values.tStoreUi.config.BASE_PATH }}`)
       kind: Rule
       services:
-        - name: tstore-ui
+        - name: {{ .Values.tStoreUi.name }}
           port: 8080
       middlewares:
-        - name: tstore-ui-strip-prefix
+        - name: {{ .Values.tStoreUi.name }}-strip-prefix
