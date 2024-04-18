@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf ./helm-charts
+
 # Create directories and copy files for tsystem
 mkdir -p ./helm-charts/tsystem
 cp -r ../../tsystem/helm/* ./helm-charts/tsystem
