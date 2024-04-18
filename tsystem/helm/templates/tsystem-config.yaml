@@ -13,7 +13,6 @@ data:
   SSH_PORT: "{{ .Values.tSystemApi.config.SSH_PORT }}"
   #TSYSTEM_UI_PORT: "{{ .Values.tSystemApi.config.TSYSTEM_UI_PORT }}"
   TSYSTEM_TAG: "{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
-  TSYSTEM_API_ENDPOINT: "{{ .Values.tSystemApi.config.TSYSTEM_API_ENDPOINT }}"
   BASE_PATH: "{{ .Values.tSystemApi.config.BASE_PATH }}"
   DOCKER_FILE_BASE_PATH: "{{ .Values.tSystemApi.config.DOCKER_FILE_BASE_PATH }}"
   DOCKER_FILE_TEMPLATE_PATH: "{{ .Values.tSystemApi.config.DOCKER_FILE_TEMPLATE_PATH }}"

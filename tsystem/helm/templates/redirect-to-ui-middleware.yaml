@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-ui
+spec:
+  redirectRegex:
+    regex: "/tsystem/?(.*)"
+    replacement: "{{ .Values.tSystemUi.config.BASE_PATH }}/$1"
+    permanent: true

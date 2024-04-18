@@ -6,6 +6,15 @@ spec:
   entryPoints:
     - web
   routes:
+    - match: PathPrefix(`/tsystem/`)
+      kind: Rule
+      middlewares:
+        - name: redirect-to-ui
+    - match: PathPrefix(`{{ .Values.tSystemUi.config.BASE_PATH }}`)
+      kind: Rule
+      services:
+        - name: tsystem-ui-service
+          port: 3000
     - match: PathPrefix(`{{ .Values.tSystemApi.config.BASE_PATH }}`)
       kind: Rule
       services:
@@ -13,11 +22,3 @@ spec:
           port: 80
       middlewares:
         - name: strip-prefix
-    - match: PathPrefix(`{{ .Values.tSystemUi.config.BASE_PATH }}`)
-      kind: Rule
-      services:
-        - name: tsystem-ui-service
-          port: 3000
-
-    
-

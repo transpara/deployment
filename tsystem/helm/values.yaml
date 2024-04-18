@@ -2,6 +2,7 @@ global:
   imagePullSecret: transpara-docker-secret
   imagePullPolicy: Always
   CONTAINER_HOST: localhost
+  BASE_TSYSTEM_PATH: /tsystem
 
 # tsystem-api volume
 tSystemApiPv:
@@ -42,7 +43,7 @@ tSystemApi:
   replicas: 1
   image:
     repository: transpara/tsystem
-    tag: "kube-test"
+    tag: "kube-test-operator"
   ports:
     containerPort: 80
     servicePort: 80
@@ -51,7 +52,7 @@ tSystemApi:
     name: tsystem-api-data
     mountPath: /app/database
   config:
-    BASE_PATH: "/tsystem-api"
+    BASE_PATH: "/tsystem/api/v1"
     TSYSTEM_ID: "049f6ed7-e015-47cd-961c-8ae249cd412d"
     #TSYSTEM_NAME: "tsystem"
     #REDIS_PORT: "6379"
@@ -60,7 +61,6 @@ tSystemApi:
     USERNAME: "transpara"
     SSH_PORT: "22"
     #TSYSTEM_UI_PORT: "3010"
-    TSYSTEM_API_ENDPOINT: "/api/v1/"
     DOCKER_FILE_BASE_PATH: "/transpara/deployment"
     DOCKER_FILE_TEMPLATE_PATH: "/transpara/deployment/template"
 
@@ -89,4 +89,4 @@ tSystemUi:
     servicePort: 3000
     # nodePort: 30081
   config:
-    BASE_PATH: "/tsystem"
+    BASE_PATH: "/tsystem/ui"
