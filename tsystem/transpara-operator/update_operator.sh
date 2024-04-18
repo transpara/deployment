@@ -11,3 +11,5 @@ cp -r ../../tstore-interface/helm/* ./helm-charts/tstoreinterface
 # Create directories and copy files for tauth
 mkdir -p ./helm-charts/tauth
 cp -r ../../tauth/helm/* ./helm-charts/tauth
+
+make docker-build docker-push bundle bundle-build bundle-push catalog-build catalog-push
