@@ -18,7 +18,7 @@ metadata:
             },
             "tSystemApi": {
               "config": {
-                "BASE_PATH": "/tsystem/api/v1/",
+                "BASE_PATH": "/tsystem/api/v1",
                 "DOCKER_FILE_BASE_PATH": "/transpara/deployment",
                 "DOCKER_FILE_TEMPLATE_PATH": "/transpara/deployment/template",
                 "SSH_PORT": "22",
@@ -111,10 +111,10 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2024-04-17T16:11:40Z"
+    createdAt: "2024-04-18T20:23:08Z"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
-  name: transpara-operator.v0.0.6
+  name: transpara-operator.v0.0.7
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -209,7 +209,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=transpara-operator
-                image: transpara/transpara-operator:0.0.6
+                image: transpara/transpara-operator:0.0.7
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -295,4 +295,4 @@ spec:
   maturity: alpha
   provider:
     name: transpara
-  version: 0.0.6
+  version: 0.0.7
