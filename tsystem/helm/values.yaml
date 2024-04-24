@@ -39,7 +39,7 @@ tSystemCachePvc:
 
 tSystemApi:
   name: tsystem-api
-  serviceName: tsystem-api-service
+  serviceName: tsystem-api
   replicas: 1
   image:
     repository: transpara/tsystem
@@ -66,7 +66,7 @@ tSystemApi:
 
 tSystemCache:
   name: tsystem-cache
-  serviceName: tsystem-cache-service
+  serviceName: tsystem-cache
   replicas: 1
   image: 
     repository: transpara/tcache
@@ -79,7 +79,7 @@ tSystemCache:
 
 tSystemUi:
   name: tsystem-ui
-  serviceName: tsystem-ui-service
+  serviceName: tsystem-ui
   replicas: 2
   image:
     repository: transpara/tsystem-ui

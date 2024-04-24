@@ -35,7 +35,7 @@ metadata:
                 "servicePort": 80
               },
               "replicas": 1,
-              "serviceName": "tsystem-api-service",
+              "serviceName": "tsystem-api",
               "volumeMount": {
                 "mountPath": "/app/database",
                 "name": "tsystem-api-data"
@@ -68,7 +68,7 @@ metadata:
                 "servicePort": 6379
               },
               "replicas": 1,
-              "serviceName": "tsystem-cache-service",
+              "serviceName": "tsystem-cache",
               "volumeMount": {
                 "mountPath": "/data",
                 "name": "tsystem-cache-data"
@@ -105,16 +105,16 @@ metadata:
                 "servicePort": 3000
               },
               "replicas": 2,
-              "serviceName": "tsystem-ui-service"
+              "serviceName": "tsystem-ui"
             }
           }
         }
       ]
     capabilities: Basic Install
-    createdAt: "2024-04-18T21:29:11Z"
+    createdAt: "2024-04-23T17:13:33Z"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
-  name: transpara-operator.v0.0.7
+  name: transpara-operator.v0.0.8
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -209,7 +209,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=transpara-operator
-                image: transpara/transpara-operator:0.0.7
+                image: transpara/transpara-operator:0.0.8
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -295,4 +295,4 @@ spec:
   maturity: alpha
   provider:
     name: transpara
-  version: 0.0.7
+  version: 0.0.8

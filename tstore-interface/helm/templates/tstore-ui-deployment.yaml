@@ -15,16 +15,17 @@ spec:
       containers:
       - name: {{ .Values.tStoreUi.name }}
         image: "{{ .Values.tStoreUi.image.repository }}:{{ .Values.tStoreUi.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         ports:
 {{ toYaml .Values.tStoreInterface.ports | indent 10 }}
         env:
         - name: TSTORE_INTERFACE_URL
-          value: "http://{{ .Values.tStoreInterface.name }}:{{ (index .Values.tStoreInterface.ports 0).containerPort }}/api/v1"
+          value: "http://{{ .Values.tStoreInterface.name }}:{{ (index .Values.tStoreInterface.ports 0).containerPort }}"
         - name: VERSION
           value: "{{ .Values.tStoreUi.image.tag }}"
         - name: LOG_LEVEL
           value: "{{ .Values.tStoreUi.config.LOG_LEVEL | default .Values.global.logLevel }}"
         - name: BASE_PATH
-          value: "{{ .Values.tStoreInterface.config.BASE_PATH }}"
+          value: "{{ .Values.tStoreUi.config.BASE_PATH }}"
       imagePullSecrets:
       - name: {{ .Values.global.imagePullSecret }}

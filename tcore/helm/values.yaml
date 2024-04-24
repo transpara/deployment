@@ -3,7 +3,7 @@ global:
 
 tcoreApi:
   service:
-    name: tcore-api-service
+    name: tcore-api
     type: NodePort
     port: 80
     nodePort: 30010
@@ -16,11 +16,11 @@ tcoreApi:
     tag: develop
   config:
     TCORE_NAME: version_six
-    TGRAPH_HOST: memgraph-db-service
+    TGRAPH_HOST: memgraph-db
     TGRAPH_PORT: 7687
-    REDIS_HOST: tsystem-cache-service
+    REDIS_HOST: tsystem-cache
     REDIS_PORT: 6379
-    TAUTH_HOST: tsystem-tauth-service
+    TAUTH_HOST: tsystem-tauth
     TAUTH_PORT: 8080
     TCORE_ID: 049f6ed7-e754-4315-bdc6-bf5ed6e4d437
     OTEL_EXPORTER_HOST: tstore_tscale
@@ -36,9 +36,9 @@ tcoreBeat:
     TCORE_NAME: version_six
     TGRAPH_HOST: tcore-beat-tcore-db
     TGRAPH_PORT: 7687
-    REDIS_HOST: tsystem-cache-service
+    REDIS_HOST: tsystem-cache
     REDIS_PORT: 6379
-    TAUTH_HOST: tsystem-tauth-service
+    TAUTH_HOST: tsystem-tauth
     TAUTH_PORT: 8080
     TCORE_ID: 049f6ed7-e754-4315-bdc6-bf5ed6e4d437
 
@@ -70,12 +70,12 @@ tcoreFlower:
     tag: develop
   config:
     TCORE_NAME: version_six
-    REDIS_HOST: tsystem-cache-service
+    REDIS_HOST: tsystem-cache
     REDIS_PORT: 6379
 
 tcoreUi:
   service:
-    name: tcore-ui-service
+    name: tcore-ui
     type: ClusterIP
     port: 3000
     nodePort: null
@@ -93,7 +93,7 @@ tcoreUi:
 
 memgraphDb:
   service:
-    name: memgraph-db-service
+    name: memgraph-db
     type: ClusterIP
     port: 7687
     nodePort: null
