@@ -6,11 +6,3 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: PathPrefix(`{{ .Values.tStoreUi.config.BASE_PATH }}`)
-      kind: Rule
-      services:
-        - name: {{ .Values.tStoreUi.name }}
-          port: 8080
-      middlewares:
-        - name: {{ .Values.tStoreUi.name }}-strip-prefix
-        - name: {{ .Values.tStoreUi.name }}-add-prefix-header

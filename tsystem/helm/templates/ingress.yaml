@@ -6,14 +6,19 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: PathPrefix(`/tsystem/ui`) || PathPrefix(`/tsystem`)
+    - match: PathPrefix(`{{ .Values.tSystemUi.config.BASE_PATH }}`)
+      kind: Rule
+      services:
+        - name: tsystem-ui
+          port: 3000
+    - match: PathPrefix(`/tsystem`) # This will match any subpath not exclusively caught by the above
       kind: Rule
       middlewares:
         - name: redirect-to-ui
       services:
         - name: tsystem-ui
           port: 3000
-    - match: PathPrefix(`/tsystem/api/v1`)
+    - match: PathPrefix(`{{ .Values.tSystemApi.config.BASE_PATH }}`)
       kind: Rule
       services:
         - name: tsystem-api

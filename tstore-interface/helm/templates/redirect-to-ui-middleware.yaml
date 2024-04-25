@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .Values.tStoreUi.name }}-redirect-to-ui
+spec:
+  redirectRegex:
+    regex: "^(.*)/tstore/?(.*)"
+    replacement: "$1{{ .Values.tStoreUi.config.BASE_PATH }}/$2"
+    permanent: true
