@@ -1,0 +1,30 @@
+version: "3.9"
+   
+services:
+  todbc:
+    build: .
+    image: "transpara/${EXTRACTOR_PREFIX}_extractor:${VERSION}"
+    environment:
+      - VERSION=${VERSION}
+      - ID=${ID}
+      - EXTRACTOR_PREFIX=${EXTRACTOR_PREFIX}
+      - TSTORE_API_URL=${TSTORE_API_URL}
+      - TSTORE_FLUSH_INTERVAL_SECONDS=${TSTORE_FLUSH_INTERVAL_SECONDS}
+      - TSTORE_FLUSH_SIZE=${TSTORE_FLUSH_SIZE}
+      - OUTPUT_BATCH_SIZE=${OUTPUT_BATCH_SIZE}
+      - CYCLE_SECONDS=${CYCLE_SECONDS}
+      - LOOKBACK_SECONDS=${LOOKBACK_SECONDS}
+      - MAX_RANGE_PER_REQUEST_SECONDS=${MAX_RANGE_PER_REQUEST_SECONDS}
+      - BACKFILL_START_TIME=${BACKFILL_START_TIME}
+      - BACKFILL=${BACKFILL}
+      - CONNECTION_STRING=${CONNECTION_STRING}
+      - TSYSTEM_HOST=${TSYSTEM_HOST}
+      - QUERY=${QUERY}
+      - SOURCE_TZ=${SOURCE_TZ}
+    container_name: ${EXTRACTOR_PREFIX}_extractor
+    restart: unless-stopped
+
+networks:
+   default:
+      external: true
+      name: transpara
