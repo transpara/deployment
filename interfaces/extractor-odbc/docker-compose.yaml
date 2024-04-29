@@ -2,8 +2,8 @@ version: "3.9"
    
 services:
   todbc:
-    build: .
-    image: "transpara/${EXTRACTOR_PREFIX}_extractor:${VERSION}"
+    #build: .
+    image: "transpara/extractor-odbc:${VERSION}"
     environment:
       - VERSION=${VERSION}
       - ID=${ID}
