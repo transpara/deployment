@@ -12,7 +12,7 @@ repositories:
   - name: bitnami #minio
     url: https://charts.bitnami.com/bitnami
   - name: openebs
-    url: https://openebs.github.io/charts
+    url: https://openebs.github.io/openebs
 
 helmDefaults:
   wait: true
