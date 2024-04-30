@@ -4,6 +4,6 @@ metadata:
   name: redirect-to-ui
 spec:
   redirectRegex:
-    regex: "^(.*)/tsystem(?!/ui|/api)(/.*)?$"
+    regex: "^(.*)/tsystem(/.*)?$"
     replacement: "$1{{ .Values.tSystemUi.config.BASE_PATH }}$2"
     permanent: true
