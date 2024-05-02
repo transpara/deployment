@@ -1,0 +1,14 @@
+apiVersion: charts.transpara.com/v1
+kind: TStoreInterface
+metadata:
+  name: <<TSTORE_INTERFACE_NAME>>
+spec:
+  tStoreInterface:
+    config:
+      # Example: http://tsystem-api-service:80/api/v1
+      TSYSTEM_URL: <<TSYSTEM_URL>>
+      # Example: postgresql://postgres:a0ba-396f-4c57-9b4@my-db-primary:5432/postgres
+      TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
+      TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
+      TSTORE_ID: <<TSTORE_ID>>
+      TCACHE_HOST: tsystem-cache-service
