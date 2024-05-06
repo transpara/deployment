@@ -25,6 +25,7 @@ services:
       # most of the time we look for the data close to recent and unlimited search through the old chunks
       # makes the SQL planner work too hard for no reason
       - HISTORICAL_RETRY_DAYS_TIERS=${HISTORICAL_RETRY_DAYS_TIERS} 
+      - BASE_PATH=${BASE_PATH}
     container_name: ${TSTORE_INTERFACE_NAME}
     hostname: ${TSTORE_INTERFACE_NAME}
     ports:
