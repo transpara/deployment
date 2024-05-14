@@ -35,3 +35,10 @@ spec:
   prometheusAutobind: true
   nonProductionOptions:
     disableClusterPodAntiAffinity: true
+  tolerations:
+  - key: "tstore-node"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  nodeSelector:
+    tstore-node: "true"

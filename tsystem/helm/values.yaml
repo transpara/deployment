@@ -80,7 +80,7 @@ tSystemCache:
 tSystemUi:
   name: tsystem-ui
   serviceName: tsystem-ui
-  replicas: 2
+  replicas: 1
   image:
     repository: transpara/tsystem-ui
     tag: "kube-test"

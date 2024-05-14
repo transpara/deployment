@@ -14,6 +14,17 @@ spec:
         app: {{ .Values.tSystemApi.name }}
     spec:
       serviceAccountName: {{ .Values.tSystemApi.name }}
+      # affinity to try making all replicas deploy in the same node
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - tsystem-api
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: {{ .Values.tSystemApi.name }}
         image: "{{ .Values.tSystemApi.image.repository }}:{{ .Values.tSystemApi.image.tag | default .Chart.AppVersion }}"
