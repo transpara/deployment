@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  collector_telegraf:
+    labels:
+      - "Version=${COLLECTOR_TELEGRAF_TAG}"
+      - "ID=${TELEGRAF_ID}"
+    image: transpara/collector-telegraf:${COLLECTOR_TELEGRAF_TAG}
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/utmp:/hostfs/var/run/utmp:ro
+    environment:
+      - extractor_version=${COLLECTOR_TELEGRAF_TAG}
+      - disk_free_min=${DISK_FREE_MIN}
+      - HOST_ETC=/hostfs/etc
+      - HOST_PROC=/hostfs/proc
+      - HOST_SYS=/hostfs/sys
+      - HOST_VAR=/hostfs/var
+      - HOST_RUN=/hostfs/run
+      - HOST_MOUNT_PREFIX=/hostfs
+    container_name: ${TELEGRAF_NAME}
+    hostname: ${TELEGRAF_NAME}
+    restart: unless-stopped
+
+networks:
+  default:
+    name: transpara
+    external: true
