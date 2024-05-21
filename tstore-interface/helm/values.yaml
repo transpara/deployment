@@ -35,7 +35,7 @@ tStoreInterface:
 
 tStoreUi:
   name: tstore-ui
-  replicas: 2 
+  replicas: 1
   image:
     repository: transpara/tstore-ui
     tag: kube-test
