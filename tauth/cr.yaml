@@ -1,0 +1,16 @@
+apiVersion: charts.transpara.com/v1
+kind: TAuth
+metadata:
+  name: tauth
+spec:
+  tauth:
+    name: tsystem-tauth
+    image:
+      repository: transpara/tauth
+    service:
+      type: ClusterIP
+      port: 8080
+    environment:
+      KEYCLOAK_ADMIN: tauthdev
+      KEYCLOAK_ADMIN_PASSWORD: BorgGoesLive!22
+      KEYCLOAK_IMPORT: /opt/keycloak/data/import/transpara-realm.json
