@@ -14,8 +14,8 @@ services:
     environment:
       - EXTERNAL_PORT=${TSYSTEM_PORT}
       - TSYSTEM_TAG=${TSYSTEM_TAG}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
+      - TCACHE_HOST=${TCACHE_HOST}
+      - TCACHE_PORT=${TCACHE_PORT}
       - CONTAINER_HOST=${CONTAINER_HOST}
       - USERNAME=${USERNAME}
       - SSH_PORT=${SSH_PORT}
