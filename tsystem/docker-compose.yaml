@@ -35,7 +35,7 @@ services:
     container_name: ${TSYSTEM_NAME}_cache
     hostname: ${TSYSTEM_NAME}_cache
     ports:
-      - "0.0.0.0:${REDIS_PORT}:6379"
+      - "0.0.0.0:${TCACHE_PORT}:6379"
     restart: unless-stopped      
   
   tsystem_ui:
