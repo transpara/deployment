@@ -52,6 +52,55 @@ services:
       - "0.0.0.0:${TSYSTEM_UI_PORT}:3000"
     restart: unless-stopped
 
+  tsystem_broker:
+    labels:
+      - "Version=${TEVENT_BROKER_TAG}"
+      - "ID=${TSYSTEM_ID}"
+    image: "transpara/tevent-broker:${TEVENT_BROKER_TAG}"
+    container_name: ${TSYSTEM_NAME}_broker
+    hostname: ${TSYSTEM_NAME}_broker
+    ports:
+      - "0.0.0.0:${BROKER_MQTT_PORT}:1883"
+      - "0.0.0.0:${BROKER_WEBSERVICE_PORT}:9001"
+    restart: unless-stopped
+
+  tsystem_event:
+    labels:
+      - "Version=${TEVENT_PROCESSOR_TAG}"
+      - "ID=${TSYSTEM_ID}"
+    image: "transpara/tevent-processor:${TEVENT_PROCESSOR_TAG}"
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - VERSION=${TEVENT_PROCESSOR_TAG}
+      - TMQTTBROKER_HOST=${TSYSTEM_NAME}_broker
+      - TEVENTBROKER_PORT=1883
+      - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80${TSYSTEM_API_ENDPOINT}
+      - WORKER_COUNT=${EVENT_WORKER_COUNT}
+      - SUBSCRIPTION_REFRESH_INTERVAL_SEC=${EVENT_SUBSCRIPTION_REFRESH_INTERVAL_SEC}  
+    container_name: ${TSYSTEM_NAME}_event
+    hostname: ${TSYSTEM_NAME}_event
+    restart: unless-stopped
+
+  tsystem_event_mgmt:
+    labels:
+      - "Version=${TEVENT_MANAGEMENT_TAG}"
+      - "ID=${TSYSTEM_ID}"
+    image: "cedalo/management-center:${TEVENT_MANAGEMENT_TAG}"
+    environment:
+      - CEDALO_MC_BROKER_ID=mosquitto
+      - CEDALO_MC_BROKER_ID= mosquitto
+      - CEDALO_MC_BROKER_NAME=Mosquitto
+      - CEDALO_MC_BROKER_URL=mqtt://${TSYSTEM_NAME}_broker:1883
+      # CEDALO_MC_BROKER_USERNAME=username
+      # CEDALO_MC_BROKER_PASSWORD=password
+      - CEDALO_MC_USERNAME=admin
+      - CEDALO_MC_PASSWORD=BorgGoesLive!22
+    ports:
+      - "0.0.0.0:${EVENT_MGMT_PORT}:8088"          
+    container_name: ${TSYSTEM_NAME}_event_mgmt
+    hostname: ${TSYSTEM_NAME}_event_mgmt
+    restart: unless-stopped
+
 networks:
    default:
       name: transpara
