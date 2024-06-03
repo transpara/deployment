@@ -1,0 +1,226 @@
+version: "3.9"
+
+services:
+
+  tgraph_db:
+    image: "memgraph/memgraph-platform:2.14.1-memgraph2.14.1-lab2.11.1-mage1.14.1"
+    volumes:
+      - tgraph_data:/var/lib/memgraph
+    container_name: ${TGRAPH_NAME}_tgraph_db
+    ports:
+      - "0.0.0.0:${TGRAPH_LAB_PORT}:3000"
+      - "0.0.0.0:${TGRAPH_PORT}:7687"
+    restart: unless-stopped
+
+  tgraph_api:
+    image: "transpara/tgraph-api:${IMAGE_TAG}"
+    #build: .
+    container_name: ${TGRAPH_NAME}_tgraph_api
+    hostname: ${TGRAPH_NAME}_tgraph_api
+    ports:
+      - "0.0.0.0:${TGRAPH_API_PORT}:80"
+    restart: unless-stopped
+    environment:
+      - TSYSTEM_HOST=${TSYSTEM_HOST}
+      - ALLOW_OFFLINE=${ALLOW_OFFLINE}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - VERSION=${VERSION}
+      - COMPONENT_ID=${COMPONENT_ID}
+      - TSYSTEM_COMPONENT_TYPE=${TSYSTEM_COMPONENT_TYPE}
+      - TGRAPH_LAB_PORT=${TGRAPH_LAB_PORT}
+      - TGRAPH_API_PORT=${TGRAPH_API_PORT}
+      - TGRAPH_NAME=${TGRAPH_NAME}
+      - TGRAPH_HOST=${TGRAPH_NAME}_tgraph_db
+      - TGRAPH_PORT=7687
+      - TGRAPH_USER=${TGRAPH_USER}
+      - TGRAPH_PASSWORD=${TGRAPH_PASSWORD}
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=${TAUTH_PORT}
+      - EXPOSE_METRICS=${EXPOSE_METRICS}
+      - EXPORT_TRACES=${EXPORT_TRACES}
+      - EXPORT_TRACE_ARGS=${EXPORT_TRACE_ARGS}
+      - OTEL_EXPORTER_HOST=${OTEL_EXPORTER_HOST}
+      - OTEL_EXPORTER_PORT=${OTEL_EXPORTER_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_GLOBAL_VERBOSE=${LOG_GLOBAL_VERBOSE}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MQTT_BROKER_HOST=${MQTT_BROKER_HOST}
+      - MQTT_BROKER_PORT=${MQTT_BROKER_PORT}
+      - GROUP_ROLLUP_DEPTH_TO_CACHE=${GROUP_ROLLUP_DEPTH_TO_CACHE}
+      - ROLLUP_CACHE_EXPIRATION=${ROLLUP_CACHE_EXPIRATION}
+      - CACHE_SECONDS=${CACHE_SECONDS}
+      - CACHE_LOCK_EXPIRY_SECONDS=${CACHE_LOCK_EXPIRY_SECONDS}
+      - CELERY_BROKER_URL=redis://${REDIS_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${REDIS_HOST}:6379/1 
+
+
+  tgraph-updater:
+    image: "transpara/tgraph-api:${IMAGE_TAG}"
+    #build: .
+    command: /app/run-updater.sh
+    restart: unless-stopped
+    environment:
+      - TSYSTEM_HOST=${TSYSTEM_HOST}
+      - ALLOW_OFFLINE=${ALLOW_OFFLINE}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - VERSION=${VERSION}
+      - COMPONENT_ID=${COMPONENT_ID}
+      - TSYSTEM_COMPONENT_TYPE=${TSYSTEM_COMPONENT_TYPE}
+      - TGRAPH_LAB_PORT=${TGRAPH_LAB_PORT}
+      - TGRAPH_API_PORT=${TGRAPH_API_PORT}
+      - TGRAPH_NAME=${TGRAPH_NAME}
+      - TGRAPH_HOST=${TGRAPH_NAME}_tgraph_db
+      - TGRAPH_PORT=7687
+      - TGRAPH_USER=${TGRAPH_USER}
+      - TGRAPH_PASSWORD=${TGRAPH_PASSWORD}
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=${TAUTH_PORT}
+      - EXPOSE_METRICS=${EXPOSE_METRICS}
+      - EXPORT_TRACES=${EXPORT_TRACES}
+      - EXPORT_TRACE_ARGS=${EXPORT_TRACE_ARGS}
+      - OTEL_EXPORTER_HOST=${OTEL_EXPORTER_HOST}
+      - OTEL_EXPORTER_PORT=${OTEL_EXPORTER_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_GLOBAL_VERBOSE=${LOG_GLOBAL_VERBOSE}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MQTT_BROKER_HOST=${MQTT_BROKER_HOST}
+      - MQTT_BROKER_PORT=${MQTT_BROKER_PORT}
+      - GROUP_ROLLUP_DEPTH_TO_CACHE=${GROUP_ROLLUP_DEPTH_TO_CACHE}
+      - ROLLUP_CACHE_EXPIRATION=${ROLLUP_CACHE_EXPIRATION}
+      - CACHE_SECONDS=${CACHE_SECONDS}
+      - CACHE_LOCK_EXPIRY_SECONDS=${CACHE_LOCK_EXPIRY_SECONDS}
+      - CELERY_BROKER_URL=redis://${REDIS_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${REDIS_HOST}:6379/1 
+
+  tgraph-simulator:
+    image: "transpara/tgraph-api:${IMAGE_TAG}"
+    #build: .
+    command: /app/run-simulator.sh
+    restart: unless-stopped
+    environment:
+      - TSYSTEM_HOST=${TSYSTEM_HOST}
+      - ALLOW_OFFLINE=${ALLOW_OFFLINE}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - VERSION=${VERSION}
+      - COMPONENT_ID=${COMPONENT_ID}
+      - TSYSTEM_COMPONENT_TYPE=${TSYSTEM_COMPONENT_TYPE}
+      - TGRAPH_LAB_PORT=${TGRAPH_LAB_PORT}
+      - TGRAPH_API_PORT=${TGRAPH_API_PORT}
+      - TGRAPH_NAME=${TGRAPH_NAME}
+      - TGRAPH_HOST=${TGRAPH_NAME}_tgraph_db
+      - TGRAPH_PORT=7687
+      - TGRAPH_USER=${TGRAPH_USER}
+      - TGRAPH_PASSWORD=${TGRAPH_PASSWORD}
+      - TAUTH_HOST=${TAUTH_HOST}
+      - TAUTH_PORT=${TAUTH_PORT}
+      - EXPOSE_METRICS=${EXPOSE_METRICS}
+      - EXPORT_TRACES=${EXPORT_TRACES}
+      - EXPORT_TRACE_ARGS=${EXPORT_TRACE_ARGS}
+      - OTEL_EXPORTER_HOST=${OTEL_EXPORTER_HOST}
+      - OTEL_EXPORTER_PORT=${OTEL_EXPORTER_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_GLOBAL_VERBOSE=${LOG_GLOBAL_VERBOSE}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MQTT_BROKER_HOST=${MQTT_BROKER_HOST}
+      - MQTT_BROKER_PORT=${MQTT_BROKER_PORT}
+      - GROUP_ROLLUP_DEPTH_TO_CACHE=${GROUP_ROLLUP_DEPTH_TO_CACHE}
+      - ROLLUP_CACHE_EXPIRATION=${ROLLUP_CACHE_EXPIRATION}
+      - CACHE_SECONDS=${CACHE_SECONDS}
+      - CACHE_LOCK_EXPIRY_SECONDS=${CACHE_LOCK_EXPIRY_SECONDS}
+      - CELERY_BROKER_URL=redis://${REDIS_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${REDIS_HOST}:6379/1 
+
+
+
+  # tcore-beat:
+  #   image: "transpara/tcore-scratchpad"
+  #   command: /app/run-celerybeat.sh
+  #   container_name: tcore_scratchpad_beat
+  #   hostname: tcore_scratchpad_beat
+  #   restart: unless-stopped
+  #   environment:
+  #     - TCORE_NAME=${TCORE_NAME}
+  #     - TGRAPH_HOST=${TCORE_NAME}_tcore_db
+  #     - TGRAPH_PORT=7687    
+  #     - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1          
+  #     - REDIS_HOST=${TCACHE_HOST}
+  #     - REDIS_PORT=6379   
+  #     - TAUTH_HOST=${TAUTH_HOST}
+  #     - TAUTH_PORT=8080     
+  #     - TCORE_ID=${TCORE_ID}
+
+  # tcore-worker:
+  #   image: "transpara/tcore-scratchpad"
+  #   command: /app/run-celeryworker.sh
+  #   container_name: tcore_scratchpad_worker
+  #   hostname: tcore_scratchpad_worker
+  #   restart: unless-stopped
+  #   environment:
+  #     - TCORE_NAME=${TCORE_NAME}
+  #     - TGRAPH_HOST=${TCORE_NAME}_tcore_db
+  #     - TGRAPH_PORT=7687    
+  #     - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1          
+  #     - REDIS_HOST=${TCACHE_HOST}
+  #     - REDIS_PORT=6379   
+  #     - TAUTH_HOST=${TAUTH_HOST}
+  #     - TAUTH_PORT=8080     
+  #     - TCORE_ID=${TCORE_ID}
+
+
+  # tcore-flower:
+  #   image: "transpara/tcore-scratchpad"
+  #   command: /app/run-flower.sh
+  #   container_name: tcore_scratchpad_flower
+  #   hostname: tcore_scratchpad_flower
+  #   ports:
+  #     - "${FLOWER_PORT}:5555"    
+  #   restart: unless-stopped     
+  #   environment:
+  #     - TCORE_NAME=${TCORE_NAME}
+  #     - CELERY_BROKER_URL=redis://${TCACHE_HOST}:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://${TCACHE_HOST}:6379/1
+
+  # tauth:
+  #   restart: unless-stopped
+  #   image: transpara/tauth:develop
+  #   container_name: tsystem_tauth
+  #   ports:
+  #     - '0.0.0.0:8080:8080'
+  #   #volumes:
+  #     #- tauth_data:/
+  #   environment:
+  #     - KEYCLOAK_ADMIN=tauthdev
+  #     - KEYCLOAK_ADMIN_PASSWORD=BorgGoesLive!22
+  #     - KEYCLOAK_IMPORT=/opt/keycloak/data/import/transpara-realm.json
+  #   command: start-dev --import-realm
+
+  # tredis:
+  #   labels:
+  #     - "Version=${IMAGE_TAG}"
+  #     - "ID=${TSYSTEM_ID}"
+  #   image: "transpara/tcache:${IMAGE_TAG}"
+  #   volumes:
+  #     - tredis_data:/data  
+  #   container_name: ${TSYSTEM_NAME}_tcache
+  #   hostname: ${TSYSTEM_NAME}_tcache
+  #   ports:
+  #     - "0.0.0.0:6379:6379"
+  #   restart: unless-stopped      
+  
+
+volumes:
+  tgraph_data: 
+      name: tgraph_data_${COMPONENT_ID}
+
+  #tredis_data:
+  #    name: tsystem_redis_data_${TSYSTEM_ID}
+
+networks:
+  default:
+    name: transpara
+    external: true
