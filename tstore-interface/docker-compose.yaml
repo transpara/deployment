@@ -26,6 +26,8 @@ services:
       # makes the SQL planner work too hard for no reason
       - HISTORICAL_RETRY_DAYS_TIERS=${HISTORICAL_RETRY_DAYS_TIERS} 
       - BASE_PATH=${BASE_PATH}
+      - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
+      - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}
     container_name: ${TSTORE_INTERFACE_NAME}
     hostname: ${TSTORE_INTERFACE_NAME}
     ports:
@@ -41,6 +43,8 @@ services:
       - TSTORE_INTERFACE_URL=http://${TSTORE_INTERFACE_NAME}:80/api/v1
       - VERSION=${TSTORE_UI_TAG}    
       - LOG_LEVEL=${LOG_LEVEL}
+      - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
+      - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
     container_name: ${TSTORE_UI_NAME}
     hostname: ${TSTORE_UI_NAME}
     ports:
