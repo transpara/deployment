@@ -41,6 +41,7 @@ services:
     image: "transpara/tstore-ui:${TSTORE_UI_TAG}"
     environment:
       - TSTORE_INTERFACE_URL=http://${TSTORE_INTERFACE_NAME}:80/api/v1
+      - TSTORE_ID=${TSTORE_ID}
       - VERSION=${TSTORE_UI_TAG}    
       - LOG_LEVEL=${LOG_LEVEL}
       - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
