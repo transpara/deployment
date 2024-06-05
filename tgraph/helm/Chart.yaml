@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tgraph
+description: Monitoring engine
+type: application
+version: 0.1.0
+appVersion: "0.175.0"

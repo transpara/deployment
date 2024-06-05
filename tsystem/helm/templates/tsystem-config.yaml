@@ -5,8 +5,8 @@ metadata:
 data:
   TSYSTEM_ID: "{{ .Values.tSystemApi.config.TSYSTEM_ID }}"
   #TSYSTEM_NAME: "{{ .Values.tSystemApi.name }}"
-  REDIS_PORT: "{{ .Values.tSystemCache.ports.servicePort}}"
-  REDIS_HOST: "{{ .Values.tSystemCache.name }}"
+  TCACHE_PORT: "{{ .Values.tSystemCache.ports.servicePort}}"
+  TCACHE_HOST: "{{ .Values.tSystemCache.name }}"
   TSYSTEM_PORT: "{{ .Values.tSystemApi.ports.servicePort }}"
   CONTAINER_HOST: "{{ .Values.global.CONTAINER_HOST }}"
   USERNAME: "{{ .Values.tSystemApi.config.USERNAME }}"

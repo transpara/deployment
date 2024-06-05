@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.tSystemBroker.serviceName }}
+spec:
+  selector:
+    app: {{ .Values.tSystemBroker.name }}
+  ports:
+  - name: mqtt
+    protocol: TCP
+    port: {{ .Values.tSystemBroker.ports.mqttPort }}
+    targetPort: {{ .Values.tSystemBroker.ports.mqttContainerPort }}
+  - name: websocket
+    protocol: TCP
+    port: {{ .Values.tSystemBroker.ports.webservicePort }}
+    targetPort: {{ .Values.tSystemBroker.ports.webserviceContainerPort }}
+  type: NodePort

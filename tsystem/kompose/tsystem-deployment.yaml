@@ -33,8 +33,8 @@ spec:
         - env:
             - name: CONTAINER_HOST
             - name: EXTERNAL_PORT
-            - name: REDIS_HOST
-            - name: REDIS_PORT
+            - name: TCACHE_HOST
+            - name: TCACHE_PORT
             - name: SSH_PORT
             - name: TSYSTEM_TAG
             - name: USERNAME

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tSystemEventMgmt.name }}
+spec:
+  replicas: {{ .Values.tSystemEventMgmt.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tSystemEventMgmt.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tSystemEventMgmt.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tSystemEventMgmt.name }}
+        image: "{{ .Values.tSystemEventMgmt.image.repository }}:{{ .Values.tSystemEventMgmt.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.tSystemEventMgmt.ports.containerPort }}
+        env:
+        - name: CEDALO_MC_BROKER_ID
+          value: mosquitto
+        - name: CEDALO_MC_BROKER_NAME
+          value: Mosquitto
+        - name: CEDALO_MC_BROKER_URL
+          value: "mqtt://{{ .Values.tSystemBroker.name }}:1883"
+        - name: CEDALO_MC_USERNAME
+          value: {{ .Values.tSystemEventMgmt.config.username }}
+        - name: CEDALO_MC_PASSWORD
+          value: {{ .Values.tSystemEventMgmt.config.password }}
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

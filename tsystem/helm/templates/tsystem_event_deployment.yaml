@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tSystemEvent.name }}
+spec:
+  replicas: {{ .Values.tSystemEvent.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tSystemEvent.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tSystemEvent.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tSystemEvent.name }}
+        image: "{{ .Values.tSystemEvent.image.repository }}:{{ .Values.tSystemEvent.image.tag }}"
+        env:
+        - name: LOG_LEVEL
+          value: "{{ .Values.tSystemEvent.config.logLevel }}"
+        - name: VERSION
+          value: "{{ .Values.tSystemEvent.image.tag }}"
+        - name: TMQTTBROKER_HOST
+          value: "{{ .Values.tSystemBroker.name }}"
+        - name: TEVENTBROKER_PORT
+          value: "1883"
+        - name: TSYSTEM_API_URL
+          value: "http://{{ .Values.tSystemApi.name }}:80{{ .Values.tSystemApi.config.BASE_PATH }}"
+        - name: WORKER_COUNT
+          value: "{{ .Values.tSystemEvent.config.workerCount }}"
+        - name: SUBSCRIPTION_REFRESH_INTERVAL_SEC
+          value: "{{ .Values.tSystemEvent.config.subscriptionRefreshInterval }}"
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}

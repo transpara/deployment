@@ -1,0 +1,9 @@
+global:
+  imagePullSecret: transpara-docker-secret
+
+
+tGraphDb:
+
+tGraphApi:
+
+tGraphUpdater:

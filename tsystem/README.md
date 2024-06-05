@@ -5,8 +5,8 @@ in the .env file please modify the information according to your target machine
 # START
 TSYSTEM_ID=049f6ed7-e015-47cd-961c-8ae249cd412d
 TSYSTEM_NAME=tsystem
-REDIS_PORT=6379
-REDIS_HOST=tsystem_redis
+TCACHE_PORT=6379
+TCACHE_HOST=tsystem_redis
 TSYSTEM_PORT=8000
 CONTAINER_HOST=localhost
 USERNAME=transpara

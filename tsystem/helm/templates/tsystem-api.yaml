@@ -34,16 +34,16 @@ spec:
             configMapKeyRef:
               name: tsystem-config
               key: TSYSTEM_TAG
-        - name: REDIS_HOST
+        - name: TCACHE_HOST
           valueFrom:
             configMapKeyRef:
               name: tsystem-config
-              key: REDIS_HOST
-        - name: REDIS_PORT
+              key: TCACHE_HOST
+        - name: TCACHE_PORT
           valueFrom:
             configMapKeyRef:
               name: tsystem-config
-              key: REDIS_PORT
+              key: TCACHE_PORT
         - name: CONTAINER_HOST
           valueFrom:
             configMapKeyRef:
@@ -74,6 +74,8 @@ spec:
             configMapKeyRef:
               name: tsystem-config
               key: DOCKER_FILE_TEMPLATE_PATH
+        - name: IS_OUTSIDE_CLUSTER
+          value: "False"
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}
       volumes:

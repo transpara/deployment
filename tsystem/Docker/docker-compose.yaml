@@ -15,8 +15,8 @@ services:
     environment:
       - EXTERNAL_PORT=${TSYSTEM_PORT}
       - TSYSTEM_TAG=${TSYSTEM_TAG}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
+      - TCACHE_HOST=${TCACHE_HOST}
+      - TCACHE_PORT=${TCACHE_PORT}
       - CONTAINER_HOST=${CONTAINER_HOST}
       - USERNAME=${USERNAME}
       - SSH_PORT=${SSH_PORT}
@@ -34,7 +34,7 @@ services:
     container_name: ${TSYSTEM_NAME}_cache
     hostname: ${TSYSTEM_NAME}_cache
     ports:
-      - "0.0.0.0:${REDIS_PORT}:6379"
+      - "0.0.0.0:${TCACHE_PORT}:6379"
     restart: unless-stopped      
   
   tsystem_ui:

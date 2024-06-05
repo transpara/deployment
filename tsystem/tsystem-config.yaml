@@ -5,8 +5,8 @@ metadata:
 data:
   TSYSTEM_ID: "049f6ed7-e015-47cd-961c-8ae249cd412d"
   TSYSTEM_NAME: "tsystem"
-  REDIS_PORT: "6379"
-  REDIS_HOST: "tsystem-cache"
+  TCACHE_PORT: "6379"
+  TCACHE_HOST: "tsystem-cache"
   TSYSTEM_PORT: "8000"
   CONTAINER_HOST: "172.31.8.155"
   USERNAME: "transpara"

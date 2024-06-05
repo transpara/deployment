@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tSystemBroker.name }}
+spec:
+  replicas: {{ .Values.tSystemBroker.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tSystemBroker.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tSystemBroker.name }}
+    spec:
+      containers:
+      - name: {{ .Values.tSystemBroker.name }}
+        image: "{{ .Values.tSystemBroker.image.repository }}:{{ .Values.tSystemBroker.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.tSystemBroker.ports.mqttPort }}
+        - containerPort: {{ .Values.tSystemBroker.ports.webservicePort }}
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}
