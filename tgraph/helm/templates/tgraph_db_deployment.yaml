@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.TGRAPH_NAME }}-tgraph-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.TGRAPH_NAME }}-tgraph-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.TGRAPH_NAME }}-tgraph-db
+    spec:
+      containers:
+      - name: tgraph-db
+        image: {{ .Values.tGraphDb.image }}
+        ports:
+        - containerPort: {{ .Values.tGraphDb.ports.lab }}
+        - containerPort: {{ .Values.tGraphDb.ports.db }}
+        volumeMounts:
+        - name: tgraph-data
+          mountPath: /var/lib/memgraph
+      volumes:
+      - name: tgraph-data
+        persistentVolumeClaim:
+          claimName: tgraph-data-pvc
+

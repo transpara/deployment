@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.TGRAPH_NAME }}-tgraph-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.TGRAPH_NAME }}-tgraph-simulator
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.TGRAPH_NAME }}-tgraph-simulator
+    spec:
+      containers:
+      - name: tgraph-simulator
+        image: {{ .Values.tGraphApi.image }}
+        command: ["/app/run-simulator.sh"]
+        env:
+        - name: TSYSTEM_HOST
+          value: {{ .Values.environment.TSYSTEM_HOST }}
+        - name: ALLOW_OFFLINE
+          value: {{ .Values.environment.ALLOW_OFFLINE }}
+        - name: IMAGE_TAG
+          value: {{ .Values.IMAGE_TAG }}
+        - name: VERSION
+          value: {{ .Values.VERSION }}
+        - name: COMPONENT_ID
+          value: {{ .Values.COMPONENT_ID }}
+        - name: TSYSTEM_COMPONENT_TYPE
+          value: "tgraph-simulator"
+        - name: TGRAPH_LAB_PORT
+          value: {{ .Values.tGraphDb.ports.lab | quote }}
+        - name: tGraphApi_PORT
+          value: {{ .Values.tGraphApi.ports.api | quote }}
+        - name: TGRAPH_NAME
+          value: {{ .Values.TGRAPH_NAME }}
+        - name: TGRAPH_HOST
+          value: {{ .Values.TGRAPH_NAME }}-tgraph-db
+        - name: TGRAPH_PORT
+          value: "7687"
+        - name: TGRAPH_USER
+          value: {{ .Values.environment.TGRAPH_USER }}
+        - name: TGRAPH_PASSWORD
+          value: {{ .Values.environment.TGRAPH_PASSWORD }}
+        - name: TAUTH_HOST
+          value: {{ .Values.environment.TAUTH_HOST }}
+        - name: TAUTH_PORT
+          value: {{ .Values.environment.TAUTH_PORT | quote }}
+        - name: EXPOSE_METRICS
+          value: {{ .Values.environment.EXPOSE_METRICS }}
+        - name: EXPORT_TRACES
+          value: {{ .Values.environment.EXPORT_TRACES }}
+        - name: EXPORT_TRACE_ARGS
+          value: {{ .Values.environment.EXPORT_TRACE_ARGS }}
+        - name: OTEL_EXPORTER_HOST
+          value: {{ .Values.environment.OTEL_EXPORTER_HOST }}
+        - name: OTEL_EXPORTER_PORT
+          value: {{ .Values.environment.OTEL_EXPORTER_PORT | quote }}
+        - name: LOG_LEVEL
+          value: {{ .Values.environment.LOG_LEVEL }}
+        - name: LOG_GLOBAL_VERBOSE
+          value: {{ .Values.environment.LOG_GLOBAL_VERBOSE }}
+        - name: REDIS_HOST
+          value: {{ .Values.environment.REDIS_HOST }}
+        - name: REDIS_PORT
+          value: {{ .Values.environment.REDIS_PORT | quote }}
+        - name: MQTT_BROKER_HOST
+          value: {{ .Values.environment.MQTT_BROKER_HOST }}
+        - name: MQTT_BROKER_PORT
+          value: {{ .Values.environment.MQTT_BROKER_PORT | quote }}
+        - name: GROUP_ROLLUP_DEPTH_TO_CACHE
+          value: {{ .Values.environment.GROUP_ROLLUP_DEPTH_TO_CACHE | quote }}
+        - name: ROLLUP_CACHE_EXPIRATION
+          value: {{ .Values.environment.ROLLUP_CACHE_EXPIRATION | quote }}
+        - name: CACHE_SECONDS
+          value: {{ .Values.environment.CACHE_SECONDS | quote }}
+        - name: CACHE_LOCK_EXPIRY_SECONDS
+          value: {{ .Values.environment.CACHE_LOCK_EXPIRY_SECONDS | quote }}
+        - name: CELERY_BROKER_URL
+          value: "redis://{{ .Values.environment.REDIS_HOST }}:6379/0"
+        - name: CELERY_RESULT_BACKEND
+          value: "redis://{{ .Values.environment.REDIS_HOST }}:6379/1"
+
