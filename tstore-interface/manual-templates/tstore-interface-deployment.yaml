@@ -18,79 +18,11 @@ spec:
       - name: tstore-interface
         image: "transpara/tstore-interface:kube-test"
         imagePullPolicy: Always
-        env:
-        - name: TSYSTEM_URL
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TSYSTEM_URL
-        - name: TSTORE_DB_READ_URL
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TSTORE_DB_READ_URL
-        - name: TSTORE_DB_WRITE_URL
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TSTORE_DB_WRITE_URL
-        - name: EXPOSE_METRICS
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: EXPOSE_METRICS
-        - name: TSTORE_ID
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TSTORE_ID
-        - name: TCACHE_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TCACHE_HOST
-        - name: TCACHE_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TCACHE_PORT
-        - name: TCACHE_DB
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TCACHE_DB
-        - name: TCACHE_CONSIDER_STALE_SEC
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TCACHE_CONSIDER_STALE_SEC
-        - name: TREND_RESOLUTION_FACTOR
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TREND_RESOLUTION_FACTOR
-        - name: VERSION
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: TSTORE_INTERFACE_TAG
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: LOG_LEVEL
-        - name: BASE_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: BASE_PATH
-        - name: HISTORICAL_RETRY_DAYS_TIERS
-          valueFrom:
-            configMapKeyRef:
-              name: tstore-interface-config
-              key: HISTORICAL_RETRY_DAYS_TIERS
+      envFrom:
+      - configMapRef:
+          name: tstore-interface-config
         ports:
-          - containerPort: 80
+        - containerPort: 80
         resources:
           requests:
             cpu: "100m"
