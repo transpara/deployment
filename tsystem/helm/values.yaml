@@ -115,7 +115,7 @@ tSystemEvent:
   replicas: 1
   image:
     repository: transpara/tevent-processor
-    tag: 0.175.0
+    tag: "kube-test"
   config:
     logLevel: INFO
     workerCount: 4

@@ -21,14 +21,14 @@ spec:
           ports:
             - containerPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
           env:
-            - name: NEXT_PUBLIC_TSYSTEM_API_URL
-              value: "http://{{ .Values.global.CONTAINER_HOST }}{{ .Values.tSystemApi.config.BASE_PATH }}"
-            - name: NEXT_PUBLIC_CONTAINER_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: tsystem-config
-                  key: CONTAINER_HOST
-            - name: NEXT_PUBLIC_BASE_PATH
-              value: "{{ .Values.tSystemUi.config.BASE_PATH }}"
+          - name: NEXT_PUBLIC_TSYSTEM_API_URL
+            value: "http://{{ .Values.global.CONTAINER_HOST }}{{ .Values.tSystemApi.config.BASE_PATH }}"
+          - name: NEXT_PUBLIC_CONTAINER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: tsystem-config
+                key: CONTAINER_HOST
+          - name: NEXT_PUBLIC_BASE_PATH
+            value: "{{ .Values.tSystemUi.config.BASE_PATH }}"
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}

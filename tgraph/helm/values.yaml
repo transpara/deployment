@@ -1,4 +1,4 @@
-
+imagePullSecret: transpara-docker-secret
 TGRAPH_NAME: "mytgraph"
 IMAGE_TAG: "latest"
 COMPONENT_ID: "default-component"
@@ -16,29 +16,28 @@ tGraphApi:
     api: 80
 
 environment:
-  TSYSTEM_HOST: "localhost"
-  ALLOW_OFFLINE: "true"
+  ALLOW_OFFLINE: true
+  EXPOSE_METRICS: true
+  LOG_GLOBAL_VERBOSE: true
+  TSYSTEM_HOST: "tsystem-api"
   TGRAPH_USER: "user"
   TGRAPH_PASSWORD: "password"
-  TAUTH_HOST: "localhost"
+  TAUTH_HOST: "tauth"
   TAUTH_PORT: 8080
-  EXPOSE_METRICS: "true"
-  EXPORT_TRACES: "false"
-  EXPORT_TRACE_ARGS: ""
-  OTEL_EXPORTER_HOST: "localhost"
+  EXPORT_TRACES: false
+  EXPORT_TRACE_ARGS: false
+  OTEL_EXPORTER_HOST: "otel-exporter"
   OTEL_EXPORTER_PORT: 4317
-  LOG_LEVEL: "info"
-  LOG_GLOBAL_VERBOSE: "true"
+  LOG_LEVEL: "INFO"
   REDIS_HOST: "tsystem-cache"
   REDIS_PORT: 6379
   MQTT_BROKER_HOST: "tsystem-broker"
   MQTT_BROKER_PORT: 1883
-  GROUP_ROLLUP_DEPTH_TO_CACHE: 5
-  ROLLUP_CACHE_EXPIRATION: 3600
-  CACHE_SECONDS: 300
-  CACHE_LOCK_EXPIRY_SECONDS: 60
+  GROUP_ROLLUP_DEPTH_TO_CACHE: "5"
+  ROLLUP_CACHE_EXPIRATION: "3600"
+  CACHE_SECONDS: "300"
+  CACHE_LOCK_EXPIRY_SECONDS: "60"
 
 persistence:
   enabled: true
   size: 1Gi
-

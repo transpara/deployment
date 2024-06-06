@@ -20,7 +20,7 @@ spec:
           value: "{{ .Values.tSystemEvent.config.logLevel }}"
         - name: VERSION
           value: "{{ .Values.tSystemEvent.image.tag }}"
-        - name: TMQTTBROKER_HOST
+        - name: TEVENTBROKER_HOST 
           value: "{{ .Values.tSystemBroker.name }}"
         - name: TEVENTBROKER_PORT
           value: "1883"

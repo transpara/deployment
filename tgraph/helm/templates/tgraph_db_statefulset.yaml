@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Values.TGRAPH_NAME }}-tgraph-db
 spec:
@@ -21,6 +21,13 @@ spec:
         volumeMounts:
         - name: tgraph-data
           mountPath: /var/lib/memgraph
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
       volumes:
       - name: tgraph-data
         persistentVolumeClaim:
