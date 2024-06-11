@@ -24,8 +24,6 @@ services:
     ports:
       - "0.0.0.0:${TSYSTEM_PORT}:80"
     restart: unless-stopped
-    profiles:
-      - tsystem-base
 
   tcache:
     labels:
@@ -39,8 +37,6 @@ services:
     ports:
       - "0.0.0.0:${TCACHE_PORT}:6379"
     restart: unless-stopped
-    profiles:
-      - tsystem-base
       
   tsystem_ui:
     labels:
@@ -55,8 +51,6 @@ services:
     ports:
       - "0.0.0.0:${TSYSTEM_UI_PORT}:3000"
     restart: unless-stopped
-    profiles:
-      - tsystem-base
 
   tsystem_broker:
     labels:
@@ -69,6 +63,8 @@ services:
       - "0.0.0.0:${BROKER_MQTT_PORT}:1883"
       - "0.0.0.0:${BROKER_WEBSERVICE_PORT}:9001"
     restart: unless-stopped
+    profiles:
+      - mqtt
 
   tsystem_event:
     labels:
@@ -86,6 +82,8 @@ services:
     container_name: ${TSYSTEM_NAME}_event
     hostname: ${TSYSTEM_NAME}_event
     restart: unless-stopped
+    profiles:
+      - mqtt
 
   tsystem_event_mgmt:
     labels:
@@ -103,6 +101,8 @@ services:
     container_name: ${TSYSTEM_NAME}_event_mgmt
     hostname: ${TSYSTEM_NAME}_event_mgmt
     restart: unless-stopped
+    profiles:
+      - mqtt
 
 networks:
    default:
