@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.TGRAPH_NAME }}-tgraph-api
+  name: {{ .Values.tGraphApi.name | quote }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.TGRAPH_NAME }}-tgraph-api
+      app: {{ .Values.tGraphApi.name | quote }}
   template:
     metadata:
       labels:
-        app: {{ .Values.TGRAPH_NAME }}-tgraph-api
+        app: {{ .Values.tGraphApi.name | quote }}
     spec:
       containers:
       - name: tgraph-api
@@ -37,7 +37,7 @@ spec:
         - name: TGRAPH_NAME
           value: {{ .Values.TGRAPH_NAME | quote }}
         - name: TGRAPH_HOST
-          value: "tgraph-db-memgraph"
+          value: {{ .Values.tGraphDb.name | quote }}
         - name: TGRAPH_PORT
           value: "7687"
         - name: TGRAPH_USER

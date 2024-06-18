@@ -5,12 +5,14 @@ COMPONENT_ID: "default-component"
 VERSION: "1.0"
 
 tGraphDb:
+  name: tsystem-tgraph-db
   image: "memgraph/memgraph-platform:2.14.1-memgraph2.14.1-lab2.11.1-mage1.14.1"
   ports:
     lab: 3000
     db: 7687
 
 tGraphApi:
+  name: tsystem-tgraph-api
   image: "transpara/tgraph-api:latest"
   ports:
     api: 80

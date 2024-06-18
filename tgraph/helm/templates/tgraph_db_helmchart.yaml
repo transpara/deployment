@@ -1,0 +1,10 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  namespace: kube-system
+  name: {{ .Values.tGraphDb.name | quote }}
+spec:
+  targetNamespace: default
+  createNamespace: true
+  chart: memgraph
+  repo: https://memgraph.github.io/helm-charts
