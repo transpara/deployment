@@ -1,8 +1,0 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: {{ .Values.tStoreUi.name }}
-spec:
-  entryPoints:
-    - web
-  routes:
