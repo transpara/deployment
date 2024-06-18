@@ -64,7 +64,7 @@ services:
       - "0.0.0.0:${BROKER_WEBSERVICE_PORT}:9001"
     restart: unless-stopped
     profiles:
-      - mqtt
+      - event
 
   tsystem_event:
     labels:
@@ -83,7 +83,7 @@ services:
     hostname: ${TSYSTEM_NAME}_event
     restart: unless-stopped
     profiles:
-      - mqtt
+      - event
 
   tsystem_event_mgmt:
     labels:
@@ -102,7 +102,7 @@ services:
     hostname: ${TSYSTEM_NAME}_event_mgmt
     restart: unless-stopped
     profiles:
-      - mqtt
+      - event
 
 networks:
    default:
