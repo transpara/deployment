@@ -1,8 +1,8 @@
 apiVersion: stackgres.io/v1
 kind: SGCluster
 metadata:
-  name: my-db
-  namespace: my-db
+  name: tstore
+  namespace: tstore
 spec:
   postgres:
     version: '15.3'

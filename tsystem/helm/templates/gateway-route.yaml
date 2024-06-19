@@ -11,7 +11,7 @@ spec:
         type: PathPrefix
         value: "{{ .Values.tSystemUi.config.BASE_PATH }}"
     backendRefs:
-    - name: tsystem-ui
+    - name: {{ .Values.tSystemUi.serviceName }}
       port: 3000
   - matches:
     - path:
@@ -24,7 +24,7 @@ spec:
           type: ReplacePrefixMatch
           replacePrefixMatch: "/"
     backendRefs:
-    - name: tsystem-api
+    - name: {{ .Values.tSystemApi.serviceName }}
       port: 80
   - matches:
     - path:
@@ -35,5 +35,5 @@ spec:
       requestRedirect:
         scheme: "http"
         path:
-          type: "ReplacePrefixMatch"
-          replacePrefixMatch: "/tsystem/ui"
+          type: ReplacePrefixMatch
+          replacePrefixMatch: "{{ .Values.tSystemUi.config.BASE_PATH }}"
