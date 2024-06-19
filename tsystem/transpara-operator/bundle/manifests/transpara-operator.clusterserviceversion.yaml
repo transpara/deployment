@@ -111,7 +111,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2024-06-19T03:10:54Z"
+    createdAt: "2024-06-19T15:00:13Z"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
   name: transpara-operator.v0.0.9
