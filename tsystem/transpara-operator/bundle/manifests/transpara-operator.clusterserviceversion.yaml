@@ -111,10 +111,10 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2024-04-23T17:13:33Z"
+    createdAt: "2024-06-19T03:10:54Z"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
-  name: transpara-operator.v0.0.8
+  name: transpara-operator.v0.0.9
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -209,7 +209,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=transpara-operator
-                image: transpara/transpara-operator:0.0.8
+                image: transpara/transpara-operator:0.0.9
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -295,4 +295,4 @@ spec:
   maturity: alpha
   provider:
     name: transpara
-  version: 0.0.8
+  version: 0.0.9
