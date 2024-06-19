@@ -11,4 +11,4 @@ spec:
       TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
       TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
       TSTORE_ID: <<TSTORE_ID>>
-      TCACHE_HOST: tsystem-cache-service
+      TCACHE_HOST: tsystem-cache
