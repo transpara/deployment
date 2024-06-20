@@ -34,7 +34,6 @@ tSystemCachePvc:
   storageClassName: local-path
   storage: 1Gi
 
-
 tSystemApi:
   name: tsystem-api
   serviceName: tsystem-api
@@ -82,42 +81,42 @@ tSystemUi:
   config:
     BASE_PATH: "/tsystem/ui"
 
-tSystemEventMgmt:
-  name: tsystem-event-mgmt
-  serviceName: tsystem-event-mgmt
-  replicas: 1
-  image:
-    repository: cedalo/management-center
-    tag: 2
-  ports:
-    containerPort: 8088
-    servicePort: 8088
-    nodePort: 30082
-  config:
-    username: admin
-    password: BorgGoesLive!22
+# tSystemEventMgmt:
+#   name: tsystem-event-mgmt
+#   serviceName: tsystem-event-mgmt
+#   replicas: 1
+#   image:
+#     repository: cedalo/management-center
+#     tag: 2
+#   ports:
+#     containerPort: 8088
+#     servicePort: 8088
+#     nodePort: 30082
+#   config:
+#     username: admin
+#     password: BorgGoesLive!22
 
-tSystemBroker:
-  name: tsystem-broker
-  serviceName: tsystem-broker
-  replicas: 1
-  image:
-    repository: transpara/tevent-broker
-    tag: 0.175.0
-  ports:
-    mqttPort: 1883
-    mqttContainerPort: 1883
-    webservicePort: 9001
-    webserviceContainerPort: 9001
+# tSystemBroker:
+#   name: tsystem-broker
+#   serviceName: tsystem-broker
+#   replicas: 1
+#   image:
+#     repository: transpara/tevent-broker
+#     tag: 0.175.0
+#   ports:
+#     mqttPort: 1883
+#     mqttContainerPort: 1883
+#     webservicePort: 9001
+#     webserviceContainerPort: 9001
 
-tSystemEvent:
-  name: tsystem-event
-  replicas: 1
-  image:
-    repository: transpara/tevent-processor
-    tag: "kube-test"
-  config:
-    logLevel: INFO
-    workerCount: 4
-    subscriptionRefreshInterval: 60
+# tSystemEvent:
+#   name: tsystem-event
+#   replicas: 1
+#   image:
+#     repository: transpara/tevent-processor
+#     tag: "kube-test"
+#   config:
+#     logLevel: INFO
+#     workerCount: 4
+#     subscriptionRefreshInterval: 60
 
