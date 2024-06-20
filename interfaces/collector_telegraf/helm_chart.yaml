@@ -2,7 +2,6 @@ apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: telegraf
-  namespace: kube-system
 spec:
   chart: telegraf
   repo: https://helm.influxdata.com/
