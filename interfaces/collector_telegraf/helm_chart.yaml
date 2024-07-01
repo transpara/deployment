@@ -97,15 +97,6 @@ spec:
             restart_delay: "60s"
             environment: [ "TSTORE_API_URL=http://tstore-interface/tstore/", "TSTORE_FLUSH_INTERVAL_SECONDS=10", "TSTORE_FLUSH_SIZE=500", "OUTPUT_BATCH_SIZE=1000", "TSYSTEM_SETTINGS_TIMEOUT=10", "TSYSTEM_HOST=tsystem-api", "SOURCE_TZ=UTC", "LOG_ENQUEUING=true",]
       inputs:
-        - statsd:
-            service_address: ":8125"
-            percentiles:
-              - 50
-              - 95
-              - 99
-            metric_separator: "_"
-            allowed_pending_messages: 10000
-            percentile_limit: 1000
         - cpu:
             percpu: true
             totalcpu: true

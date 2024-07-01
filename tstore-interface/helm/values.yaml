@@ -51,3 +51,8 @@ tStoreUi:
         port: 8080
         targetPort: 8080
         nodePort: 30084 
+
+# used for init container wait-tstore
+tStore:
+  host: tstore.tstore
+  port: 5432

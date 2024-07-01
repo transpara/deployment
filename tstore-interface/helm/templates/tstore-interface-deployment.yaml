@@ -12,6 +12,17 @@ spec:
       labels:
         app: {{ .Values.tStoreInterface.name }}
     spec:
+      initContainers: 
+      - name: wait-tstore
+        image: busybox
+        command: 
+        - sh
+        - -c
+        - |
+          until nc -zvw 3 {{ .Values.tStore.host }} {{ .Values.tStore.port }}; do
+            echo "Waiting for {{ .Values.tStore.host }}:{{ .Values.tStore.port }} to be available..."
+            sleep 2
+          done
       containers:
       - name: {{ .Values.tStoreInterface.name }}
         image: "{{ .Values.tStoreInterface.image.repository }}:{{ .Values.tStoreInterface.image.tag | default .Chart.AppVersion }}"
