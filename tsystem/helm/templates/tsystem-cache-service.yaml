@@ -9,3 +9,9 @@ spec:
   - protocol: TCP
     port: {{ .Values.tSystemCache.ports.servicePort }}
     targetPort: {{ .Values.tSystemCache.ports.targetPort }}
+    {{- if .Values.tSystemCache.ports.nodePort }}
+    nodePort: {{ .Values.tSystemCache.ports.nodePort }}
+    {{- end }}
+  {{- if .Values.tSystemCache.ports.nodePort }}
+  type: "NodePort"
+  {{- end }}

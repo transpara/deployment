@@ -9,5 +9,9 @@ spec:
   - protocol: TCP
     port: {{ .Values.tSystemApi.ports.servicePort }}
     targetPort: {{ .Values.tSystemApi.ports.containerPort }}
+    {{- if .Values.tSystemApi.ports.nodePort }}
     nodePort: {{ .Values.tSystemApi.ports.nodePort }}
+    {{- end }}
+  {{- if .Values.tSystemApi.ports.nodePort }}
   type: "NodePort"
+  {{- end }}

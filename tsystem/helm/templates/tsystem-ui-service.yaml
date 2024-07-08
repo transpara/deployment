@@ -6,8 +6,12 @@ spec:
   selector:
     app: {{ .Values.tSystemUi.name }}
   ports:
-    - protocol: TCP
-      port: {{ .Values.tSystemUi.ports.servicePort | default 3000 }}
-      targetPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
-      nodePort: {{ .Values.tSystemUi.ports.nodePort | default 30081 }}
-  type: NodePort
+  - protocol: TCP
+    port: {{ .Values.tSystemUi.ports.servicePort | default 3000 }}
+    targetPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
+    {{- if .Values.tSystemUi.ports.nodePort }}
+    nodePort: {{ .Values.tSystemUi.ports.nodePort }}
+    {{- end }}
+  {{- if .Values.tSystemUi.ports.nodePort }}
+  type: "NodePort"
+  {{- end }}
