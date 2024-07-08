@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.tOdbc.name }}-config
+data:
+  VERSION: "{{ .Values.tOdbc.image.tag | default .Chart.AppVersion }}"
+  ID: "{{ .Values.tOdbc.config.ID }}"
+  EXTRACTOR_PREFIX: "{{ .Values.tOdbc.config.EXTRACTOR_PREFIX }}"
+  TSTORE_API_URL: "{{ .Values.tOdbc.config.TSTORE_API_URL }}"
+  TSTORE_FLUSH_INTERVAL_SECONDS: "{{ .Values.tOdbc.config.TSTORE_FLUSH_INTERVAL_SECONDS }}"
+  TSTORE_FLUSH_SIZE: "{{ .Values.tOdbc.config.TSTORE_FLUSH_SIZE }}"
+  OUTPUT_BATCH_SIZE: "{{ .Values.tOdbc.config.OUTPUT_BATCH_SIZE }}"
+  CYCLE_SECONDS: "{{ .Values.tOdbc.config.CYCLE_SECONDS }}"
+  LOOKBACK_SECONDS: "{{ .Values.tOdbc.config.LOOKBACK_SECONDS }}"
+  MAX_RANGE_PER_REQUEST_SECONDS: "{{ .Values.tOdbc.config.MAX_RANGE_PER_REQUEST_SECONDS }}"
+  BACKFILL_START_TIME: "{{ .Values.tOdbc.config.BACKFILL_START_TIME }}"
+  BACKFILL: "{{ .Values.tOdbc.config.BACKFILL }}"
+  CONNECTION_STRING: "{{ .Values.tOdbc.config.CONNECTION_STRING }}"
+  TSYSTEM_HOST: "{{ .Values.tOdbc.config.TSYSTEM_HOST }}"
+  QUERY: {{ .Values.tOdbc.config.QUERY }}
+  SOURCE_TZ: "{{ .Values.tOdbc.config.SOURCE_TZ }}"
+  LOG_ENQUEING: "{{ .Values.tOdbc.config.LOG_ENQUEING }}"
+  LOG_QUERY: "{{ .Values.tOdbc.config.LOG_QUERY }}"

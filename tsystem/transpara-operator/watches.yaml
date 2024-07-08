@@ -1,14 +1,23 @@
 # Use the 'create api' subcommand to add watches to this file.
+
 - group: charts.transpara.com
   version: v1
   kind: TSystem
   chart: helm-charts/tsystem
+
 - group: charts.transpara.com
   version: v1
   kind: TStoreInterface
   chart: helm-charts/tstoreinterface
+
+- group: charts.transpara.com
+  version: v1
+  kind: ExtractorOdbc
+  chart: helm-charts/extractorodbc
+
 - group: charts.transpara.com
   version: v1
   kind: TAuth
   chart: helm-charts/tauth
+
 #+kubebuilder:scaffold:watch

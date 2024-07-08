@@ -1,0 +1,25 @@
+# tsystem-ui-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tOdbc.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.tOdbc.name }}
+  replicas: {{ .Values.tOdbc.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tOdbc.name }}
+    spec:
+      containers:
+        - name: {{ .Values.tOdbc.name }}
+          image: "{{ .Values.tOdbc.image.repository }}:{{ .Values.tOdbc.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.tOdbc.name }}-config
+      imagePullSecrets: 
+        - name: {{ .Values.global.imagePullSecret }}

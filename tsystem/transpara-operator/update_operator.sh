@@ -14,4 +14,8 @@ cp -r ../../tstore-interface/helm/* ./helm-charts/tstoreinterface
 mkdir -p ./helm-charts/tauth
 cp -r ../../tauth/helm/* ./helm-charts/tauth
 
+# Create directories and copy files for extractorodbc
+mkdir -p ./helm-charts/extractorodbc
+cp -r ../../interfaces/extractor-odbc/helm/* ./helm-charts/extractorodbc
+
 make docker-build docker-push bundle bundle-build bundle-push catalog-build catalog-push
