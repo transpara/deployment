@@ -44,7 +44,9 @@ services:
       - PGBOUNCER_QUERY_WAIT_TIMEOUT=300
       - PGBOUNCER_MAX_DB_CONNECTIONS=430
     container_name: ${TSTORE_NAME}_pool
-    hostname: ${TSTORE_NAME}_pool          
+    hostname: ${TSTORE_NAME}_pool      
+    ports:
+      - "${TSTORE_POOL_PORT}:6432"        
     restart: unless-stopped
 
 networks:
