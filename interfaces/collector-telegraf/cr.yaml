@@ -1,5 +1,5 @@
 apiVersion: charts.transpara.com/v1
-kind: collectortelegraf
+kind: CollectorTelegraf
 metadata:
   name: telegraf
 spec:
