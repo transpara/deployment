@@ -17,6 +17,11 @@
 
 - group: charts.transpara.com
   version: v1
+  kind: CollectorTelegraf
+  chart: helm-charts/collectortelegraf
+
+- group: charts.transpara.com
+  version: v1
   kind: TAuth
   chart: helm-charts/tauth
 

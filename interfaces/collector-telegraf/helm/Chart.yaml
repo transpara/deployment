@@ -2,5 +2,5 @@ apiVersion: v2
 name: collectortelegraf
 description: Telegraf collector for Transpara
 type: application
-version: 0.1.0
+version: 1.8.50
 appVersion: "0.178.0"

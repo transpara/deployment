@@ -18,4 +18,8 @@ cp -r ../../tauth/helm/* ./helm-charts/tauth
 mkdir -p ./helm-charts/extractorodbc
 cp -r ../../interfaces/extractor-odbc/helm/* ./helm-charts/extractorodbc
 
+# Create directories and copy files for collectortelegraf
+mkdir -p ./helm-charts/collectortelegraf
+cp -r ../../interfaces/collector-telegraf/helm/* ./helm-charts/collectortelegraf
+
 make docker-build docker-push bundle bundle-build bundle-push catalog-build catalog-push

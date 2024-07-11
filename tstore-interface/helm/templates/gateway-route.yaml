@@ -9,7 +9,7 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: "{{ .Values.tStoreUi.config.BASE_PATH }}"
+        value: "/tstore/ui"
     filters:
     - type: URLRewrite
       urlRewrite:
@@ -20,7 +20,7 @@ spec:
       requestHeaderModifier:
         add:
           - name: X-Forwarded-Prefix
-            value: "{{ .Values.tStoreUi.config.BASE_PATH }}"
+            value: "/tstore/ui"
     backendRefs:
     - name: {{ .Values.tStoreUi.name }}
       port: 8080
@@ -47,4 +47,4 @@ spec:
         scheme: "http"
         path:
           type: ReplacePrefixMatch
-          replacePrefixMatch: "{{ .Values.tStoreUi.config.BASE_PATH }}"
+          replacePrefixMatch: "/tstore/ui"

@@ -6,4 +6,5 @@ resources:
 - bases/charts.transpara.com_tstoreinterfaces.yaml
 - bases/charts.transpara.com_tauths.yaml
 - bases/charts.transpara.com_extractorodbcs.yaml
+- bases/charts.transpara.com_collectortelegrafs.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
