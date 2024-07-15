@@ -1,12 +1,12 @@
 apiVersion: charts.transpara.com/v1
 kind: ExtractorOdbc
 metadata:
-  name: todbc
+  name: <<NAME>>
 spec:
   tOdbc:
     imagePullSecret: transpara-docker-secret
     imagePullPolicy: Always
-    name: todbc
+    name: <<NAME>>
     serviceName: tsystem-api
     replicas: 1
     image:

@@ -1,7 +1,7 @@
 apiVersion: charts.transpara.com/v1
 kind: CollectorTelegraf
 metadata:
-  name: telegraf
+  name: <<NAME>>                                                                                                                                                                    telegraf
 spec:
   replicaCount: 1
   image:
