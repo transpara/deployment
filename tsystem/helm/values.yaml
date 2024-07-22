@@ -47,7 +47,7 @@ tSystemApi:
     # Provide nodePort to enable it
   volumeMount:
     name: tsystem-api-data
-    mountPath: /data/database
+    mountPath: /app/database
   config:
     BASE_PATH: "/tsystem/api/v1"
     TSYSTEM_ID: "049f6ed7-e015-47cd-961c-8ae249cd412d"
