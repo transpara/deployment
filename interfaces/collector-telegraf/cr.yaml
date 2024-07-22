@@ -61,8 +61,7 @@ spec:
     create: true
     name: ""
     annotations: {}
-  config:
-<<TELEGRAF_CONFIG>>
+  config: <<TELEGRAF_CONFIG>>
     # agent:
     #   interval: "10s"
     #   round_interval: true
