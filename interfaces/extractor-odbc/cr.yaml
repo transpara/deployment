@@ -7,7 +7,6 @@ spec:
     imagePullSecret: transpara-docker-secret
     imagePullPolicy: Always
     name: <<NAME>>
-    serviceName: tsystem-api
     replicas: 1
     image:
       repository: transpara/extractor-odbc

@@ -5,8 +5,6 @@ metadata:
   labels:
     type: local
 spec:
-  #we use local node storage here!
-  #kubectl get storageclass
   storageClassName: local-path
   capacity:
     storage: 1Gi

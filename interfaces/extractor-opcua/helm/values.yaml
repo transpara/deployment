@@ -1,0 +1,13 @@
+global:
+  imagePullSecret: transpara-docker-secret
+  imagePullPolicy: Always
+
+tOpcua:
+  name: opcua
+  serviceName: tsystem-api
+  replicas: 1
+  image:
+    #TODO correct repository
+    repository: transpara/opcua
+    tag: 0.179.0
+  config:
