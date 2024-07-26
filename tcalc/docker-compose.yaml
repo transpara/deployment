@@ -54,6 +54,24 @@ services:
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
       - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
+  tcalc-ui:
+    labels:
+      - "Version=${TCALC_UI_TAG}"
+      - "ID=${TCALC_ID}"
+    image: "transpara/tcalc-ui:${TCALC_UI_TAG}"
+    environment:
+      - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
+      - TCALC_API_URL=http://${TCALC_NAME}_main:80/api/v1
+      - VERSION=${TCALC_UI_TAG}    
+      - LOG_LEVEL=${LOG_LEVEL}
+      - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
+      - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
+    container_name: ${TCALC_NAME}_ui
+    hostname: ${TCALC_NAME}_ui
+    ports:
+      - "${TCALC_UI_PORT}:8080"
+    restart: unless-stopped  
+
   # code-server:
   #   labels:
   #     - "Version=${TCALC_TAG}"
