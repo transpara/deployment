@@ -66,6 +66,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
       - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
       - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     container_name: ${TCALC_NAME}_ui
     hostname: ${TCALC_NAME}_ui
     ports:
