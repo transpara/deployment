@@ -3,3 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.tOpcua.name }}-config
 data:
+  OPCUA_ENDPOINT_URL: "{{ .Values.tOdbc.config.OPCUA_ENDPOINT_URL }}"
