@@ -1,0 +1,13 @@
+apiVersion: charts.transpara.com/v1
+kind: CollectorOpcua
+metadata:
+  name: topcua
+spec:
+  tOpcua:
+    name: opcua
+    replicas: 1
+    image:
+      repository: transpara/tstore_opcua_collector
+      tag: 1.0.0
+    config:
+      OPCUA_ENDPOINT_URL: <opcua_url>
