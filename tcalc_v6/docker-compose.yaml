@@ -24,8 +24,6 @@ services:
       - REDIS_CELERY_RESULT_DB=6
       - REDIS_SNAPSHOT_DB=7    
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
-      - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
-      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC} 
       - VERSION=${TCALC_TAG}      
       - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
@@ -48,30 +46,29 @@ services:
       - REDIS_CELERY_BROKER_DB=5
       - REDIS_CELERY_RESULT_DB=6
       - REDIS_SNAPSHOT_DB=7
-      - TSTORE_API_URL=http://${TSTORE_NAME}_interface:80/api/v1
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
       - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
-  # tcalc-ui:
-  #   labels:
-  #     - "Version=${TCALC_UI_TAG}"
-  #     - "ID=${TCALC_ID}"
-  #   image: "transpara/tcalc-ui:${TCALC_UI_TAG}"
-  #   environment:
-  #     - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
-  #     - TCALC_API_URL=http://${TCALC_NAME}_main:80/api/v1
-  #     - VERSION=${TCALC_UI_TAG}    
-  #     - LOG_LEVEL=${LOG_LEVEL}
-  #     - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
-  #     - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
-  #     - OPENAI_API_KEY=${OPENAI_API_KEY}
-  #   container_name: ${TCALC_NAME}_ui
-  #   hostname: ${TCALC_NAME}_ui
-  #   ports:
-  #     - "${TCALC_UI_PORT}:8080"
-  #   restart: unless-stopped  
+  tcalc-ui:
+    labels:
+      - "Version=${TCALC_UI_TAG}"
+      - "ID=${TCALC_ID}"
+    image: "transpara/tcalc-ui:${TCALC_UI_TAG}"
+    environment:
+      - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
+      - TCALC_API_URL=http://${TCALC_NAME}_main:10003/api/v1
+      - VERSION=${TCALC_UI_TAG}    
+      - LOG_LEVEL=${LOG_LEVEL}
+      - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
+      - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    container_name: ${TCALC_NAME}_ui
+    hostname: ${TCALC_NAME}_ui
+    ports:
+      - "${TCALC_UI_PORT}:8080"
+    restart: unless-stopped  
 
   # code-server:
   #   labels:
