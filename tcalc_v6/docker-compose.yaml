@@ -1,5 +1,3 @@
-version: "3.9"
-   
 services:
 
   tcalc-main:
@@ -19,9 +17,9 @@ services:
       - tcalc_modules:/app/app/extensions  
     environment:
       - REDIS_HOST=${TSYSTEM_NAME}_cache
-      - REDIS_PORT=${TREDIS_PORT}         
-      - REDIS_CELERY_BROKER_DB=5
-      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_PORT=${TCACHE_PORT}         
+      - REDIS_CELERY_BROKER_DB=9
+      - REDIS_CELERY_RESULT_DB=10
       - REDIS_SNAPSHOT_DB=7    
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC} 
@@ -42,9 +40,9 @@ services:
       - tcalc_modules:/app/app/extensions      
     environment:
       - REDIS_HOST=${TSYSTEM_NAME}_cache
-      - REDIS_PORT=${TREDIS_PORT}          
-      - REDIS_CELERY_BROKER_DB=5
-      - REDIS_CELERY_RESULT_DB=6
+      - REDIS_PORT=${TCACHE_PORT}          
+      - REDIS_CELERY_BROKER_DB=9
+      - REDIS_CELERY_RESULT_DB=10
       - REDIS_SNAPSHOT_DB=7
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
