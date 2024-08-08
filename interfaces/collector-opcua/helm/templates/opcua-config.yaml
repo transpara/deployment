@@ -4,50 +4,5 @@ metadata:
   name: {{ .Values.tOpcua.name }}-config
 data:
   config.yaml: |+
-    endpointUrl: opc.tcp://opcuademo.sterfive.com:26543
-    monitoredItems:
-    - name: Pressure
-      nodeId: ns=1;i=1450
-    - name: Temperature
-      nodeId: ns=1;s=Temperature
-    - name: TemperatureBahlbla
-      nodeId: ns=1;s=TemperatureAnalogItem
-    - name: FanSpeed
-      nodeId: ns=1;s=FanSpeed
-    - name: PumpSpeed
-      nodeId: ns=1;s=PumpSpeed
-    - name: Pressure2
-      nodeId: ns=1;i=1450
-    - name: Scalar_Simulation_Boolean
-      nodeId: ns=8;s=Scalar_Simulation_Boolean
-    - name: Scalar_Simulation_SByte
-      nodeId: ns=8;s=Scalar_Simulation_SByte
-    - name: Scalar_Simulation_Int16
-      nodeId: ns=8;s=Scalar_Simulation_Int16
-    - name: Scalar_Simulation_Int32
-      nodeId: ns=8;s=Scalar_Simulation_Int32
-    - name: Scalar_Simulation_Byte
-      nodeId: ns=8;s=Scalar_Simulation_Byte
-    - name: Scalar_Simulation_UInt16
-      nodeId: ns=8;s=Scalar_Simulation_UInt16
-    - name: Scalar_Simulation_UInt32
-      nodeId: ns=8;s=Scalar_Simulation_UInt32
-    - name: Scalar_Simulation_DateTime
-      nodeId: ns=8;s=Scalar_Simulation_DateTime
-    - name: Scalar_Simulation_String
-      nodeId: ns=8;s=Scalar_Simulation_String
-    - name: Scalar_Simulation_Double
-      nodeId: ns=8;s=Scalar_Simulation_Double
-    - name: Scalar_Simulation_Float
-      nodeId: ns=8;s=Scalar_Simulation_Float
-    - name: Static_Array_Double
-      nodeId: ns=8;s=Static_Array_Double
-    monitoringParameters:
-      queueSize: 25
-      samplingInterval: 200
-    subscriptionParameters:
-      publishingInterval: 100
-    tstoreEndpoint: http://tstore-interface/tstore
-    tstoreWriteInterval: 10000
-    userIdentity:
-      type: Anonymous
+    {{ tpl (toYaml .Values.tOpcua.config.OPCUA_CONFIG) . | nindent 4 }}
+  

@@ -1,10 +1,10 @@
 apiVersion: charts.transpara.com/v1
 kind: CollectorOpcua
 metadata:
-  name: topcua
+  name: <<NAME>>
 spec:
   tOpcua:
-    name: opcua
+    name: <<NAME>>
     replicas: 1
     image:
       repository: transpara/tstore_opcua_collector
