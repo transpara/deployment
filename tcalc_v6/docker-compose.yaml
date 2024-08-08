@@ -16,6 +16,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions  
     environment:
+      - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
       - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TCACHE_PORT}         
       - REDIS_CELERY_BROKER_DB=9
@@ -39,6 +40,7 @@ services:
     volumes:
       - tcalc_modules:/app/app/extensions      
     environment:
+      - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
       - REDIS_HOST=${TSYSTEM_NAME}_cache
       - REDIS_PORT=${TCACHE_PORT}          
       - REDIS_CELERY_BROKER_DB=9
