@@ -1,0 +1,27 @@
+global:
+  imagePullSecret: transpara-docker-secret
+  imagePullPolicy: Always
+
+tOpcua:
+  name: opcua
+  replicas: 1
+  image:
+    repository: transpara/tstore_opcua_collector
+    tag: 1.0.0
+  config:
+    OPCUA_CONFIG: 
+      endpointUrl: <endpoint_url>
+      monitoredItems:
+      - name: Pressure
+        nodeId: ns=1;i=1450
+      - name: Temperature
+        nodeId: ns=1;s=Temperature
+      monitoringParameters:
+        queueSize: 25
+        samplingInterval: 200
+      subscriptionParameters:
+        publishingInterval: 100
+      tstoreEndpoint: http://tstore-interface/tstore
+      tstoreWriteInterval: 10000
+      userIdentity:
+        type: Anonymous

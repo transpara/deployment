@@ -7,4 +7,5 @@ resources:
 - bases/charts.transpara.com_tauths.yaml
 - bases/charts.transpara.com_extractorodbcs.yaml
 - bases/charts.transpara.com_collectortelegrafs.yaml
+- bases/charts.transpara.com_collectoropcuas.yaml
 #+kubebuilder:scaffold:crdkustomizeresource

@@ -10,4 +10,4 @@ spec:
       repository: transpara/tstore_opcua_collector
       tag: 1.0.0
     config:
-      OPCUA_ENDPOINT_URL: <opcua_url>
+      OPCUA_CONFIG: <<OPCUA_CONFIG>>

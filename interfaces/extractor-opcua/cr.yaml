@@ -1,7 +1,0 @@
-apiVersion: charts.transpara.com/v1
-kind: CollectorOpcua
-metadata:
-  name: <<NAME>>
-spec:
-  tOpcua:
-

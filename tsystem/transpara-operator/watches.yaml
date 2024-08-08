@@ -7,6 +7,11 @@
 
 - group: charts.transpara.com
   version: v1
+  kind: TAuth
+  chart: helm-charts/tauth
+
+- group: charts.transpara.com
+  version: v1
   kind: TStoreInterface
   chart: helm-charts/tstoreinterface
 
@@ -17,12 +22,7 @@
 
 - group: charts.transpara.com
   version: v1
-  kind: CollectorTelegraf
-  chart: helm-charts/collectortelegraf
-
-- group: charts.transpara.com
-  version: v1
-  kind: TAuth
-  chart: helm-charts/tauth
+  kind: CollectorOpcua
+  chart: helm-charts/collectoropcua
 
 #+kubebuilder:scaffold:watch
