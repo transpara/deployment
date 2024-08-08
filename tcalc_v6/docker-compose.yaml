@@ -13,43 +13,43 @@ services:
       - "${TCALC_FLOWER_PORT}:5555"    
       - "${TCALC_API_PORT}:10003"    
     restart: unless-stopped     
-    volumes:
-      - tcalc_modules:/app/app/extensions  
+    # volumes:
+    #   - tcalc_modules:/app/app/extensions  
     environment:
       - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
-      - REDIS_HOST=${TSYSTEM_NAME}_cache
-      - REDIS_PORT=${TCACHE_PORT}         
+      - TCACHE_HOST=${TSYSTEM_NAME}_cache
+      - TCACHE_PORT=${TCACHE_PORT}         
+      - TCACHE_DB=7    
       - REDIS_CELERY_BROKER_DB=9
       - REDIS_CELERY_RESULT_DB=10
-      - REDIS_SNAPSHOT_DB=7    
       - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC} 
       - VERSION=${TCALC_TAG}      
       - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
-  tcalc-worker:
-    labels:
-      - "Module=Worker"
-      - "Version=${TCALC_TAG}"
-      - "ID=${TCALC_ID}"
-    image: "transpara/tcalc:${TCALC_TAG}"  
-    command: /app/run-celeryworker.sh
-    container_name: ${TCALC_NAME}_worker
-    hostname: ${TCALC_NAME}_worker
-    restart: unless-stopped     
-    volumes:
-      - tcalc_modules:/app/app/extensions      
-    environment:
-      - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
-      - REDIS_HOST=${TSYSTEM_NAME}_cache
-      - REDIS_PORT=${TCACHE_PORT}          
-      - REDIS_CELERY_BROKER_DB=9
-      - REDIS_CELERY_RESULT_DB=10
-      - REDIS_SNAPSHOT_DB=7
-      - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
-      - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
-      - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
-      - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
+  # tcalc-worker:
+  #   labels:
+  #     - "Module=Worker"
+  #     - "Version=${TCALC_TAG}"
+  #     - "ID=${TCALC_ID}"
+  #   image: "transpara/tcalc:${TCALC_TAG}"  
+  #   command: /app/run-celeryworker.sh
+  #   container_name: ${TCALC_NAME}_worker
+  #   hostname: ${TCALC_NAME}_worker
+  #   restart: unless-stopped     
+  #   # volumes:
+  #   #   - tcalc_modules:/app/app/extensions      
+  #   environment:
+  #     - TGRAPH_API_URL=http://${TGRAPH_NAME}_tgraph_api:80/api/v1
+  #     - TCACHE_HOST=${TSYSTEM_NAME}_cache
+  #     - TCACHE_PORT=${TCACHE_PORT}         
+  #     - TCACHE_DB=7    
+  #     - REDIS_CELERY_BROKER_DB=9
+  #     - REDIS_CELERY_RESULT_DB=10
+  #     - TSYSTEM_API_URL=http://${TSYSTEM_NAME}_api:80/api/v1
+  #     - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
+  #     - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
+  #     - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
 
   tcalc-ui:
     labels:
@@ -95,6 +95,6 @@ networks:
       external: true
 
 
-volumes:
-   tcalc_modules:
-      name: tcalc_modules_${TCALC_ID}
+# volumes:
+#    tcalc_modules:
+#       name: tcalc_modules_${TCALC_ID}
