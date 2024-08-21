@@ -26,6 +26,7 @@ services:
       - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC} 
       - VERSION=${TCALC_TAG}      
       - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
+      - TIMEZONE=${TIMEZONE}
 
   # tcalc-worker:
   #   labels:
@@ -50,6 +51,7 @@ services:
   #     - CONFIG_DB_URL=postgresql://${TSTORE_UNAME}:${TSTORE_PASSWORD}@${TSTORE_NAME}_db:5432/${TSTORE_DBNAME}
   #     - CACHE_CALCULATIONS_SEC=${CACHE_CALCULATIONS_SEC}     
   #     - SNAPSHOT_TOLERATED_DELAY=${SNAPSHOT_TOLERATED_DELAY}
+      # - TIMEZONE=${TIMEZONE}
 
   tcalc-ui:
     labels:
@@ -64,6 +66,7 @@ services:
       - TEVENT_BROKER_HOST=${TEVENT_BROKER_HOST}
       - TEVENT_BROKER_PORT=${TEVENT_BROKER_PORT}      
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE=${TIMEZONE}
     container_name: ${TCALC_NAME}_ui
     hostname: ${TCALC_NAME}_ui
     ports:
