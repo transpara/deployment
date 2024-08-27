@@ -3,4 +3,4 @@ name: collectortelegraf
 description: Telegraf collector for Transpara
 type: application
 version: 1.8.50
-appVersion: "0.178.0"
+appVersion: "0.179.0"

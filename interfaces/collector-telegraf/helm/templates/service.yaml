@@ -12,6 +12,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
+  {{ toYaml .Values.service.ports | indent 4 }}
   {{- $health := include "telegraf.health" . | fromYaml }}
   {{- with $health }}
   - port: {{ trimPrefix "http://:" .service_address | int64 }}

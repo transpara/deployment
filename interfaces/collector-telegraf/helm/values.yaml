@@ -16,10 +16,16 @@ nodeSelector: {}
 affinity: {}
 tolerations: []
 updateStrategy: {}
+ports:
+  - containerPort: 8000
 service:
   enabled: true
   type: ClusterIP
   annotations: {}
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
 rbac:
   create: true
   clusterWide: true
