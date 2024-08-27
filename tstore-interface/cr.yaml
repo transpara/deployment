@@ -4,6 +4,7 @@ metadata:
   name: <<NAME>>
 spec:
   tStoreInterface:
+    name: <<NAME>>
     config:
       # Example: http://tsystem-api-service:80/api/v1
       TSYSTEM_URL: <<TSYSTEM_URL>>
