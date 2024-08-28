@@ -22,7 +22,7 @@
 
 - group: charts.transpara.com
   version: v1
-  kind: CollectorOpcua
+  kind: CollectorTelegraf
   chart: helm-charts/collectortelegraf
 
 - group: charts.transpara.com
