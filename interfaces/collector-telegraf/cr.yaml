@@ -23,7 +23,7 @@ spec:
   tolerations: []
   updateStrategy: {}
   service:
-    enabled: false
+    enabled: true
     type: ClusterIP
     annotations: {}
   rbac:
