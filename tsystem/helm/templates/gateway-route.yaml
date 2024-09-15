@@ -23,6 +23,8 @@ spec:
         path:
           type: ReplacePrefixMatch
           replacePrefixMatch: "/"
+    timeouts:
+      request: 5m         
     backendRefs:
     - name: {{ .Values.tSystemApi.serviceName }}
       port: 80
