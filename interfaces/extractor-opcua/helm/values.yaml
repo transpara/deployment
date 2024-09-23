@@ -1,0 +1,60 @@
+# Global settings for the Helm chart
+global:
+  imagePullSecret: transpara-docker-secret  # Secret to pull Docker images
+  imagePullPolicy: Always                   # Image pull policy
+
+# OPC UA extractor settings
+tOpcua:
+  name: extractor-opcua
+  replicas: 1                               # Number of replicas for the deployment
+
+  image:
+    repository: transpara/extractor-opcua
+    tag: 0.179.0
+  config:
+    ID: 7eef
+    EXTRACTOR_PREFIX: opcua
+    TSTORE_API_URL: http://192.168.10.100/tstore/
+    TSTORE_FLUSH_INTERVAL_SECONDS: 10
+    TSTORE_FLUSH_SIZE: 100
+    OUTPUT_BATCH_SIZE: 20
+    CYCLE_SECONDS: 20
+    SOURCE_TZ: UTC
+    OPCUA_CONFIG: 
+      ## OPC UA CONFIGURATION
+      opcua_endpoint_url: opc.tcp://192.168.10.110000:53530/OPCUA/SimulationServer
+      # security_mode: SignAndEncrypt
+      # security_policy: Basic256Sha256
+      # user_identity:
+      #   type: UserName
+      #   user_name: user1
+      #   password: password1
+      user_identity:
+        type: Anonymous
+      monitoring_parameters:
+        sampling_interval: 200
+        queue_size: 25
+      subscription_parameters:
+        publishing_interval: 100
+      # Node ID configuration
+      # name          - field name to use in the output (optional)
+      # node_id        - Node ID, contains namespace, identifier type, and identifier. Example node_id = "ns=3;i=1003"
+      # default_tags  - extra tags to be added to the output metric (optional)
+      monitored_items:
+        - name: ""
+          node_id: "ns=3;i=1003"
+          default_tags:
+            source: "opcua_server"
+            location: "caracas"
+        - name: ""
+          node_id: "ns=3;i=1001"
+        - name: ""
+          node_id: "ns=3;i=1002"
+        - name: ""
+          node_id: "ns=3;i=1004"
+        - name: ""
+          node_id: "ns=3;i=1005"
+        - name: ""
+          node_id: "ns=3;i=1006"
+        - name: ""
+          node_id: "ns=3;i=1007"

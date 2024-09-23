@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.tOpcua.name }}-config
+data:
+  ID: "{{ .Values.tOpcua.config.ID }}"
+  EXTRACTOR_PREFIX: "{{ .Values.tOpcua.config.EXTRACTOR_PREFIX }}"
+  TSTORE_API_URL: "{{ .Values.tOpcua.config.TSTORE_API_URL }}"
+  TSTORE_FLUSH_INTERVAL_SECONDS: "{{ .Values.tOpcua.config.TSTORE_FLUSH_INTERVAL_SECONDS }}"
+  TSTORE_FLUSH_SIZE: "{{ .Values.tOpcua.config.TSTORE_FLUSH_SIZE }}"
+  OUTPUT_BATCH_SIZE: "{{ .Values.tOpcua.config.OUTPUT_BATCH_SIZE }}"
+  CYCLE_SECONDS: "{{ .Values.tOpcua.config.CYCLE_SECONDS }}"
+  SOURCE_TZ: "{{ .Values.tOpcua.config.SOURCE_TZ }}"
+  opcua_config.yaml: |+
+    {{ tpl (toYaml .Values.tOpcua.config.OPCUA_CONFIG) . | nindent 4 }}
+  

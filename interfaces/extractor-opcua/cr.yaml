@@ -1,0 +1,21 @@
+apiVersion: charts.transpara.com/v1
+kind: ExtractorOpcua
+metadata:
+  name: <<NAME>>
+spec:
+  tOpcua:
+    name: <<NAME>>
+    replicas: 1
+    image:
+      repository: transpara/tstore_opcua_collector
+      tag: 1.0.0
+    config:
+      ID: <<ID>>
+      EXTRACTOR_PREFIX: opcua
+      TSTORE_API_URL: http://tstore-interface:80/tstore/
+      TSTORE_FLUSH_INTERVAL_SECONDS: 10
+      TSTORE_FLUSH_SIZE: 100
+      OUTPUT_BATCH_SIZE: 20
+      CYCLE_SECONDS: 20
+      SOURCE_TZ: UTC
+      OPCUA_CONFIG: <<OPCUA_CONFIG>>

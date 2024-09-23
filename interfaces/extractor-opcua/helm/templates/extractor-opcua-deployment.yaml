@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tOpcua.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.tOpcua.name }}
+  replicas: {{ .Values.tOpcua.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tOpcua.name }}
+    spec:
+      containers:
+        - name: {{ .Values.tOpcua.name }}
+          image: "{{ .Values.tOpcua.image.repository }}:{{ .Values.tOpcua.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.tOpcua.name }}-config
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app/app/opcua_config.yaml
+            subPath: opcua_config.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.tOpcua.name }}-config
+      imagePullSecrets: 
+        - name: {{ .Values.global.imagePullSecret }}

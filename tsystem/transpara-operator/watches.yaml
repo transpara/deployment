@@ -22,6 +22,11 @@
 
 - group: charts.transpara.com
   version: v1
+  kind: ExtractorOpcua
+  chart: helm-charts/extractoropcua
+
+- group: charts.transpara.com
+  version: v1
   kind: CollectorTelegraf
   chart: helm-charts/collectortelegraf
 

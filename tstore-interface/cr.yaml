@@ -1,17 +1,39 @@
 apiVersion: charts.transpara.com/v1
 kind: TStoreInterface
 metadata:
-  name: <<NAME>>
+  name: <<TSTORE_INTERFACE_NAME>>
 spec:
   tStoreInterface:
-    name: <<NAME>>
+    name: <<TSTORE_INTERFACE_NAME>>
     config:
-      # Example: http://tsystem-api-service:80/api/v1
+      # URL of the TSystem API
       TSYSTEM_URL: <<TSYSTEM_URL>>
-      # Example: postgresql://postgres:a0ba-396f-4c57-9b4@my-db-primary:5432/postgres
+      # Database URLs for read and write
       TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
       TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
+      # Unique ID for the TStore
       TSTORE_ID: <<TSTORE_ID>>
-      TCACHE_HOST: tsystem-cache  
+      # Cache host and settings
+      TCACHE_HOST: <<TCACHE_HOST>>
+      TCACHE_PORT: <<TCACHE_PORT>>
+      TCACHE_DB: <<TCACHE_DB>>
+      TCACHE_CONSIDER_STALE_SEC: <<TCACHE_CONSIDER_STALE_SEC>>
+      # Optional metadata stale configuration
+      TCACHE_META_CONSIDER_STALE_SEC: <<TCACHE_META_CONSIDER_STALE_SEC>>
+      # Trend resolution factor
+      TREND_RESOLUTION_FACTOR: <<TREND_RESOLUTION_FACTOR>>
+      # Expose metrics (true/false)
+      EXPOSE_METRICS: <<EXPOSE_METRICS>>
+      # Logging level (e.g., INFO, DEBUG)
+      LOG_LEVEL: <<LOG_LEVEL>>
+      # Base path for API
+      BASE_PATH: <<BASE_PATH>>
+      # Historical retry days tiers
+      HISTORICAL_RETRY_DAYS_TIERS: <<HISTORICAL_RETRY_DAYS_TIERS>>
   tStoreUi:
-    name: <<NAME>>-ui
+    name: <<TSTORE_UI_NAME>>
+    config:
+      # Base path for UI
+      BASE_PATH: <<BASE_PATH>>
+      # Logging level (e.g., INFO, DEBUG)
+      LOG_LEVEL: <<LOG_LEVEL>>
