@@ -1,7 +1,7 @@
 apiVersion: charts.transpara.com/v1
 kind: TStoreInterface
 metadata:
-  name: <<TSTORE_INTERFACE_NAME>>
+  name: <<NAME>>
 spec:
   tStoreInterface:
     name: <<TSTORE_INTERFACE_NAME>>
