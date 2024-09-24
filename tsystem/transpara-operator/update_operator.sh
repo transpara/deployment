@@ -22,7 +22,4 @@ cp -r ../../interfaces/extractor-opcua/helm/* ./helm-charts/extractoropcua
 mkdir -p ./helm-charts/collectortelegraf
 cp -r ../../interfaces/collector-telegraf/helm/* ./helm-charts/collectortelegraf
 
-mkdir -p ./helm-charts/collectoropcua
-cp -r ../../interfaces/collector-opcua/helm/* ./helm-charts/collectoropcua
-
 make docker-build docker-push bundle bundle-build bundle-push catalog-build catalog-push

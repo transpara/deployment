@@ -30,9 +30,4 @@
   kind: CollectorTelegraf
   chart: helm-charts/collectortelegraf
 
-- group: charts.transpara.com
-  version: v1
-  kind: CollectorOpcua
-  chart: helm-charts/collectoropcua
-
 #+kubebuilder:scaffold:watch
