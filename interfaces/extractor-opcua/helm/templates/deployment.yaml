@@ -11,6 +11,8 @@ spec:
     metadata:
       labels:
         app: {{ .Values.tOpcua.name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Values.tOpcua.name }}
