@@ -8,7 +8,7 @@ spec:
     config:
       # URL of the TSystem API
       TSYSTEM_URL: <<TSYSTEM_URL>>
-      # Database URLs for read and write
+      # Database URLs for read and write # Example: postgresql://postgres:a0ba-396f-4c57-9b4@my-db-primary:5432/postgres
       TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
       TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
       # Unique ID for the TStore

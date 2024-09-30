@@ -7,7 +7,7 @@ tStoreInterface:
   replicas: 1
   image:
     repository: transpara/tstore-interface
-    tag: 0.178.0
+    tag: 0.179.0
   config:
     # Example: http://tsystem-api:80/api/v1
     TSYSTEM_URL: http://tsystem-api:80/api/v1
