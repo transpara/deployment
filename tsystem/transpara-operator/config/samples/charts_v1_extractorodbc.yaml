@@ -25,7 +25,7 @@ spec:
     BACKFILL: true
     CONNECTION_STRING: Driver={PostgreSQL Unicode};Server=<server_ip_address>;Port=<server_port>;Database=postgres;Uid=postgres;Pwd=<password>;
     TSYSTEM_HOST: tsystem-api
-    QUERY: Select metric, value, ts, comma_delimitted_labels from your_table
+    QUERY: Select metric, value, ts, comma_delimited_labels from your_table
     SOURCE_TZ: UTC
     LOG_ENQUEING: true
     LOG_QUERY: true
