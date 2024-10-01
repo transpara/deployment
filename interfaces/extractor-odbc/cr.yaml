@@ -22,6 +22,7 @@ spec:
       LOOKBACK_SECONDS: <<LOOKBACK_SECONDS>>
       MAX_RANGE_PER_REQUEST_SECONDS: <<MAX_RANGE_PER_REQUEST_SECONDS>>
       BACKFILL_START_TIME: <<BACKFILL_START_TIME>>
+      TSYSTEM_SETTINGS_TIMEOUT: <<TSYSTEM_SETTINGS_TIMEOUT>>
       BACKFILL: <<BACKFILL>>
       # Driver={PostgreSQL Unicode};Server=<server_ip_address>;Port=<server_port>;Database=postgres;Uid=postgres;Pwd=<password>;
       CONNECTION_STRING: <<CONNECTION_STRING>>
@@ -29,6 +30,7 @@ spec:
       # Select metric, value, ts, comma_delimited_labels from your_table
       QUERY: <<QUERY>> 
       SOURCE_TZ: <<SOURCE_TZ>>
+      OUTBOUND_DATETIME_FORMAT: <<OUTBOUND_DATETIME_FORMAT>>
       LOG_ENQUEING: true
       LOG_QUERY: true
 
