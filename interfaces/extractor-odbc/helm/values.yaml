@@ -12,7 +12,7 @@ tOdbc:
   config:
     ID: 7eef
     EXTRACTOR_PREFIX: odbc
-    TSTORE_API_URL: http://tstore-interface:80/tstore/
+    TSTORE_API_URL: http://tstore-interface/tstore/
     TSTORE_FLUSH_INTERVAL_SECONDS: 10
     TSTORE_FLUSH_SIZE: 100
     OUTPUT_BATCH_SIZE: 20
@@ -20,10 +20,12 @@ tOdbc:
     LOOKBACK_SECONDS: 1800
     MAX_RANGE_PER_REQUEST_SECONDS: 86400
     BACKFILL_START_TIME: 2023-08-10
+    TSYSTEM_SETTINGS_TIMEOUT: 10
     BACKFILL: true
     CONNECTION_STRING: Driver={PostgreSQL Unicode};Server=<server_ip_address>;Port=<server_port>;Database=postgres;Uid=postgres;Pwd=<password>;
     TSYSTEM_HOST: tsystem-api
     QUERY: Select metric, value, ts, comma_delimited_labels from your_table
     SOURCE_TZ: UTC
+    OUTBOUND_DATETIME_FORMAT: "YYYY-MM-DDTHH:mm:ssZZ"
     LOG_ENQUEING: true
     LOG_QUERY: true
