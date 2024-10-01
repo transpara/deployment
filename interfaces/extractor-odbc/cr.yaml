@@ -10,7 +10,7 @@ spec:
     replicas: 1
     image:
       repository: transpara/extractor-odbc
-      tag: 0.179.0
+      tag: "kube-test"
     config:
       ID: <<ID>> 
       EXTRACTOR_PREFIX: <<EXTRACTOR_PREFIX>>
