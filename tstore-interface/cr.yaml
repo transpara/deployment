@@ -34,6 +34,6 @@ spec:
     name: <<TSTORE_UI_NAME>>
     config:
       # Base path for UI
-      BASE_PATH: <<BASE_PATH>>
+      BASE_PATH: <<TSTORE_UI_BASE_PATH>>
       # Logging level (e.g., INFO, DEBUG)
       LOG_LEVEL: <<LOG_LEVEL>>
