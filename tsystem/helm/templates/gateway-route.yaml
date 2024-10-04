@@ -27,7 +27,7 @@ spec:
       request: 5m         
     backendRefs:
     - name: {{ .Values.tSystemApi.serviceName }}
-      port: 80
+      port: {{ .Values.tSystemApi.ports.servicePort }}
   - matches:
     - path:
         type: PathPrefix

@@ -42,8 +42,8 @@ tSystemApi:
     repository: transpara/tsystem
     tag: "kube-test-operator"
   ports:
-    containerPort: 80
-    servicePort: 80
+    containerPort: 8080
+    servicePort: 8080
     # Provide nodePort to enable it
   volumeMount:
     name: tsystem-api-data
