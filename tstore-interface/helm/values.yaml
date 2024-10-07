@@ -1,7 +1,7 @@
 global:
   imagePullSecret: transpara-docker-secret
   imagePullPolicy: Always
-  
+
 tStoreInterface:
   name: tstore-interface
   replicas: 1
@@ -10,7 +10,7 @@ tStoreInterface:
     tag: 0.179.0
   config:
     # Example: http://tsystem-api:80/api/v1
-    TSYSTEM_URL: http://tsystem-api:80/api/v1
+    TSYSTEM_URL: http://tsystem-api:8080/api/v1
     # Example: postgresql://postgres:a0ba-396f-4c57-9b4@my-db-primary:5432/postgres
     TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
     TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
@@ -40,7 +40,7 @@ tStoreUi:
     tag: kube-test
   config:
     BASE_PATH: "/tstore/ui"
-    LOG_LEVEL: INFO 
+    LOG_LEVEL: INFO
   ports:
     - containerPort: 8080
   service:
@@ -50,7 +50,7 @@ tStoreUi:
         port: 8080
         targetPort: 8080
 
-# used for init container wait-tstore 
+# used for init container wait-tstore
 tStore:
   host: tstore.tstore
   port: 5432
