@@ -32,11 +32,15 @@ releases:
 
 - name: stackgres-operator
   namespace: stackgres
-  version: 1.13.0
+  createNamespace: true
   chart: stackgres-charts/stackgres-operator
+  version: 1.13.0
   values:
-    - values/stackgres-{{ .Environment.Name }}-values.yaml
-  disableValidation: true
+    - adminui:
+        service:
+          type: ClusterIP
+    - grafana:
+        autoEmbed: true
 
 - name: minio
   namespace: tstore

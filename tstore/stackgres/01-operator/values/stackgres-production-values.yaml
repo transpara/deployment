@@ -9,11 +9,3 @@ grafana:
 adminui:
   service:
     type: ClusterIP
-
-authentication:
-  createAdminSecret: true
-
-deploy:
-  restapi: true
-  operator: true
-  collector: true
