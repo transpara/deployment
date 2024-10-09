@@ -12,7 +12,7 @@ repositories:
   - name: bitnami #minio
     url: https://charts.bitnami.com/bitnami
   - name: openebs
-    url: https://openebs.github.io/openebs
+    url: https://openebs.github.io/charts
 
 helmDefaults:
   wait: true
@@ -50,5 +50,3 @@ releases:
   namespace: openebs
   chart: openebs/openebs
   disableValidation: true
-  version: 4.1.1
-
