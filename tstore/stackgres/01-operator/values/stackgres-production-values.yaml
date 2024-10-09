@@ -2,6 +2,7 @@ grafana:
   autoEmbed: true
   webHost: prometheus-operator-grafana.monitoring.svc
   secretNamespace: monitoring
+  secretName: prometheus-grafana
   secretUserKey: admin-user
   secretPasswordKey: admin-password
 

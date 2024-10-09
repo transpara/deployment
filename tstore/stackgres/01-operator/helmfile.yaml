@@ -12,7 +12,7 @@ repositories:
   - name: bitnami #minio
     url: https://charts.bitnami.com/bitnami
   - name: openebs
-    url: https://openebs.github.io/charts
+    url: https://openebs.github.io/openebs
 
 helmDefaults:
   wait: true
@@ -25,13 +25,14 @@ releases:
 - name: prometheus-operator
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
+  version: 65.1.1
   disableValidation: true
   values:
     - values/prometheus-{{ .Environment.Name }}-values.yaml
 
 - name: stackgres-operator
   namespace: stackgres
-  version: 1.11.0
+  version: 1.13.0
   chart: stackgres-charts/stackgres-operator
   values:
     - values/stackgres-{{ .Environment.Name }}-values.yaml
@@ -40,7 +41,7 @@ releases:
 - name: minio
   namespace: tstore
   chart: bitnami/minio
-  version: 12.8.7
+  version: 14.7.15
   disableValidation: true
   values:
     - values/minio-{{ .Environment.Name }}-values.yaml
@@ -49,5 +50,5 @@ releases:
   namespace: openebs
   chart: openebs/openebs
   disableValidation: true
-  version: v3.10.0
+  version: 4.1.1
 
