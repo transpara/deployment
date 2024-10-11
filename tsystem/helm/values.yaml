@@ -3,6 +3,7 @@ global:
   imagePullPolicy: Always
   CONTAINER_HOST: localhost
   BASE_TSYSTEM_PATH: /tsystem
+  supportGateway: true
 
 tSystemApiPv:
   name: tsystem-api-data
