@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   tsystem:
     labels:
@@ -57,6 +55,8 @@ services:
       - "Version=${TEVENT_BROKER_TAG}"
       - "ID=${TSYSTEM_ID}"
     image: "transpara/tevent-broker:${TEVENT_BROKER_TAG}"
+    volumes:
+      - tsystem_broker_data:/mosquitto/data
     container_name: ${TSYSTEM_NAME}_broker
     hostname: ${TSYSTEM_NAME}_broker
     ports:
@@ -114,3 +114,5 @@ volumes:
       name: tsystem_api_data_${TSYSTEM_ID}
   tsystem_cache_data:
       name: tsystem_cache_data_${TSYSTEM_ID}
+  tsystem_broker_data:
+      name: tsystem_broker_data_${TSYSTEM_ID}
