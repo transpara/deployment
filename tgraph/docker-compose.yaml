@@ -55,10 +55,10 @@ services:
       - CELERY_RESULT_BACKEND=redis://${REDIS_HOST}:6379/1 
 
 
-  tgraph-updater:
+  tgraph-event:
     image: "transpara/tgraph-api:${IMAGE_TAG}"
     #build: .
-    command: /app/run-updater.sh
+    command: /app/run-tgraph-event.sh
     restart: unless-stopped
     environment:
       - TSYSTEM_HOST=${TSYSTEM_HOST}
