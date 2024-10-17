@@ -2,7 +2,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: tstore
-  namespace: transpara
 spec:
   instances: 3
   imageName: ""

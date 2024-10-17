@@ -2,7 +2,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ImageCatalog
 metadata:
   name: tstore-timescaledb-ha
-  namespace: operators
 spec:
   images:
     - major: 12
