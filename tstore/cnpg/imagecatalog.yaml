@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ImageCatalog
+metadata:
+  name: tstore-timescaledb-ha
+  namespace: operators
+spec:
+  images:
+    - major: 12
+      image: timescale/timescaledb-ha:pg15-ts2.17
+    - major: 13
+      image: timescale/timescaledb-ha:pg15-ts2.17
+    - major: 14
+      image: timescale/timescaledb-ha:pg15-ts2.17
+    - major: 15
+      image: timescale/timescaledb-ha:pg15-ts2.17
+    - major: 16
+      image: timescale/timescaledb-ha:pg16-ts2.17

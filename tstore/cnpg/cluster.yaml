@@ -1,0 +1,54 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: tstore
+  namespace: transpara
+spec:
+  instances: 3
+  imageName: ""
+  
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ImageCatalog
+    name: tstore-timescaledb-ha
+    major: 16
+
+  storage:
+    size: 3Gi
+    # storageClass: tanzu-dev-new-storage-policy # Tanzu
+    
+  postgresql:
+    shared_preload_libraries:
+      - timescaledb
+
+  postgresUID: 1000 # user needs to be specified when usingtimescaledb-ha image
+
+  enableSuperuserAccess: true # tstore-interface needs superuser access
+  
+  backup:
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      destinationPath: "s3://test"
+      endpointURL: "http://minio:9000"
+      s3Credentials:
+        accessKeyId:
+          name: minio
+          key: root-user
+        secretAccessKey:
+          name: minio
+          key: root-password
+      wal:
+        compression: gzip
+        encryption: AES256
+        # maxParallel: 8
+        
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: 1
+    limits:
+      memory: "4Gi"
+      cpu: 1
+
+  monitoring:
+    enablePodMonitor: true

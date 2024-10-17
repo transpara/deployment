@@ -1,0 +1,18 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: tstore-pooler
+spec:
+  cluster:
+    name: tstore
+  instances: 3
+  type: rw
+  pgbouncer:
+    poolMode: session # transaction pool mode does not work well with prepared statements which SQLAlchemy uses
+    parameters:
+      max_client_conn: "430" # global limit per user/database, should match max_connections on DB side
+      default_pool_size: "96" # assuming 12 connections per each worker, 96 connections in total
+      min_pool_size: "16" # assuming minimum 2 open connections per worker
+      reserve_pool_size: "334" # remaining between default and max
+      query_wait_timeout: "300"
+      max_db_connections: "430" # matching max_connections on DB side
