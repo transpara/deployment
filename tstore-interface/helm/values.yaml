@@ -52,5 +52,5 @@ tStoreUi:
 
 # used for init container wait-tstore
 tStore:
-  host: tstore.tstore
+  host: tstore-rw
   port: 5432

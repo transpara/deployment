@@ -38,8 +38,7 @@ spec:
           key: root-password
       wal:
         compression: gzip
-        encryption: AES256
-        # maxParallel: 8
+
         
   resources:
     requests:
@@ -51,3 +50,4 @@ spec:
 
   monitoring:
     enablePodMonitor: true
+  
