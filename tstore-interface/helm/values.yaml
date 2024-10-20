@@ -6,14 +6,14 @@ tStoreInterface:
   name: tstore-interface
   replicas: 1
   image:
-    repository: transpara/tstore-interface
-    tag: 0.179.0
+    repository: harbor.nonprod.caas.energy.sug.pri/transpara-dev/tstore-interface
+    tag: kube-test
   config:
     # Example: http://tsystem-api:80/api/v1
     TSYSTEM_URL: http://tsystem-api:8080/api/v1
     # Example: postgresql://postgres:a0ba-396f-4c57-9b4@my-db-primary:5432/postgres
-    TSTORE_DB_WRITE_URL: <<TSTORE_DB_WRITE_URL>>
-    TSTORE_DB_READ_URL: <<TSTORE_DB_READ_URL>>
+    TSTORE_DB_WRITE_URL: postgresql://postgres:8md2hlNVQJoPYsXzU39Olg3PbKjopJtELkElXn6Nkahrld81DpL7dOmY2SPRBjml@cluster-example-rw.operators:5432/postgres
+    TSTORE_DB_READ_URL: postgresql://postgres:8md2hlNVQJoPYsXzU39Olg3PbKjopJtELkElXn6Nkahrld81DpL7dOmY2SPRBjml@cluster-example-r.operators:5432/postgres
     EXPOSE_METRICS: "true"
     TSTORE_ID: test-id
     TCACHE_HOST: tsystem-cache
@@ -24,13 +24,13 @@ tStoreInterface:
     BASE_PATH: "/tstore/api/v1"
     HISTORICAL_RETRY_DAYS_TIERS: "[1,7,30]"
   ports:
-    - containerPort: 80
+    - containerPort: 8080
   service:
     type: ClusterIP
     ports:
       - protocol: TCP
         port: 80
-        targetPort: 80
+        targetPort: 8080
 
 tStoreUi:
   name: tstore-ui

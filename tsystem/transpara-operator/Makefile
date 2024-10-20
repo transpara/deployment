@@ -30,7 +30,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
 # transpara.com/transpara-operator-bundle:$VERSION and transpara.com/transpara-operator-catalog:$VERSION.
-IMAGE_TAG_BASE ?= transpara/transpara-operator
+IMAGE_TAG_BASE ?= harbor.nonprod.caas.energy.sug.pri/transpara-dev/transpara-operator
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -210,7 +210,7 @@ BUNDLE_IMGS ?= $(BUNDLE_IMG)
 # The image tag given to the resulting catalog image (e.g. make catalog-build CATALOG_IMG=example.com/operator-catalog:v0.2.0).
 
 # CATALOG_IMG ?= $(IMAGE_TAG_BASE)-catalog:v$(VERSION)
-CATALOG_IMG ?= $(IMAGE_TAG_BASE)-catalog:master
+CATALOG_IMG ?= $(IMAGE_TAG_BASE)-catalog:main
 
 # CATALOG_BASE_IMG ?= $(IMAGE_TAG_BASE)-catalog:v$(PREVIOUS_VERSION)
 # CATALOG_BASE_IMG ?= $(IMAGE_TAG_BASE)-catalog:master
