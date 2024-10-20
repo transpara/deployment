@@ -4,6 +4,7 @@ global:
   CONTAINER_HOST: localhost
   BASE_TSYSTEM_PATH: /tsystem
   supportGateway: true
+  definePvs: true
 
 tSystemApiPv:
   name: tsystem-api-data

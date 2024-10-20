@@ -1,3 +1,4 @@
+{{- if .Values.definePvs }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -11,3 +12,4 @@ spec:
   accessModes: {{ .Values.tSystemApiPv.accessModes }}
   hostPath:
     path: {{ .Values.tSystemApiPv.hostPath }}
+{{- end }}
