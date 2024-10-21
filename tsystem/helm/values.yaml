@@ -85,10 +85,10 @@ tSystemUi:
     # Provide nodePort to enable it
   config:
     BASE_PATH: "/tsystem/ui"
-
+    protocol: "http"
 # tSystemEventMgmt:
 #   name: tsystem-event-mgmt
-#   serviceName: tsystem-event-mgmt
+#   serviceName: tsystem-event-mgmt 
 #   replicas: 1
 #   image:
 #     repository: cedalo/management-center

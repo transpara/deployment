@@ -26,7 +26,7 @@ spec:
             - containerPort: {{ .Values.tSystemUi.ports.containerPort | default 3000 }}
           env:
           - name: NEXT_PUBLIC_TSYSTEM_API_URL
-            value: "http://{{ .Values.global.CONTAINER_HOST }}{{ .Values.tSystemApi.config.BASE_PATH }}"
+            value: "{{ .Values.tSystemUi.config.protocol }}://{{ .Values.global.CONTAINER_HOST }}{{ .Values.tSystemApi.config.BASE_PATH }}"
           - name: NEXT_PUBLIC_CONTAINER_HOST
             valueFrom:
               configMapKeyRef:
