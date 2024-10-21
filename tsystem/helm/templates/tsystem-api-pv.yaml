@@ -1,4 +1,4 @@
-{{- if .Values.definePvs }}
+{{- if .Values.global.definePvs }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:

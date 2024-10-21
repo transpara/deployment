@@ -14,6 +14,10 @@ spec:
       labels:
         app: {{ .Values.tSystemUi.name }}
     spec:
+      securityContext:
+        runAsUser: 1001  
+        runAsGroup: 1001  
+        fsGroup: 1001  
       containers:
         - name: {{ .Values.tSystemUi.name | default "tsystem-ui" }}
           image: "{{ .Values.tSystemUi.image.repository }}:{{ .Values.tSystemUi.image.tag | default .Chart.AppVersion }}"
