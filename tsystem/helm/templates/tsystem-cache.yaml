@@ -13,6 +13,9 @@ spec:
       labels:
         app: {{ .Values.tSystemCache.name }}
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 6006
       containers:
       - name: {{ .Values.tSystemCache.name }}
         image: "{{ .Values.tSystemCache.image.repository }}:{{ .Values.tSystemCache.image.tag | default .Chart.AppVersion }}"
