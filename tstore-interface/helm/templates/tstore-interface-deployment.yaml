@@ -12,6 +12,10 @@ spec:
       labels:
         app: {{ .Values.tStoreInterface.name }}
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 6006
+        fsGroup: 6006
       initContainers: 
       - name: wait-tstore
         image: busybox

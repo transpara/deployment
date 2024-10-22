@@ -12,6 +12,10 @@ spec:
       labels:
         app: {{ .Values.tStoreUi.name }}
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 6006
+        fsGroup: 6006
       containers:
       - name: {{ .Values.tStoreUi.name }}
         image: "{{ .Values.tStoreUi.image.repository }}:{{ .Values.tStoreUi.image.tag | default .Chart.AppVersion }}"
