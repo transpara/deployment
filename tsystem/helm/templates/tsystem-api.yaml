@@ -12,6 +12,9 @@ spec:
     metadata:
       labels:
         app: {{ .Values.tSystemApi.name }}
+      annotations:
+        # This annotation is required so that pods restart on configmap change
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       securityContext:
         runAsNonRoot: true
