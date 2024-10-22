@@ -30,6 +30,8 @@ spec:
       BASE_PATH: <<BASE_PATH>>
       # Historical retry days tiers
       HISTORICAL_RETRY_DAYS_TIERS: <<HISTORICAL_RETRY_DAYS_TIERS>>
+      # Support gateway for exposing the app (true/false)
+      SUPPORT_GATEWAY: <<SUPPORT_GATEWAY>>
   tStoreUi:
     name: <<TSTORE_UI_NAME>>
     config:

@@ -78,6 +78,11 @@ spec:
             configMapKeyRef:
               name: tsystem-config
               key: DOCKER_FILE_TEMPLATE_PATH
+        - name: TRANSPARA_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              name: tsystem-config
+              key: TRANSPARA_NAMESPACE
         - name: IS_OUTSIDE_CLUSTER
           value: "False"
       imagePullSecrets: 

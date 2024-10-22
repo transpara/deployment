@@ -57,6 +57,7 @@ tSystemApi:
     SSH_PORT: "22"
     DOCKER_FILE_BASE_PATH: "/transpara/deployment"
     DOCKER_FILE_TEMPLATE_PATH: "/transpara/deployment/template"
+    TRANSPARA_NAMESPACE: "transpara"
 
 tSystemCache:
   name: tsystem-cache
@@ -88,7 +89,7 @@ tSystemUi:
     protocol: "http"
 # tSystemEventMgmt:
 #   name: tsystem-event-mgmt
-#   serviceName: tsystem-event-mgmt 
+#   serviceName: tsystem-event-mgmt
 #   replicas: 1
 #   image:
 #     repository: cedalo/management-center

@@ -34,5 +34,11 @@ spec:
                 key: CONTAINER_HOST
           - name: NEXT_PUBLIC_BASE_PATH
             value: "{{ .Values.tSystemUi.config.BASE_PATH }}"
+          - name: NEXT_PUBLIC_INTERNAL_TSYSTEM_API_HOST
+            value: "{{ .Values.tSystemApi.serviceName }}"
+          - name: NEXT_PUBLIC_INTERNAL_TSYSTEM_API_PORT
+            value: "{{ .Values.tSystemApi.ports.servicePort }}"
+          - name: NEXT_PUBLIC_TSYSTEM_API_BASE_PATH
+            value: "{{ .Values.tSystemApi.config.BASE_PATH }}"
       imagePullSecrets: 
         - name: {{ .Values.global.imagePullSecret }}

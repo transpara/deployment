@@ -16,3 +16,4 @@ data:
   BASE_PATH: "{{ .Values.tSystemApi.config.BASE_PATH }}"
   DOCKER_FILE_BASE_PATH: "{{ .Values.tSystemApi.config.DOCKER_FILE_BASE_PATH }}"
   DOCKER_FILE_TEMPLATE_PATH: "{{ .Values.tSystemApi.config.DOCKER_FILE_TEMPLATE_PATH }}"
+  TRANSPARA_NAMESPACE: "{{ .Values.tSystemApi.config.TRANSPARA_NAMESPACE }}"

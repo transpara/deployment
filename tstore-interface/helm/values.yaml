@@ -23,6 +23,7 @@ tStoreInterface:
     LOG_LEVEL: INFO
     BASE_PATH: "/tstore/api/v1"
     HISTORICAL_RETRY_DAYS_TIERS: "[1,7,30]"
+    SUPPORT_GATEWAY: "true"
   ports:
     - containerPort: 80
   service:

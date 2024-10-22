@@ -1,3 +1,4 @@
+{{- if .Values.global.supportGateway }}
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: HTTPRoute
 metadata:
@@ -48,3 +49,4 @@ spec:
         path:
           type: ReplacePrefixMatch
           replacePrefixMatch: "/tstore/ui"
+{{- end }}
